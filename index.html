@@ -25,18 +25,18 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 20px;
-      background: #333;
+      padding: 15px 20px;
+      background: #111;
       color: white;
       flex-wrap: wrap;
     }
 
-    .logo-text {
+    .logo {
       font-size: 24px;
       font-weight: bold;
     }
 
-    .logo-text span {
+    .logo span {
       color: #ff6600;
     }
 
@@ -69,69 +69,144 @@
       cursor: pointer;
     }
 
-    /* Right-side logo */
-    .top-right-logo {
+    /* Site Logo Top Right */
+    .header-logo {
       position: absolute;
+      top: 15px;
       right: 20px;
-      top: 10px;
     }
 
-    .top-right-logo img {
-      height: 40px;
-      width: 40px;
-      border-radius: 50%;
+    .header-logo img {
+      height: 60px;
+      width: 60px;
+      object-fit: contain;
+      border-radius: 8px;
     }
 
     /* Banner */
     .banner {
-      position: relative;
-      background: url('https://i.ibb.co/jkXh8T0W/istockphoto-1129343516-612x612.jpg') no-repeat center center/cover;
-      height: 450px;
-      margin-top: 70px;
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                  url('https://i.ibb.co/jkXh8T0W/istockphoto-1129343516-612x612.jpg') no-repeat center center/cover;
+      height: 500px;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-    }
-
-    .banner::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-color: rgba(0, 0, 0, 0.5);
-    }
-
-    .banner-content {
-      position: relative;
       color: white;
+      flex-direction: column;
       padding: 20px;
+      margin-top: 70px;
     }
 
-    .banner-content h1 {
-      font-size: 40px;
-      margin-bottom: 10px;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    .banner h1 {
+      font-size: 42px;
+      margin: 0;
+      font-weight: bold;
     }
 
-    .banner-content p {
-      font-size: 18px;
-      max-width: 600px;
-      margin: 0 auto 15px;
-      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    .banner p {
+      font-size: 20px;
+      margin: 15px 0;
+      max-width: 700px;
     }
 
     .banner .btn {
       background: #ff6600;
       color: white;
-      padding: 12px 24px;
-      font-size: 16px;
+      padding: 14px 28px;
+      font-size: 18px;
       text-decoration: none;
-      border-radius: 4px;
-      display: inline-block;
-      margin-top: 10px;
+      margin-top: 20px;
+      border-radius: 6px;
+      transition: background 0.3s ease;
     }
 
-    /* Responsive Design */
+    .banner .btn:hover {
+      background: #e65c00;
+    }
+
+    /* Products */
+    .products {
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .product-list {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .product {
+      border: 1px solid #ddd;
+      padding: 10px;
+      width: 100%;
+      max-width: 200px;
+      background: #fafafa;
+    }
+
+    .product img {
+      width: 100%;
+      height: auto;
+    }
+
+    .product h3 {
+      margin: 10px 0 5px;
+    }
+
+    .product .price {
+      font-weight: bold;
+      color: #333;
+    }
+
+    .product button {
+      margin-top: 10px;
+      padding: 8px 12px;
+      background: #333;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* Logos Section */
+    .logos {
+      text-align: center;
+      padding: 40px 20px;
+      background-color: #f2f2f2;
+    }
+
+    .logos h2 {
+      margin-bottom: 20px;
+    }
+
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .logo-container img {
+      width: 100px;
+      height: auto;
+    }
+
+    /* Footer */
+    footer {
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .socials a {
+      color: #ff6600;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+
+    /* Responsive */
     @media (max-width: 768px) {
       header {
         flex-direction: column;
@@ -148,10 +223,10 @@
         justify-content: flex-start;
       }
 
-      .top-right-logo {
-        position: static;
-        align-self: flex-end;
-        margin-top: 10px;
+      .header-logo {
+        position: absolute;
+        top: 15px;
+        right: 20px;
       }
     }
   </style>
@@ -160,7 +235,7 @@
 
   <!-- Header Section -->
   <header>
-    <div class="logo-text">Aaila <span>Pasa</span></div>
+    <div class="logo">Aaila <span>Pasa</span></div>
     <nav>
       <ul>
         <li><a href="#">Home</a></li>
@@ -173,19 +248,64 @@
       <input type="text" placeholder="Search..." />
       <button>🔍</button>
     </div>
-    <div class="top-right-logo">
-      <img src="https://i.ibb.co/9qZxTC6/logo-sample.png" alt="Logo" />
+    <div class="header-logo">
+      <img src="https://i.ibb.co/9qZxTC6/logo-sample.png" alt="Site Logo" />
     </div>
   </header>
 
   <!-- Banner Section -->
   <section class="banner">
-    <div class="banner-content">
-      <h1>Indulge in Luxury</h1>
-      <p>Premium wines, whiskeys & spirits delivered to your doorstep.</p>
-      <a href="#" class="btn">Shop Now</a>
+    <h1>Unwind with Every Sip</h1>
+    <p>Explore our curated selection of luxury spirits. From fine wines to bold whiskeys, we bring the bar to your home.</p>
+    <a href="#" class="btn">Browse Collection</a>
+  </section>
+
+  <!-- Products Section -->
+  <section class="products">
+    <h2>Best Sellers</h2>
+    <div class="product-list">
+      <div class="product">
+        <img src="https://i.ibb.co/RGcqhj8Q/bundles.webp" alt="Red Wine" />
+        <h3>French Red Wine</h3>
+        <p class="price">Rs.2,100</p>
+        <button>Add to Cart</button>
+      </div>
+      <div class="product">
+        <img src="https://i.ibb.co/NdBR861Z/old-durbar-750ml-73537.jpg" alt="Whiskey" />
+        <h3>Vintage Whiskey</h3>
+        <p class="price">Rs.2,950</p>
+        <button>Add to Cart</button>
+      </div>
+      <div class="product">
+        <img src="https://i.ibb.co/1tyX15GM/Diuoxl5-W0-AE75-Ae.jpg" alt="Vodka" />
+        <h3>Crystal Vodka</h3>
+        <p class="price">Rs.2,275</p>
+        <button>Add to Cart</button>
+      </div>
     </div>
   </section>
 
+  <!-- Logos Section -->
+  <section class="logos">
+    <h2>Trusted Brands</h2>
+    <div class="logo-container">
+      <img src="https://i.ibb.co/V03LpVLy/1779456.webp" alt="Brand 1" />
+      <img src="https://i.ibb.co/LzzTFkr8/48201-1647770612.jpg" alt="Brand 2" />
+      <img src="https://i.ibb.co/5WgWxtVj/beer-20993-3d927-hd.png" alt="Brand 3" />
+      <img src="https://i.ibb.co/gLJPNsH1/4a073255-74df-48aa-b2ac-696ca38e9961.png" alt="Brand 4" />
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer>
+    <div class="footer-content">
+      <p>© 2025 Aaila Pasa. All rights reserved.</p>
+      <div class="socials">
+        <a href="#">Facebook</a>
+        <a href="#">Instagram</a>
+        <a href="#">Twitter</a>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
