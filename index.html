@@ -25,18 +25,30 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 15px 20px;
-      background: #111;
+      padding: 10px 20px;
+      background: #333;
       color: white;
       flex-wrap: wrap;
     }
 
-    .logo {
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-area img {
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+    }
+
+    .logo-area .logo-text {
       font-size: 24px;
       font-weight: bold;
     }
 
-    .logo span {
+    .logo-area .logo-text span {
       color: #ff6600;
     }
 
@@ -71,128 +83,54 @@
 
     /* Banner */
     .banner {
-      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-                  url('https://i.ibb.co/jkXh8T0W/istockphoto-1129343516-612x612.jpg') no-repeat center center/cover;
-      height: 500px;
+      position: relative;
+      background: url('https://i.ibb.co/jkXh8T0W/istockphoto-1129343516-612x612.jpg') no-repeat center center/cover;
+      height: 450px;
+      margin-top: 70px;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
+    }
+
+    .banner::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .banner-content {
+      position: relative;
       color: white;
-      flex-direction: column;
       padding: 20px;
-      margin-top: 70px;
     }
 
-    .banner h1 {
-      font-size: 42px;
-      margin: 0;
-      font-weight: bold;
+    .banner-content h1 {
+      font-size: 40px;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
     }
 
-    .banner p {
-      font-size: 20px;
-      margin: 15px 0;
-      max-width: 700px;
+    .banner-content p {
+      font-size: 18px;
+      max-width: 600px;
+      margin: 0 auto 15px;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
     }
 
     .banner .btn {
       background: #ff6600;
       color: white;
-      padding: 14px 28px;
-      font-size: 18px;
+      padding: 12px 24px;
+      font-size: 16px;
       text-decoration: none;
-      margin-top: 20px;
-      border-radius: 6px;
-      transition: background 0.3s ease;
-    }
-
-    .banner .btn:hover {
-      background: #e65c00;
-    }
-
-    /* Products */
-    .products {
-      padding: 40px 20px;
-      text-align: center;
-    }
-
-    .product-list {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    .product {
-      border: 1px solid #ddd;
-      padding: 10px;
-      width: 100%;
-      max-width: 200px;
-      background: #fafafa;
-    }
-
-    .product img {
-      width: 100%;
-      height: auto;
-    }
-
-    .product h3 {
-      margin: 10px 0 5px;
-    }
-
-    .product .price {
-      font-weight: bold;
-      color: #333;
-    }
-
-    .product button {
+      border-radius: 4px;
+      display: inline-block;
       margin-top: 10px;
-      padding: 8px 12px;
-      background: #333;
-      color: white;
-      border: none;
-      cursor: pointer;
     }
 
-    /* Logos Section */
-    .logos {
-      text-align: center;
-      padding: 40px 20px;
-      background-color: #f2f2f2;
-    }
-
-    .logos h2 {
-      margin-bottom: 20px;
-    }
-
-    .logo-container {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
-    .logo-container img {
-      width: 100px;
-      height: auto;
-    }
-
-    /* Footer */
-    footer {
-      background: #222;
-      color: white;
-      text-align: center;
-      padding: 20px;
-    }
-
-    .socials a {
-      color: #ff6600;
-      margin: 0 10px;
-      text-decoration: none;
-    }
-
-    /* Responsive */
+    /* Responsive Design */
     @media (max-width: 768px) {
       header {
         flex-direction: column;
@@ -208,10 +146,6 @@
         width: 100%;
         justify-content: flex-start;
       }
-
-      .product-list {
-        justify-content: center;
-      }
     }
   </style>
 </head>
@@ -219,7 +153,10 @@
 
   <!-- Header Section -->
   <header>
-    <div class="logo">Aaila <span>Pasa</span></div>
+    <div class="logo-area">
+      <img src="https://i.ibb.co/9qZxTC6/logo-sample.png" alt="Logo" />
+      <div class="logo-text">Aaila <span>Pasa</span></div>
+    </div>
     <nav>
       <ul>
         <li><a href="#">Home</a></li>
@@ -236,57 +173,12 @@
 
   <!-- Banner Section -->
   <section class="banner">
-    <h1>Unwind with Every Sip</h1>
-    <p>Explore our curated selection of luxury spirits. From fine wines to bold whiskeys, we bring the bar to your home.</p>
-    <a href="#" class="btn">Browse Collection</a>
-  </section>
-
-  <!-- Products Section -->
-  <section class="products">
-    <h2>Best Sellers</h2>
-    <div class="product-list">
-      <div class="product">
-        <img src="https://i.ibb.co/RGcqhj8Q/bundles.webp" alt="Red Wine" />
-        <h3>French Red Wine</h3>
-        <p class="price">Rs.2,100</p>
-        <button>Add to Cart</button>
-      </div>
-      <div class="product">
-        <img src="https://i.ibb.co/NdBR861Z/old-durbar-750ml-73537.jpg" alt="Whiskey" />
-        <h3>Vintage Whiskey</h3>
-        <p class="price">Rs.2,950</p>
-        <button>Add to Cart</button>
-      </div>
-      <div class="product">
-        <img src="https://i.ibb.co/1tyX15GM/Diuoxl5-W0-AE75-Ae.jpg" alt="Vodka" />
-        <h3>Crystal Vodka</h3>
-        <p class="price">Rs.2,275</p>
-        <button>Add to Cart</button>
-      </div>
+    <div class="banner-content">
+      <h1>Indulge in Luxury</h1>
+      <p>Premium wines, whiskeys & spirits delivered to your doorstep.</p>
+      <a href="#" class="btn">Shop Now</a>
     </div>
   </section>
 
-  <!-- Logos Section -->
-  <section class="logos">
-    <h2>Trusted Brands</h2>
-    <div class="logo-container">
-      <img src="https://i.ibb.co/V03LpVLy/1779456.webp" alt="Brand 1" />
-      <img src="https://i.ibb.co/LzzTFkr8/48201-1647770612.jpg" alt="Brand 2" />
-      <img src="https://i.ibb.co/5WgWxtVj/beer-20993-3d927-hd.png" alt="Brand 3" />
-      <img src="https://i.ibb.co/gLJPNsH1/4a073255-74df-48aa-b2ac-696ca38e9961.png" alt="Brand 4" />
-    </div>
-  </section>
-
-  <!-- Footer Section -->
-  <footer>
-    <div class="footer-content">
-      <p>© 2025 Aaila Pasa. All rights reserved.</p>
-      <div class="socials">
-        <a href="#">Facebook</a>
-        <a href="#">Instagram</a>
-        <a href="#">Twitter</a>
-      </div>
-    </div>
-  </footer>
 </body>
 </html>
