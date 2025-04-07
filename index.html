@@ -31,24 +31,12 @@
       flex-wrap: wrap;
     }
 
-    .logo-area {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .logo-area img {
-      height: 40px;
-      width: 40px;
-      border-radius: 50%;
-    }
-
-    .logo-area .logo-text {
+    .logo-text {
       font-size: 24px;
       font-weight: bold;
     }
 
-    .logo-area .logo-text span {
+    .logo-text span {
       color: #ff6600;
     }
 
@@ -79,6 +67,19 @@
     .search-bar button {
       padding: 5px 10px;
       cursor: pointer;
+    }
+
+    /* Right-side logo */
+    .top-right-logo {
+      position: absolute;
+      right: 20px;
+      top: 10px;
+    }
+
+    .top-right-logo img {
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
     }
 
     /* Banner */
@@ -146,6 +147,12 @@
         width: 100%;
         justify-content: flex-start;
       }
+
+      .top-right-logo {
+        position: static;
+        align-self: flex-end;
+        margin-top: 10px;
+      }
     }
   </style>
 </head>
@@ -153,10 +160,7 @@
 
   <!-- Header Section -->
   <header>
-    <div class="logo-area">
-      <img src="https://i.ibb.co/9qZxTC6/logo-sample.png" alt="Logo" />
-      <div class="logo-text">Aaila <span>Pasa</span></div>
-    </div>
+    <div class="logo-text">Aaila <span>Pasa</span></div>
     <nav>
       <ul>
         <li><a href="#">Home</a></li>
@@ -168,6 +172,9 @@
     <div class="search-bar">
       <input type="text" placeholder="Search..." />
       <button>🔍</button>
+    </div>
+    <div class="top-right-logo">
+      <img src="https://i.ibb.co/9qZxTC6/logo-sample.png" alt="Logo" />
     </div>
   </header>
 
