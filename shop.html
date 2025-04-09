@@ -28,6 +28,13 @@
       padding: 15px 20px;
       z-index: 1000;
     }
+    
+  .header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+    }
 
     .logo {
       font-size: 28px;
@@ -166,22 +173,6 @@
       text-decoration: none;
     }
 
-    @media (max-width: 768px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      nav ul {
-        flex-direction: column;
-        gap: 10px;
-      }
-
-      .product img {
-        height: 180px;
-      }
-    }
-
     /* === Cart Styles === */
     .cart-container {
       position: fixed;
@@ -231,26 +222,30 @@
 </head>
 <body>
 
-  <header>
+  <!-- Header Section -->
+<header>
+  <div class="header-container">
     <div class="logo">Aaila <span>Pasa</span></div>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="shop.html">Shop</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-    </nav>
-    <div class="nav__right">
-      <div class="search-bar">
-        <input type="text" placeholder="Search..." />
-        <button>🔍</button>
-      </div>
-      <div class="header-logo">
-        <img src="https://i.ibb.co/gLJPNsH1/4a073255-74df-48aa-b2ac-696ca38e9961.png" alt="Site Logo" />
-      </div>
+    <div class="header-logo">
+      <img src="https://i.ibb.co/gLJPNsH1/4a073255-74df-48aa-b2ac-696ca38e9961.png" alt="Site Logo" />
     </div>
-  </header>
+  </div>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="nav__right">
+    <div class="search-bar">
+      <input type="text" placeholder="Search..." />
+      <button>🔍</button>
+    </div>
+  </div>
+</header>
+  
 
   <section class="banner">
     <h1>Our Full Collection</h1>
