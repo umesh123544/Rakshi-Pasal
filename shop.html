@@ -385,37 +385,45 @@
       const name = productCard.querySelector('h3').innerText;
       const priceText = productCard.querySelector('.price').innerText;
       const price = parseInt(priceText.replace('Rs.', '').replace(',', ''));
-      const quantity = parseInt(quantitySelector.value);
+      const qty = parseInt(quantitySelector.value);
 
-      // Add item with quantity
-      cart.push({ name, price, quantity });
+      // Check if item already in cart
+      const existingItem = cart.find(item => item.name === name);
+      if (existingItem) {
+        existingItem.qty += qty;
+      } else {
+        cart.push({ name, price, qty }); // use `qty` consistently
+      }
+
       updateCart();
       cartContainer.style.display = 'block';
     });
   });
+
   function updateCart() {
-  cartItemsList.innerHTML = '';
-  let total = 0;
+    cartItemsList.innerHTML = '';
+    let total = 0;
 
-  cart.forEach((item, index) => {
-    const li = document.createElement('li');
-    li.innerHTML = `
-      ${item.name} (x${item.qty}) - Rs.${item.price * item.qty}
-      <button onclick="removeFromCart(${index})" style="margin-left:10px;color:red;border:none;background:none;cursor:pointer;">❌</button>
-    `;
-    cartItemsList.appendChild(li);
-    total += item.price * item.qty;
-  });
+    cart.forEach((item, index) => {
+      const li = document.createElement('li');
+      li.innerHTML = `
+        ${item.name} (x${item.qty}) - Rs.${item.price * item.qty}
+        <button onclick="removeFromCart(${index})" style="margin-left:10px;color:red;border:none;background:none;cursor:pointer;">❌</button>
+      `;
+      cartItemsList.appendChild(li);
+      total += item.price * item.qty;
+    });
 
-  cartTotal.textContent = `Total: Rs.${total}`;
-}
-  function removeFromCart(index) {
-  cart.splice(index, 1);
-  updateCart();
-  if (cart.length === 0) {
-    cartContainer.style.display = 'none';
+    cartTotal.textContent = `Total: Rs.${total}`;
   }
-}
+
+  function removeFromCart(index) {
+    cart.splice(index, 1);
+    updateCart();
+    if (cart.length === 0) {
+      cartContainer.style.display = 'none';
+    }
+  }
 </script>
 </body>
 </html>
