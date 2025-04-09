@@ -279,30 +279,75 @@
         <img src="https://i.ibb.co/NdBR861Z/old-durbar-750ml-73537.jpg" alt="Whiskey" />
         <h3>Vintage Whiskey</h3>
         <p class="price">Rs.2,950</p>
+        <label>Qty:
+  <select class="quantity-selector">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select>
+</label>
         <button>Add to Cart</button>
       </div>
       <div class="product">
         <img src="https://i.ibb.co/1tyX15GM/Diuoxl5-W0-AE75-Ae.jpg" alt="Vodka" />
         <h3>Crystal Vodka</h3>
         <p class="price">Rs.2,275</p>
+        <label>Qty:
+  <select class="quantity-selector">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select>
+</label>
         <button>Add to Cart</button>
       </div>
       <div class="product">
         <img src="https://i.ibb.co/Fs7WthS/japanese-sake.jpg" alt="Sake" />
         <h3>Premium Japanese Sake</h3>
         <p class="price">Rs.3,400</p>
+        <label>Qty:
+  <select class="quantity-selector">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select>
+</label>
         <button>Add to Cart</button>
       </div>
       <div class="product">
         <img src="https://i.ibb.co/3hBNpz3/gin.jpg" alt="Gin" />
         <h3>Botanical Gin</h3>
         <p class="price">Rs.2,150</p>
+        <label>Qty:
+  <select class="quantity-selector">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select>
+</label>
         <button>Add to Cart</button>
       </div>
       <div class="product">
         <img src="https://i.ibb.co/J2Zvd5w/tequila.jpg" alt="Tequila" />
         <h3>Mexican Tequila</h3>
         <p class="price">Rs.3,100</p>
+        <label>Qty:
+  <select class="quantity-selector">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select>
+</label>
         <button>Add to Cart</button>
       </div>
     </div>
@@ -326,40 +371,48 @@
       </div>
     </div>
   </footer>
-
   <script>
-    const cart = [];
-    const cartContainer = document.getElementById('cart');
-    const cartItemsList = document.getElementById('cart-items');
-    const cartTotal = document.getElementById('cart-total');
+  const cart = [];
+  const cartContainer = document.getElementById('cart');
+  const cartItemsList = document.getElementById('cart-items');
+  const cartTotal = document.getElementById('cart-total');
 
-    document.querySelectorAll('.product button').forEach((button) => {
-      button.addEventListener('click', () => {
-        const productCard = button.closest('.product');
-        const name = productCard.querySelector('h3').innerText;
-        const priceText = productCard.querySelector('.price').innerText;
-        const price = parseInt(priceText.replace('Rs.', '').replace(',', ''));
+  document.querySelectorAll('.product').forEach((productCard) => {
+    const button = productCard.querySelector('button');
+    const quantitySelector = productCard.querySelector('.quantity-selector');
 
-        cart.push({ name, price });
-        updateCart();
-        cartContainer.style.display = 'block';
-      });
+    button.addEventListener('click', () => {
+      const name = productCard.querySelector('h3').innerText;
+      const priceText = productCard.querySelector('.price').innerText;
+      const price = parseInt(priceText.replace('Rs.', '').replace(',', ''));
+      const quantity = parseInt(quantitySelector.value);
+
+      // Add item with quantity
+      cart.push({ name, price, quantity });
+      updateCart();
+      cartContainer.style.display = 'block';
+    });
+  });
+
+  function updateCart() {
+    cartItemsList.innerHTML = '';
+    let total = 0;
+
+    cart.forEach((item, index) => {
+      const li = document.createElement('li');
+      li.innerHTML = `${item.name} x${item.quantity} - Rs.${item.price * item.quantity} 
+        <button onclick="removeItem(${index})" style="margin-left:10px;color:red;">✖</button>`;
+      cartItemsList.appendChild(li);
+      total += item.price * item.quantity;
     });
 
-    function updateCart() {
-      cartItemsList.innerHTML = '';
-      let total = 0;
+    cartTotal.textContent = `Total: Rs.${total}`;
+  }
 
-      cart.forEach((item) => {
-        const li = document.createElement('li');
-        li.textContent = `${item.name} - Rs.${item.price}`;
-        cartItemsList.appendChild(li);
-        total += item.price;
-      });
-
-      cartTotal.textContent = `Total: Rs.${total}`;
-    }
-  </script>
-
+  function removeItem(index) {
+    cart.splice(index, 1);
+    updateCart();
+  }
+</script>
 </body>
 </html>
