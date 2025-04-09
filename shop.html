@@ -393,26 +393,29 @@
       cartContainer.style.display = 'block';
     });
   });
-
   function updateCart() {
-    cartItemsList.innerHTML = '';
-    let total = 0;
+  cartItemsList.innerHTML = '';
+  let total = 0;
 
-    cart.forEach((item, index) => {
-      const li = document.createElement('li');
-      li.innerHTML = `${item.name} x${item.quantity} - Rs.${item.price * item.quantity} 
-        <button onclick="removeItem(${index})" style="margin-left:10px;color:red;">✖</button>`;
-      cartItemsList.appendChild(li);
-      total += item.price * item.quantity;
-    });
+  cart.forEach((item, index) => {
+    const li = document.createElement('li');
+    li.innerHTML = `
+      ${item.name} (x${item.qty}) - Rs.${item.price * item.qty}
+      <button onclick="removeFromCart(${index})" style="margin-left:10px;color:red;border:none;background:none;cursor:pointer;">❌</button>
+    `;
+    cartItemsList.appendChild(li);
+    total += item.price * item.qty;
+  });
 
-    cartTotal.textContent = `Total: Rs.${total}`;
+  cartTotal.textContent = `Total: Rs.${total}`;
+}
+  function removeFromCart(index) {
+  cart.splice(index, 1);
+  updateCart();
+  if (cart.length === 0) {
+    cartContainer.style.display = 'none';
   }
-
-  function removeItem(index) {
-    cart.splice(index, 1);
-    updateCart();
-  }
+}
 </script>
 </body>
 </html>
