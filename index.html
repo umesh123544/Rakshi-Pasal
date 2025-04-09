@@ -30,6 +30,12 @@
       color: white;
       flex-wrap: wrap;
     }
+    .header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+    }
 
     .logo {
       font-size: 28px;
@@ -213,66 +219,75 @@
 
     /* Responsive */
     @media (max-width: 768px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-      }
+  header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
 
-      nav ul {
-        flex-direction: column;
-        gap: 10px;
-      }
+  .header-container {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-      .nav__right {
-        width: 100%;
-        flex-direction: column;
-        align-items: flex-start;
-      }
+  nav ul {
+    flex-direction: column;
+    gap: 10px;
+  }
 
-      .search-bar {
-        width: 100%;
-        justify-content: space-between;
-      }
+  .nav__right {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-      .banner h1 {
-        font-size: 26px;
-      }
+  .search-bar {
+    width: 100%;
+    justify-content: space-between;
+  }
 
-      .banner p {
-        font-size: 16px;
-      }
+  .banner h1 {
+    font-size: 26px;
+  }
 
-      .header-logo img {
-        height: 50px;
-        width: 50px;
-      }
+  .banner p {
+    font-size: 16px;
+  }
+
+  .header-logo img {
+    height: 50px;
+    width: 50px;
+  }
     }
+
   </style>
 </head>
 <body>
 
   <!-- Header Section -->
-  <header>
+<header>
+  <div class="header-container">
     <div class="logo">Aaila <span>Pasa</span></div>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="shop.html">Shop</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-    </nav>
-    <div class="nav__right">
-      <div class="search-bar">
-        <input type="text" placeholder="Search..." />
-        <button>🔍</button>
-      </div>
-      <div class="header-logo">
-        <img src="https://i.ibb.co/gLJPNsH1/4a073255-74df-48aa-b2ac-696ca38e9961.png" alt="Site Logo" />
-      </div>
+    <div class="header-logo">
+      <img src="https://i.ibb.co/gLJPNsH1/4a073255-74df-48aa-b2ac-696ca38e9961.png" alt="Site Logo" />
     </div>
-  </header>
+  </div>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="nav__right">
+    <div class="search-bar">
+      <input type="text" placeholder="Search..." />
+      <button>🔍</button>
+    </div>
+  </div>
+</header>
 
   <!-- Banner Section -->
   <section class="banner">
