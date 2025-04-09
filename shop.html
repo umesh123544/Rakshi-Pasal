@@ -359,16 +359,6 @@
     <ul id="cart-items"></ul>
     <p id="cart-total">Total: Rs.0</p>
     <button id="checkout-btn">Checkout</button>
-    
-  </div>
-  <div id="payment-section" style="display: none; padding: 20px;">
-  <h2>Payment Information</h2>
-  <p>Enter your details to proceed with the purchase.</p>
-  <input type="text" placeholder="Name on Card" style="display:block;margin-bottom:10px;">
-  <input type="text" placeholder="Card Number" style="display:block;margin-bottom:10px;">
-  <button onclick="alert('Payment processing...')">Pay Now</button>
-</div>
-  
   <footer>
     <div class="footer-content">
       <p>© 2025 Aaila Pasa. All rights reserved.</p>
@@ -432,10 +422,6 @@
       cartContainer.style.display = 'none';
     }
   }
-    document.getElementById('checkout-btn').addEventListener('click', () => {
-  document.getElementById('payment-section').style.display = 'block';
-  window.scrollTo(0, document.body.scrollHeight); // Scroll to payment section
-});
 </script>
 </body>
 </html>
