@@ -183,6 +183,52 @@
       gap: 20px;
       flex-wrap: wrap;
     }
+    <style>
+  /* ... your existing styles ... */
+
+  .products {
+    padding: 40px 20px;
+    text-align: center;
+  }
+
+  .product-list {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  /* ADD NEW HEADING STYLES HERE */
+  .products h2,
+  .logos h2 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: #111;
+    position: relative;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    animation: fadeInDown 1s ease-in-out;
+  }
+
+  .products h2::after,
+  .logos h2::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background-color: #ff6600;
+    border-radius: 2px;
+  }
+
+  .logos {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: #f2f2f2;
+  }
 
     .product {
       border: 1px solid #ddd;
