@@ -30,20 +30,30 @@
       color: white;
       flex-wrap: wrap;
     }
+
     .header-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
     }
 
     .logo {
       font-size: 28px;
       font-weight: bold;
+      animation: fadeInDown 1s ease-in-out;
     }
 
     .logo span {
       color: #ff6600;
+    }
+
+    .header-logo img {
+      height: 110px;
+      width: 110px;
+      object-fit: contain;
+      border-radius: 8px;
+      animation: zoomIn 1.2s ease-in-out;
     }
 
     nav ul {
@@ -52,12 +62,46 @@
       gap: 20px;
       padding: 0;
       margin: 0;
-      flex-wrap: wrap;
     }
 
     nav ul li a {
       color: white;
       text-decoration: none;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      margin: 4px 0;
+    }
+
+    .mobile-nav {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      background-color: #111;
+    }
+
+    .mobile-nav a {
+      padding: 10px;
+      border-top: 1px solid #333;
+      color: white;
+      text-decoration: none;
+    }
+
+    .nav__right {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 10px;
     }
 
     .search-bar {
@@ -66,7 +110,6 @@
       margin-top: 10px;
       height: 32px;
       align-items: center;
-      flex-wrap: nowrap;
     }
 
     .search-bar input {
@@ -79,25 +122,10 @@
       cursor: pointer;
     }
 
-    .header-logo img {
-      height: 110px;
-      width: 110px;
-      object-fit: contain;
-      border-radius: 8px;
-    }
-
-    .nav__right {
-      display: flex;
-      gap: 15px;
-      align-items: center;
-      flex-wrap: wrap;
-      margin-top: 10px;
-    }
-
     /* Banner */
     .banner {
       background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-                  url('https://i.ibb.co/jkXh8T0W/istockphoto-1129343516-612x612.jpg') no-repeat center center/cover;
+        url('https://i.ibb.co/jkXh8T0W/istockphoto-1129343516-612x612.jpg') no-repeat center center/cover;
       height: 500px;
       display: flex;
       align-items: center;
@@ -107,6 +135,7 @@
       flex-direction: column;
       padding: 20px;
       margin-top: 70px;
+      animation: fadeIn 1.5s ease;
     }
 
     .banner h1 {
@@ -180,7 +209,7 @@
       cursor: pointer;
     }
 
-    /* Logos Section */
+    /* Logos */
     .logos {
       text-align: center;
       padding: 40px 20px;
@@ -217,85 +246,129 @@
       text-decoration: none;
     }
 
-    /* Responsive */
-    @media (max-width: 768px) {
-  header {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-  }
-
-  .header-container {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  nav ul {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .nav__right {
-    width: 100%;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .search-bar {
-    width: 100%;
-    justify-content: space-between;
-  }
-      
-  .banner {
-    justify-content: center;
-    padding: 40px 10px;
-    height: auto;
-    text-align: center;
-  }
-
-  .banner h1 {
-    font-size: 24px;
-  }
-
-  .banner p {
-    font-size: 16px;
-  }
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-  .banner h1 {
-    font-size: 26px;
-  }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-  .banner p {
-    font-size: 16px;
-  }
+    @keyframes zoomIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
 
-  .header-logo img {
-    height: 90px;
-    width: 90px;
-  }
+    /* Responsive */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+      }
+
+      .header-container {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      nav ul {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .mobile-nav {
+        display: flex;
+      }
+
+      .nav__right {
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .search-bar {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .banner {
+        justify-content: center;
+        padding: 40px 10px;
+        height: auto;
+        text-align: center;
+      }
+
+      .banner h1 {
+        font-size: 24px;
+      }
+
+      .banner p {
+        font-size: 16px;
+      }
+
+      .header-logo img {
+        height: 90px;
+        width: 90px;
+      }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .header-logo img {
+        height: 100px;
+        width: 100px;
+      }
+
+      .banner h1 {
+        font-size: 28px;
+      }
+
+      .banner p {
+        font-size: 16px;
+      }
+
+      .nav__right {
+        justify-content: center;
+      }
     }
 
   </style>
 </head>
 <body>
 
-  <!-- Header Section -->
+<!-- Header -->
 <header>
   <div class="header-container">
     <div class="logo">Aaila <span>Pasa</span></div>
     <div class="header-logo">
       <img src="https://i.ibb.co/gLJPNsH1/4a073255-74df-48aa-b2ac-696ca38e9961.png" alt="Site Logo" />
     </div>
+    <div class="hamburger" onclick="toggleMobileMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
   </div>
   <nav>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="shop.html">Shop</a></li>
+    <ul class="desktop-nav">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Shop</a></li>
       <li><a href="#">About</a></li>
       <li><a href="#">Contact</a></li>
     </ul>
+    <div class="mobile-nav" id="mobileNav">
+      <a href="#">Home</a>
+      <a href="#">Shop</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </div>
   </nav>
   <div class="nav__right">
     <div class="search-bar">
@@ -305,58 +378,66 @@
   </div>
 </header>
 
-  <!-- Banner Section -->
-  <section class="banner">
-    <p>Explore our curated selection of luxury spirits. From fine wines to bold whiskeys, we bring the bar to your home.</p>
-    <a href="#" class="btn">Browse Collection</a>
-  </section>
+<!-- Banner -->
+<section class="banner">
+  <h1>Welcome to Aaila Pasa</h1>
+  <p>Explore our curated selection of luxury spirits. From fine wines to bold whiskeys, we bring the bar to your home.</p>
+  <a href="#" class="btn">Browse Collection</a>
+</section>
 
-  <!-- Products Section -->
-  <section class="products">
-    <h2>Best Sellers</h2>
-    <div class="product-list">
-      <div class="product">
-        <img src="https://i.ibb.co/RGcqhj8Q/bundles.webp" alt="Red Wine" />
-        <h3>French Red Wine</h3>
-        <p class="price">Rs.2,100</p>
-        <button>Add to Cart</button>
-      </div>
-      <div class="product">
-        <img src="https://i.ibb.co/NdBR861Z/old-durbar-750ml-73537.jpg" alt="Whiskey" />
-        <h3>Vintage Whiskey</h3>
-        <p class="price">Rs.2,950</p>
-        <button>Add to Cart</button>
-      </div>
-      <div class="product">
-        <img src="https://i.ibb.co/1tyX15GM/Diuoxl5-W0-AE75-Ae.jpg" alt="Vodka" />
-        <h3>Crystal Vodka</h3>
-        <p class="price">Rs.2,275</p>
-        <button>Add to Cart</button>
-      </div>
+<!-- Products -->
+<section class="products">
+  <h2>Best Sellers</h2>
+  <div class="product-list">
+    <div class="product">
+      <img src="https://i.ibb.co/RGcqhj8Q/bundles.webp" alt="Red Wine" />
+      <h3>French Red Wine</h3>
+      <p class="price">Rs.2,100</p>
+      <button>Add to Cart</button>
     </div>
-  </section>
+    <div class="product">
+      <img src="https://i.ibb.co/NdBR861Z/old-durbar-750ml-73537.jpg" alt="Whiskey" />
+      <h3>Vintage Whiskey</h3>
+      <p class="price">Rs.2,950</p>
+      <button>Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://i.ibb.co/1tyX15GM/Diuoxl5-W0-AE75-Ae.jpg" alt="Vodka" />
+      <h3>Crystal Vodka</h3>
+      <p class="price">Rs.2,275</p>
+      <button>Add to Cart</button>
+    </div>
+  </div>
+</section>
 
-  <!-- Logos Section -->
-  <section class="logos">
-    <h2>Trusted Brands</h2>
-    <div class="logo-container">
-      <img src="https://i.ibb.co/V03LpVLy/1779456.webp" alt="Brand 1" />
-      <img src="https://i.ibb.co/LzzTFkr8/48201-1647770612.jpg" alt="Brand 2" />
-      <img src="https://i.ibb.co/5WgWxtVj/beer-20993-3d927-hd.png" alt="Brand 3" />
-      <img src="https://i.ibb.co/gLJPNsH1/4a073255-74df-48aa-b2ac-696ca38e9961.png" alt="Brand 4" />
-    </div>
-  </section>
+<!-- Logos -->
+<section class="logos">
+  <h2>Trusted Brands</h2>
+  <div class="logo-container">
+    <img src="https://i.ibb.co/V03LpVLy/1779456.webp" alt="Brand 1" />
+    <img src="https://i.ibb.co/LzzTFkr8/48201-1647770612.jpg" alt="Brand 2" />
+    <img src="https://i.ibb.co/5WgWxtVj/beer-20993-3d927-hd.png" alt="Brand 3" />
+    <img src="https://i.ibb.co/gLJPNsH1/4a073255-74df-48aa-b2ac-696ca38e9961.png" alt="Brand 4" />
+  </div>
+</section>
 
-  <!-- Footer Section -->
-  <footer>
-    <div class="footer-content">
-      <p>© 2025 Aaila Pasa. All rights reserved.</p>
-      <div class="socials">
-        <a href="#">Facebook</a>
-        <a href="#">Instagram</a>
-        <a href="#">Twitter</a>
-      </div>
+<!-- Footer -->
+<footer>
+  <div class="footer-content">
+    <p>© 2025 Aaila Pasa. All rights reserved.</p>
+    <div class="socials">
+      <a href="#">Facebook</a>
+      <a href="#">Instagram</a>
+      <a href="#">Twitter</a>
     </div>
-  </footer>
+  </div>
+</footer>
+
+<script>
+  function toggleMobileMenu() {
+    const nav = document.getElementById("mobileNav");
+    nav.style.display = nav.style.display === "flex" ? "none" : "flex";
+  }
+</script>
 </body>
 </html>
