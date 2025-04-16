@@ -431,9 +431,9 @@
   document.getElementById('checkoutModal').style.display = 'flex';
 }
 
-  function updateCart() {
-  const cartItems = document.getElementById('cartItems');
-  const cartTotal = document.getElementById('cartTotal');
+function updateCart() {
+  const cartItems = document.getElementById('checkout-cart-items');
+  const cartTotal = document.getElementById('checkout-total');
   cartItems.innerHTML = '';
 
   let total = 0;
@@ -442,17 +442,17 @@
     const itemTotal = item.price * item.quantity;
     total += itemTotal;
 
-    const itemDiv = document.createElement('div');
-    itemDiv.classList.add('cart-item');
-    itemDiv.innerHTML = `
-      <span>${item.name} x${item.quantity} - Rs.${itemTotal.toLocaleString()}</span>
+    const itemLi = document.createElement('li');
+    itemLi.innerHTML = `
+      ${item.name} x${item.quantity} - Rs.${itemTotal.toLocaleString()}
       <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button>
     `;
-    cartItems.appendChild(itemDiv);
+    cartItems.appendChild(itemLi);
   });
 
-  cartTotal.textContent = `Rs.${total.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+  cartTotal.innerHTML = `<strong>Total: Rs.${total.toLocaleString(undefined, {minimumFractionDigits: 2})}</strong>`;
 }
+
 function removeFromCart(index) {
   cart.splice(index, 1);
   updateCart();
