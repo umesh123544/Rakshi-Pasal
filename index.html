@@ -418,62 +418,60 @@
 </footer>
 
 <script>
-  let cart = [];
+  <script>
+  const cart = [];
+  const cartContainer = document.getElementById('cart');
+  const cartItemsList = document.getElementById('cart-items');
+  const cartTotal = document.getElementById('cart-total');
 
-  function goToCheckout(button) {
-  const product = button.closest('.product');
-  const name = product.querySelector('h3').textContent;
-  const priceText = product.querySelector('.price').textContent.replace('Rs.', '').replace(/,/g, '').trim();
-  const price = parseFloat(priceText);
-  const quantity = parseInt(product.querySelector('.quantity-selector').value);
-  cart.push({ name, price, quantity });
-  updateCart();
-  document.getElementById('checkoutModal').style.display = 'flex';
-}
+  document.querySelectorAll('.product').forEach((productCard) => {
+    const button = productCard.querySelector('button');
+    const quantitySelector = productCard.querySelector('.quantity-selector');
 
-function updateCart() {
-  const cartItems = document.getElementById('checkout-cart-items');
-  const cartTotal = document.getElementById('checkout-total');
-  cartItems.innerHTML = '';
+    button.addEventListener('click', () => {
+      const name = productCard.querySelector('h3').innerText;
+      const priceText = productCard.querySelector('.price').innerText;
+      const price = parseInt(priceText.replace('Rs.', '').replace(',', ''));
+      const quantity = parseInt(quantitySelector.value);
 
-  let total = 0;
+      const existingItem = cart.find(item => item.name === name);
+      if (existingItem) {
+        existingItem.quantity += quantity;
+      } else {
+        cart.push({ name, price, quantity });
+      }
 
-  cart.forEach((item, index) => {
-    const itemTotal = item.price * item.quantity;
-    total += itemTotal;
-
-    const itemLi = document.createElement('li');
-    itemLi.innerHTML = `
-      ${item.name} x${item.quantity} - Rs.${itemTotal.toLocaleString()}
-      <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button>
-    `;
-    cartItems.appendChild(itemLi);
+      updateCart();
+      cartContainer.style.display = 'block';
+    });
   });
 
-  cartTotal.innerHTML = `<strong>Total: Rs.${total.toLocaleString(undefined, {minimumFractionDigits: 2})}</strong>`;
-}
+  function updateCart() {
+    cartItemsList.innerHTML = '';
+    let total = 0;
 
-function removeFromCart(index) {
-  cart.splice(index, 1);
-  updateCart();
-}
+    cart.forEach((item, index) => {
+      const itemTotal = item.price * item.quantity;
+      total += itemTotal;
 
-  function closeModal() {
-    document.getElementById('checkoutModal').style.display = 'none';
+      const li = document.createElement('li');
+      li.innerHTML = `
+        ${item.name} x${item.quantity} - Rs.${itemTotal.toLocaleString()}
+        <button onclick="removeFromCart(${index})" style="margin-left:10px;color:red;border:none;background:none;cursor:pointer;">❌</button>
+      `;
+      cartItemsList.appendChild(li);
+    });
+
+    cartTotal.textContent = `Total: Rs.${total.toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
   }
 
-  document.getElementById('order-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    alert('Order placed successfully!');
-    cart = [];
+  function removeFromCart(index) {
+    cart.splice(index, 1);
     updateCart();
-    closeModal();
-  });
-
-  function toggleMobileMenu() {
-    document.getElementById('mobileNav').classList.toggle('open');
+    if (cart.length === 0) {
+      cartContainer.style.display = 'none';
+    }
   }
 </script>
-
 </body>
 </html>
