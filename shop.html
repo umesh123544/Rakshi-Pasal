@@ -352,8 +352,8 @@
     </div>
   </div>
 </footer>
-
-<script>
+  
+  <script>
   const cart = [];
   const cartContainer = document.getElementById('cart');
   const cartItemsList = document.getElementById('cart-items');
@@ -367,13 +367,13 @@
       const name = productCard.querySelector('h3').innerText;
       const priceText = productCard.querySelector('.price').innerText;
       const price = parseInt(priceText.replace('Rs.', '').replace(',', ''));
-      const qty = parseInt(quantitySelector.value);
+      const quantity = parseInt(quantitySelector.value);
 
       const existingItem = cart.find(item => item.name === name);
       if (existingItem) {
-        existingItem.qty += qty;
+        existingItem.quantity += quantity;
       } else {
-        cart.push({ name, price, qty });
+        cart.push({ name, price, quantity });
       }
 
       updateCart();
@@ -386,16 +386,18 @@
     let total = 0;
 
     cart.forEach((item, index) => {
+      const itemTotal = item.price * item.quantity;
+      total += itemTotal;
+
       const li = document.createElement('li');
       li.innerHTML = `
-        ${item.name} (x${item.qty}) - Rs.${item.price * item.qty}
+        ${item.name} x${item.quantity} - Rs.${itemTotal.toLocaleString()}
         <button onclick="removeFromCart(${index})" style="margin-left:10px;color:red;border:none;background:none;cursor:pointer;">❌</button>
       `;
       cartItemsList.appendChild(li);
-      total += item.price * item.qty;
     });
 
-    cartTotal.textContent = `Total: Rs.${total}`;
+    cartTotal.textContent = `Total: Rs.${total.toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
   }
 
   function removeFromCart(index) {
@@ -406,6 +408,5 @@
     }
   }
 </script>
-
 </body>
 </html>
