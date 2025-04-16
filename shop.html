@@ -486,6 +486,51 @@
   function closeModal() {
     checkoutModal.style.display = 'none';
   }
+  let selectedItem = null;
+
+document.querySelectorAll('.product').forEach((productCard) => {
+  const button = productCard.querySelector('button');
+  const quantitySelector = productCard.querySelector('.quantity-selector');
+
+  button.addEventListener('click', () => {
+    const name = productCard.querySelector('h3').innerText;
+    const priceText = productCard.querySelector('.price').innerText;
+    const price = parseInt(priceText.replace('Rs.', '').replace(',', ''));
+    const quantity = parseInt(quantitySelector.value);
+
+    selectedItem = { name, price, quantity };
+    document.getElementById('checkout-item').innerText = `${name} x${quantity} - Rs.${(price * quantity).toLocaleString()}`;
+    document.getElementById('checkout-popup').style.display = 'block';
+  });
+});
+
+function closePopup() {
+  selectedItem = null;
+  document.getElementById('checkout-popup').style.display = 'none';
+}
+
+function removeItem() {
+  selectedItem = null;
+  closePopup();
+  alert("Item removed from checkout.");
+}
+
+document.getElementById('checkout-form').addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  if (!selectedItem) return;
+
+  const name = this.fullname.value;
+  const email = this.email.value;
+  const number = this.number.value;
+  const location = this.location.value;
+
+  alert(`Order placed!\n\nProduct: ${selectedItem.name}\nQty: ${selectedItem.quantity}\nPrice: Rs.${(selectedItem.price * selectedItem.quantity).toLocaleString()}\n\nName: ${name}\nEmail: ${email}\nPhone: ${number}\nLocation: ${location}`);
+
+  this.reset();
+  selectedItem = null;
+  closePopup();
+});
 </script>
 
 </body>
