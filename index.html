@@ -5,9 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Aaila Pasa</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       font-family: Arial, sans-serif;
@@ -15,11 +13,9 @@
       padding: 0;
     }
 
-    /* Header */
     header {
       position: fixed;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
       width: 100%;
       z-index: 1000;
       display: flex;
@@ -44,13 +40,10 @@
       animation: fadeInDown 1s ease-in-out;
     }
 
-    .logo span {
-      color: #ff6600;
-    }
+    .logo span { color: #ff6600; }
 
     .header-logo img {
-      height: 110px;
-      width: 110px;
+      height: 110px; width: 110px;
       object-fit: contain;
       border-radius: 8px;
       animation: zoomIn 1.2s ease-in-out;
@@ -87,13 +80,10 @@
       flex-direction: column;
       width: 100%;
       background-color: #111;
-      transition: max-height 0.3s ease;
       overflow: hidden;
     }
 
-    .mobile-nav.open {
-      display: flex;
-    }
+    .mobile-nav.open { display: flex; }
 
     .mobile-nav a {
       padding: 10px;
@@ -128,7 +118,6 @@
       cursor: pointer;
     }
 
-    /* Banner */
     .banner {
       background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
       url('https://i.ibb.co/jkXh8T0W/istockphoto-1129343516-612x612.jpg') no-repeat center center/cover;
@@ -144,11 +133,7 @@
       animation: fadeIn 1.5s ease;
     }
 
-    .banner h1 {
-      font-size: 34px;
-      margin: 0;
-      font-weight: bold;
-    }
+    .banner h1 { font-size: 34px; margin: 0; font-weight: bold; }
 
     .banner p {
       font-size: 18px;
@@ -167,11 +152,8 @@
       transition: background 0.3s ease;
     }
 
-    .banner .btn:hover {
-      background: #e65c00;
-    }
+    .banner .btn:hover { background: #e65c00; }
 
-    /* Products */
     .products {
       padding: 40px 20px;
       text-align: center;
@@ -197,9 +179,7 @@
       height: auto;
     }
 
-    .product h3 {
-      margin: 10px 0 5px;
-    }
+    .product h3 { margin: 10px 0 5px; }
 
     .product .price {
       font-weight: bold;
@@ -215,16 +195,13 @@
       cursor: pointer;
     }
 
-    /* Logos */
     .logos {
       text-align: center;
       padding: 40px 20px;
       background-color: #f2f2f2;
     }
 
-    .logos h2 {
-      margin-bottom: 20px;
-    }
+    .logos h2 { margin-bottom: 20px; }
 
     .logo-container {
       display: flex;
@@ -238,7 +215,6 @@
       height: auto;
     }
 
-    /* Footer */
     footer {
       background: #222;
       color: white;
@@ -252,17 +228,35 @@
       text-decoration: none;
     }
 
-    /* Checkout */
-    #checkout {
-      padding: 40px 20px;
-      background-color: #f9f9f9;
-      text-align: center;
+    /* Checkout Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0; top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
     }
 
-    .cart-summary, .checkout-form {
+    .modal-content {
+      background-color: white;
+      padding: 20px;
       max-width: 500px;
-      margin: 0 auto 30px;
-      text-align: left;
+      width: 90%;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .modal-content h3 {
+      margin-top: 0;
+    }
+
+    .cart-summary ul {
+      padding: 0;
+      list-style: none;
     }
 
     .checkout-form input,
@@ -281,118 +275,21 @@
       border: none;
       border-radius: 4px;
       cursor: pointer;
+      margin-right: 10px;
     }
 
-    /* Animations */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    .cancel-btn {
+      background: #999;
     }
 
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes zoomIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
 
-    @keyframes zoomIn {
-      from { opacity: 0; transform: scale(0.8); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    /* Responsive */
     @media (max-width: 768px) {
-      header {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 10px;
-      }
-
-      .header-container {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      nav ul {
-        display: none;
-      }
-
-      .hamburger {
-        display: flex;
-      }
-
-      .mobile-nav {
-        display: none;
-      }
-
-      .mobile-nav.open {
-        display: flex;
-      }
-
-      .nav__right {
-        width: 100%;
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .search-bar {
-        width: 100%;
-        justify-content: space-between;
-      }
-
-      .banner {
-        justify-content: center;
-        padding: 40px 10px;
-        height: auto;
-        text-align: center;
-      }
-
-      .banner h1 {
-        font-size: 24px;
-      }
-
-      .banner p {
-        font-size: 16px;
-      }
-
-      .header-logo img {
-        height: 90px;
-        width: 90px;
-      }
-    }
-
-    @media (min-width: 769px) and (max-width: 1024px) {
-      .header-logo img {
-        height: 100px;
-        width: 100px;
-      }
-
-      .banner {
-        margin-top: 110px;
-        height: 750px;
-      }
-
-      .banner h1 {
-        font-size: 28px;
-      }
-
-      .products h2,
-      .logos h2 {
-        font-size: 32px;
-        font-weight: 700;
-        color: #ff6600;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-bottom: 20px;
-      }
-
-      .banner p {
-        font-size: 16px;
-      }
-
-      .nav__right {
-        justify-content: center;
-      }
+      header { flex-direction: column; align-items: stretch; gap: 10px; }
+      nav ul { display: none; }
+      .hamburger { display: flex; }
     }
   </style>
 </head>
@@ -406,21 +303,19 @@
       <p class="brand-subtitle">Ghar Ghar Mai Delivery</p>
     </div>
     <div class="hamburger" onclick="toggleMobileMenu()">
-      <div></div>
-      <div></div>
-      <div></div>
+      <div></div><div></div><div></div>
     </div>
   </div>
   <nav>
     <ul class="desktop-nav">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="shop.html">Shop</a></li>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Shop</a></li>
       <li><a href="#">About</a></li>
       <li><a href="#">Contact</a></li>
     </ul>
     <div class="mobile-nav" id="mobileNav">
-      <a href="index.html">Home</a>
-      <a href="shop.html">Shop</a>
+      <a href="#">Home</a>
+      <a href="#">Shop</a>
       <a href="#">About</a>
       <a href="#">Contact</a>
     </div>
@@ -451,7 +346,6 @@
       <label>Qty:
         <select class="quantity-selector">
           <option value="1">1</option><option value="2">2</option><option value="3">3</option>
-          <option value="4">4</option><option value="5">5</option>
         </select>
       </label>
       <button onclick="goToCheckout(this)">Add to Cart</button>
@@ -463,19 +357,6 @@
       <label>Qty:
         <select class="quantity-selector">
           <option value="1">1</option><option value="2">2</option><option value="3">3</option>
-          <option value="4">4</option><option value="5">5</option>
-        </select>
-      </label>
-      <button onclick="goToCheckout(this)">Add to Cart</button>
-    </div>
-    <div class="product">
-      <img src="https://i.ibb.co/1tyX15GM/Diuoxl5-W0-AE75-Ae.jpg" alt="Vodka" />
-      <h3>Crystal Vodka</h3>
-      <p class="price">Rs.2,275</p>
-      <label>Qty:
-        <select class="quantity-selector">
-          <option value="1">1</option><option value="2">2</option><option value="3">3</option>
-          <option value="4">4</option><option value="5">5</option>
         </select>
       </label>
       <button onclick="goToCheckout(this)">Add to Cart</button>
@@ -494,27 +375,26 @@
   </div>
 </section>
 
-<!-- Checkout Section -->
-<section id="checkout">
-  <h2>Checkout</h2>
-
-  <div class="cart-summary">
+<!-- Checkout Modal -->
+<div class="modal" id="checkoutModal">
+  <div class="modal-content">
     <h3>Your Cart</h3>
-    <ul id="checkout-cart-items"></ul>
-    <p id="checkout-total"><strong>Total: Rs.0</strong></p>
+    <div class="cart-summary">
+      <ul id="checkout-cart-items"></ul>
+      <p id="checkout-total"><strong>Total: Rs.0</strong></p>
+    </div>
+    <div class="checkout-form">
+      <form id="order-form">
+        <input type="text" placeholder="Full Name" required />
+        <input type="email" placeholder="Email Address" required />
+        <input type="tel" placeholder="Phone Number" required />
+        <textarea placeholder="Address" rows="4" required></textarea>
+        <button type="submit">Place Order</button>
+        <button type="button" class="cancel-btn" onclick="closeModal()">Cancel</button>
+      </form>
+    </div>
   </div>
-
-  <div class="checkout-form">
-    <h3>Billing Details</h3>
-    <form id="order-form">
-      <input type="text" placeholder="Full Name" required />
-      <input type="email" placeholder="Email Address" required />
-      <input type="tel" placeholder="Phone Number" required />
-      <textarea placeholder="Address" rows="4" required></textarea>
-      <button type="submit">Place Order</button>
-    </form>
-  </div>
-</section>
+</div>
 
 <!-- Footer -->
 <footer>
@@ -531,29 +411,30 @@
 
   function goToCheckout(button) {
     const product = button.closest('.product');
-    const productName = product.querySelector('h3').textContent;
-    const productPrice = parseFloat(product.querySelector('.price').textContent.replace('Rs.', '').trim());
+    const name = product.querySelector('h3').textContent;
+    const price = parseFloat(product.querySelector('.price').textContent.replace('Rs.', '').trim());
     const quantity = parseInt(product.querySelector('.quantity-selector').value);
-
-    const item = { name: productName, price: productPrice, quantity };
-    cart.push(item);
+    cart.push({ name, price, quantity });
     updateCart();
+    document.getElementById('checkoutModal').style.display = 'flex';
   }
 
   function updateCart() {
-    const cartItemsContainer = document.getElementById('checkout-cart-items');
+    const itemsContainer = document.getElementById('checkout-cart-items');
     const totalContainer = document.getElementById('checkout-total');
-    cartItemsContainer.innerHTML = '';
+    itemsContainer.innerHTML = '';
     let total = 0;
-
     cart.forEach(item => {
       const li = document.createElement('li');
       li.textContent = `${item.name} x${item.quantity} - Rs.${(item.price * item.quantity).toFixed(2)}`;
-      cartItemsContainer.appendChild(li);
+      itemsContainer.appendChild(li);
       total += item.price * item.quantity;
     });
+    totalContainer.innerHTML = `<strong>Total: Rs.${total.toFixed(2)}</strong>`;
+  }
 
-    totalContainer.textContent = `Total: Rs.${total.toFixed(2)}`;
+  function closeModal() {
+    document.getElementById('checkoutModal').style.display = 'none';
   }
 
   document.getElementById('order-form').addEventListener('submit', function(e) {
@@ -561,6 +442,7 @@
     alert('Order placed successfully!');
     cart = [];
     updateCart();
+    closeModal();
   });
 
   function toggleMobileMenu() {
