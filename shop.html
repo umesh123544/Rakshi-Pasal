@@ -1,3 +1,4 @@
+<!-- Place this entire block as your new HTML file -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -217,6 +218,37 @@
     #checkout-btn:hover {
       background: #e25500;
     }
+
+    /* Checkout modal styles */
+    #checkout-modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      z-index: 1002;
+      max-width: 400px;
+      width: 90%;
+    }
+
+    #checkout-modal input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    #checkout-modal button {
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -245,8 +277,7 @@
   <h1>Our Full Collection</h1>
   <p>Browse all our premium spirits, wines, and liquors.</p>
 </section>
-
-<section class="products">
+section class="products">
   <h2>All Products</h2>
   <div class="product-list">
     <!-- Product 1 -->
@@ -262,7 +293,6 @@
       </label>
       <button>Add to Cart</button>
     </div>
-
     <!-- Product 2 -->
     <div class="product">
       <img src="https://i.ibb.co/NdBR861Z/old-durbar-750ml-73537.jpg" alt="Whiskey" />
@@ -276,7 +306,6 @@
       </label>
       <button>Add to Cart</button>
     </div>
-
     <!-- Product 3 -->
     <div class="product">
       <img src="https://i.ibb.co/1tyX15GM/Diuoxl5-W0-AE75-Ae.jpg" alt="Vodka" />
@@ -290,7 +319,6 @@
       </label>
       <button>Add to Cart</button>
     </div>
-
     <!-- Product 4 -->
     <div class="product">
       <img src="https://i.ibb.co/Fs7WthS/japanese-sake.jpg" alt="Sake" />
@@ -304,7 +332,6 @@
       </label>
       <button>Add to Cart</button>
     </div>
-
     <!-- Product 5 -->
     <div class="product">
       <img src="https://i.ibb.co/3hBNpz3/gin.jpg" alt="Gin" />
@@ -318,7 +345,6 @@
       </label>
       <button>Add to Cart</button>
     </div>
-
     <!-- Product 6 -->
     <div class="product">
       <img src="https://i.ibb.co/J2Zvd5w/tequila.jpg" alt="Tequila" />
@@ -342,6 +368,21 @@
   <button id="checkout-btn">Checkout</button>
 </div>
 
+<!-- Checkout Modal -->
+<div id="checkout-modal">
+  <h2>Checkout Form</h2>
+  <form id="checkout-form">
+    <input type="text" placeholder="Full Name" name="name" required>
+    <input type="email" placeholder="Email" name="email" required>
+    <input type="text" placeholder="Phone Number" name="number" required>
+    <input type="text" placeholder="Location" name="location" required>
+    <div style="display:flex; justify-content:space-between; gap:10px;">
+      <button type="submit" style="flex:1; background:#28a745; color:#fff;">Place Order</button>
+      <button type="button" onclick="closeModal()" style="flex:1; background:#dc3545; color:#fff;">Cancel</button>
+    </div>
+  </form>
+</div>
+
 <footer>
   <div class="footer-content">
     <p>© 2025 Aaila Pasa. All rights reserved.</p>
@@ -353,7 +394,7 @@
   </div>
 </footer>
   
-  <script>
+<script>
   const cart = [];
   const cartContainer = document.getElementById('cart');
   const cartItemsList = document.getElementById('cart-items');
@@ -407,6 +448,43 @@
       cartContainer.style.display = 'none';
     }
   }
+
+  const checkoutBtn = document.getElementById('checkout-btn');
+  const checkoutModal = document.getElementById('checkout-modal');
+  const checkoutForm = document.getElementById('checkout-form');
+
+  checkoutBtn.addEventListener('click', () => {
+    if (cart.length === 0) {
+      alert("Your cart is empty!");
+      return;
+    }
+    checkoutModal.style.display = 'block';
+  });
+
+  checkoutForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const formData = new FormData(checkoutForm);
+    const customerData = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      number: formData.get('number'),
+      location: formData.get('location'),
+    };
+
+    console.log("Order placed by:", customerData);
+    console.log("Order items:", cart);
+
+    alert("Thank you! Your order has been placed.");
+    cart.length = 0;
+    updateCart();
+    checkoutForm.reset();
+    checkoutModal.style.display = 'none';
+  });
+
+  function closeModal() {
+    checkoutModal.style.display = 'none';
+  }
 </script>
+
 </body>
 </html>
