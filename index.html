@@ -252,6 +252,37 @@
       text-decoration: none;
     }
 
+    /* Checkout */
+    #checkout {
+      padding: 40px 20px;
+      background-color: #f9f9f9;
+      text-align: center;
+    }
+
+    .cart-summary, .checkout-form {
+      max-width: 500px;
+      margin: 0 auto 30px;
+      text-align: left;
+    }
+
+    .checkout-form input,
+    .checkout-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .checkout-form button {
+      background: #ff6600;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
     /* Animations */
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
@@ -335,22 +366,26 @@
         height: 100px;
         width: 100px;
       }
+
       .banner {
-        margin-top: 110px; 
+        margin-top: 110px;
         height: 750px;
       }
+
       .banner h1 {
         font-size: 28px;
       }
-       .products h2,
-       .logos h2 {
-  font-size: 32px;
-  font-weight: 700;
-  color: #ff6600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 20px;
-}
+
+      .products h2,
+      .logos h2 {
+        font-size: 32px;
+        font-weight: 700;
+        color: #ff6600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 20px;
+      }
+
       .banner p {
         font-size: 16px;
       }
@@ -359,7 +394,6 @@
         justify-content: center;
       }
     }
-
   </style>
 </head>
 <body>
@@ -420,7 +454,7 @@
           <option value="4">4</option><option value="5">5</option>
         </select>
       </label>
-      <button onclick="goToCheckout()">Add to Cart</button>
+      <button onclick="goToCheckout(this)">Add to Cart</button>
     </div>
     <div class="product">
       <img src="https://i.ibb.co/NdBR861Z/old-durbar-750ml-73537.jpg" alt="Whiskey" />
@@ -432,7 +466,7 @@
           <option value="4">4</option><option value="5">5</option>
         </select>
       </label>
-      <button onclick="goToCheckout()">Add to Cart</button>
+      <button onclick="goToCheckout(this)">Add to Cart</button>
     </div>
     <div class="product">
       <img src="https://i.ibb.co/1tyX15GM/Diuoxl5-W0-AE75-Ae.jpg" alt="Vodka" />
@@ -444,7 +478,7 @@
           <option value="4">4</option><option value="5">5</option>
         </select>
       </label>
-      <button onclick="goToCheckout()">Add to Cart</button>
+      <button onclick="goToCheckout(this)">Add to Cart</button>
     </div>
   </div>
 </section>
@@ -459,13 +493,28 @@
     <img src="https://i.ibb.co/39Q3n0jp/image-1679898083042.webp" alt="Brand 4" />
   </div>
 </section>
-  
+
 <!-- Checkout Section -->
-<section id="checkout" style="padding: 40px 20px; background-color: #f9f9f9; text-align: center;">
+<section id="checkout">
   <h2>Checkout</h2>
-  <p>Your cart items will appear here. (Coming soon...)</p>
+
+  <div class="cart-summary">
+    <h3>Your Cart</h3>
+    <ul id="checkout-cart-items"></ul>
+    <p id="checkout-total"><strong>Total: Rs.0</strong></p>
+  </div>
+
+  <div class="checkout-form">
+    <h3>Billing Details</h3>
+    <form id="order-form">
+      <input type="text" placeholder="Full Name" required />
+      <input type="email" placeholder="Email Address" required />
+      <textarea placeholder="Shipping Address" required></textarea>
+      <button type="submit">Place Order</button>
+    </form>
+  </div>
 </section>
-  
+
 <!-- Footer -->
 <footer>
   <div class="footer-content">
@@ -483,10 +532,58 @@
     const nav = document.getElementById("mobileNav");
     nav.classList.toggle("open");
   }
-  function goToCheckout() {
-  const checkoutSection = document.getElementById("checkout");
-  checkoutSection.scrollIntoView({ behavior: "smooth" });
+
+  function goToCheckout(button) {
+    const product = button.closest('.product');
+    const name = product.querySelector('h3').textContent;
+    const price = parseInt(product.querySelector('.price').textContent.replace(/[^\d]/g, ''));
+    const qty = parseInt(product.querySelector('.quantity-selector').value);
+
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    const existing = cart.find(item => item.name === name);
+    if (existing) {
+      existing.qty += qty;
+    } else {
+      cart.push({ name, price, qty });
+    }
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    const checkoutSection = document.getElementById("checkout");
+    checkoutSection.scrollIntoView({ behavior: "smooth" });
+
+    renderCheckoutCart();
   }
+
+  function renderCheckoutCart() {
+    const cartData = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartList = document.getElementById('checkout-cart-items');
+    const totalElement = document.getElementById('checkout-total');
+
+    cartList.innerHTML = '';
+    let total = 0;
+
+    cartData.forEach(item => {
+      const li = document.createElement('li');
+      li.textContent = `${item.name} (x${item.qty}) - Rs.${item.qty * item.price}`;
+      cartList.appendChild(li);
+      total += item.qty * item.price;
+    });
+
+    totalElement.innerHTML = `<strong>Total: Rs.${total}</strong>`;
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderCheckoutCart();
+    document.getElementById('order-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      alert('Order placed successfully!');
+      localStorage.removeItem('cart');
+      renderCheckoutCart();
+      this.reset();
+    });
+  });
 </script>
 </body>
 </html>
