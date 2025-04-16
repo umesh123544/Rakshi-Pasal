@@ -277,7 +277,18 @@
       cursor: pointer;
       margin-right: 10px;
     }
-
+.remove-btn {
+  margin-left: 10px;
+  padding: 2px 6px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.remove-btn:hover {
+  background-color: #e60000;
+}
     .cancel-btn {
       background: #999;
     }
@@ -421,18 +432,31 @@
 }
 
   function updateCart() {
-    const itemsContainer = document.getElementById('checkout-cart-items');
-    const totalContainer = document.getElementById('checkout-total');
-    itemsContainer.innerHTML = '';
-    let total = 0;
-    cart.forEach(item => {
-      const li = document.createElement('li');
-      li.textContent = `${item.name} x${item.quantity} - Rs.${(item.price * item.quantity).toFixed(2)}`;
-      itemsContainer.appendChild(li);
-      total += item.price * item.quantity;
-    });
-    totalContainer.innerHTML = `<strong>Total: Rs.${total.toFixed(2)}</strong>`;
-  }
+  const cartItems = document.getElementById('cartItems');
+  const cartTotal = document.getElementById('cartTotal');
+  cartItems.innerHTML = '';
+
+  let total = 0;
+
+  cart.forEach((item, index) => {
+    const itemTotal = item.price * item.quantity;
+    total += itemTotal;
+
+    const itemDiv = document.createElement('div');
+    itemDiv.classList.add('cart-item');
+    itemDiv.innerHTML = `
+      <span>${item.name} x${item.quantity} - Rs.${itemTotal.toLocaleString()}</span>
+      <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button>
+    `;
+    cartItems.appendChild(itemDiv);
+  });
+
+  cartTotal.textContent = `Rs.${total.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+}
+function removeFromCart(index) {
+  cart.splice(index, 1);
+  updateCart();
+}
 
   function closeModal() {
     document.getElementById('checkoutModal').style.display = 'none';
