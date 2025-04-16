@@ -410,14 +410,15 @@
   let cart = [];
 
   function goToCheckout(button) {
-    const product = button.closest('.product');
-    const name = product.querySelector('h3').textContent;
-    const price = parseFloat(product.querySelector('.price').textContent.replace('Rs.', '').trim());
-    const quantity = parseInt(product.querySelector('.quantity-selector').value);
-    cart.push({ name, price, quantity });
-    updateCart();
-    document.getElementById('checkoutModal').style.display = 'flex';
-  }
+  const product = button.closest('.product');
+  const name = product.querySelector('h3').textContent;
+  const priceText = product.querySelector('.price').textContent.replace('Rs.', '').replace(/,/g, '').trim();
+  const price = parseFloat(priceText);
+  const quantity = parseInt(product.querySelector('.quantity-selector').value);
+  cart.push({ name, price, quantity });
+  updateCart();
+  document.getElementById('checkoutModal').style.display = 'flex';
+}
 
   function updateCart() {
     const itemsContainer = document.getElementById('checkout-cart-items');
