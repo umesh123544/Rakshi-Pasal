@@ -509,7 +509,8 @@
     <form id="order-form">
       <input type="text" placeholder="Full Name" required />
       <input type="email" placeholder="Email Address" required />
-      <textarea placeholder="Shipping Address" required></textarea>
+      <input type="tel" placeholder="Phone Number" required />
+      <textarea placeholder="Address" rows="4" required></textarea>
       <button type="submit">Place Order</button>
     </form>
   </div>
@@ -517,73 +518,55 @@
 
 <!-- Footer -->
 <footer>
-  <div class="footer-content">
-    <p>© 2025 Aaila Pasa. All rights reserved.</p>
-    <div class="socials">
-      <a href="#">Facebook</a>
-      <a href="#">Instagram</a>
-      <a href="#">Twitter</a>
-    </div>
+  <div class="socials">
+    <a href="#">Facebook</a>
+    <a href="#">Instagram</a>
+    <a href="#">Twitter</a>
   </div>
+  <p>&copy; 2025 Aaila Pasa. All rights reserved.</p>
 </footer>
 
 <script>
-  function toggleMobileMenu() {
-    const nav = document.getElementById("mobileNav");
-    nav.classList.toggle("open");
-  }
+  let cart = [];
 
   function goToCheckout(button) {
     const product = button.closest('.product');
-    const name = product.querySelector('h3').textContent;
-    const price = parseInt(product.querySelector('.price').textContent.replace(/[^\d]/g, ''));
-    const qty = parseInt(product.querySelector('.quantity-selector').value);
+    const productName = product.querySelector('h3').textContent;
+    const productPrice = parseFloat(product.querySelector('.price').textContent.replace('Rs.', '').trim());
+    const quantity = parseInt(product.querySelector('.quantity-selector').value);
 
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-    const existing = cart.find(item => item.name === name);
-    if (existing) {
-      existing.qty += qty;
-    } else {
-      cart.push({ name, price, qty });
-    }
-
-    localStorage.setItem('cart', JSON.stringify(cart));
-
-    const checkoutSection = document.getElementById("checkout");
-    checkoutSection.scrollIntoView({ behavior: "smooth" });
-
-    renderCheckoutCart();
+    const item = { name: productName, price: productPrice, quantity };
+    cart.push(item);
+    updateCart();
   }
 
-  function renderCheckoutCart() {
-    const cartData = JSON.parse(localStorage.getItem('cart')) || [];
-    const cartList = document.getElementById('checkout-cart-items');
-    const totalElement = document.getElementById('checkout-total');
-
-    cartList.innerHTML = '';
+  function updateCart() {
+    const cartItemsContainer = document.getElementById('checkout-cart-items');
+    const totalContainer = document.getElementById('checkout-total');
+    cartItemsContainer.innerHTML = '';
     let total = 0;
 
-    cartData.forEach(item => {
+    cart.forEach(item => {
       const li = document.createElement('li');
-      li.textContent = `${item.name} (x${item.qty}) - Rs.${item.qty * item.price}`;
-      cartList.appendChild(li);
-      total += item.qty * item.price;
+      li.textContent = `${item.name} x${item.quantity} - Rs.${(item.price * item.quantity).toFixed(2)}`;
+      cartItemsContainer.appendChild(li);
+      total += item.price * item.quantity;
     });
 
-    totalElement.innerHTML = `<strong>Total: Rs.${total}</strong>`;
+    totalContainer.textContent = `Total: Rs.${total.toFixed(2)}`;
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    renderCheckoutCart();
-    document.getElementById('order-form').addEventListener('submit', function (e) {
-      e.preventDefault();
-      alert('Order placed successfully!');
-      localStorage.removeItem('cart');
-      renderCheckoutCart();
-      this.reset();
-    });
+  document.getElementById('order-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    alert('Order placed successfully!');
+    cart = [];
+    updateCart();
   });
+
+  function toggleMobileMenu() {
+    document.getElementById('mobileNav').classList.toggle('open');
+  }
 </script>
+
 </body>
 </html>
