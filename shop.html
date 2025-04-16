@@ -367,17 +367,20 @@
   <button id="checkout-btn">Checkout</button>
 </div>
 
-<!-- Checkout Modal -->
-<div id="checkout-modal">
-  <h2>Checkout Form</h2>
+<!-- Checkout Form Popup -->
+<div id="checkout-popup" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:#fff; padding:25px; width:90%; max-width:400px; box-shadow:0 0 20px rgba(0,0,0,0.3); border-radius:10px; z-index:1002;">
+  <h2 style="margin-top:0;">Checkout</h2>
+  <div id="checkout-item" style="margin-bottom:15px; font-weight: bold;"></div>
   <form id="checkout-form">
-    <input type="text" placeholder="Full Name" name="name" required>
-    <input type="email" placeholder="Email" name="email" required>
-    <input type="text" placeholder="Phone Number" name="number" required>
-    <input type="text" placeholder="Location" name="location" required>
-    <div style="display:flex; justify-content:space-between; gap:10px;">
-      <button type="submit" style="flex:1; background:#28a745; color:#fff;">Place Order</button>
-      <button type="button" onclick="closeModal()" style="flex:1; background:#dc3545; color:#fff;">Cancel</button>
+    <input type="text" name="fullname" placeholder="Full Name" required style="width:100%; padding:10px; margin-bottom:10px;">
+    <input type="email" name="email" placeholder="Email" required style="width:100%; padding:10px; margin-bottom:10px;">
+    <input type="text" name="number" placeholder="Phone Number" required style="width:100%; padding:10px; margin-bottom:10px;">
+    <input type="text" name="location" placeholder="Location" required style="width:100%; padding:10px; margin-bottom:20px;">
+    
+    <div style="display:flex; justify-content:space-between;">
+      <button type="submit" style="background:#28a745; color:white; border:none; padding:10px 20px; border-radius:5px;">Place Order</button>
+      <button type="button" onclick="removeItem()" style="background:#dc3545; color:white; border:none; padding:10px 20px; border-radius:5px;">Remove</button>
+      <button type="button" onclick="closePopup()" style="background:gray; color:white; border:none; padding:10px 20px; border-radius:5px;">Cancel</button>
     </div>
   </form>
 </div>
