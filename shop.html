@@ -156,7 +156,7 @@
       text-align: center;
       padding: 6rem 1rem;
       margin-bottom: 3rem;
-      margin-top: 210px;
+      margin-top: 260px;
     }
     
     .banner h1 {
@@ -544,7 +544,7 @@
         <a href="shop.html">Shop</a>
         <a href="#">About</a>
         <a href="#">Contact</a>
-            </div>
+      </div>
     </nav>
     <div class="nav__right">
       <div class="search-bar">
@@ -665,8 +665,7 @@
         </label>
         <button>Add to Cart</button>
       </div>
-    </div>
-    
+      
       <!-- Product 1 -->
       <div class="product">
         <img src="https://i.ibb.co/RGcqhj8Q/bundles.webp" alt="Red Wine" />
@@ -800,10 +799,12 @@
     </div>
   </footer>
 
+  <!-- EmailJS and Main JavaScript -->
   <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
   <script>
+    // Initialize EmailJS
     (function() {
-      emailjs.init("jRW7p7WnU3zCVXhn3");
+      emailjs.init("jRW7p7WnU3zCVXhn3"); // Your EmailJS user ID
     })();
 
     // Mobile menu toggle
@@ -812,6 +813,7 @@
       mobileNav.classList.toggle("open");
     }
 
+    // Cart functionality
     let cart = [];
 
     function updateCheckoutPopup() {
@@ -855,6 +857,7 @@
       updateCheckoutPopup();
     }
 
+    // Add to cart functionality
     document.querySelectorAll('.product').forEach(productCard => {
       const button = productCard.querySelector('button');
       const quantitySelector = productCard.querySelector('.quantity-selector');
@@ -876,6 +879,7 @@
       });
     });
 
+    // Form submission with EmailJS
     document.getElementById('checkout-form').addEventListener('submit', function(e) {
       e.preventDefault();
 
@@ -885,37 +889,35 @@
       }
 
       const formData = new FormData(this);
-      const customerData = {
-        name: formData.get('fullname'),
-        email: formData.get('email'),
-        number: formData.get('number'),
+      const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      
+      // Prepare email parameters
+      const templateParams = {
+        from_name: formData.get('fullname'),
+        from_email: formData.get('email'),
+        phone_number: formData.get('number'),
         location: formData.get('location'),
-        items: [...cart]
+        items: cart.map(item => 
+          `${item.name} (Qty: ${item.quantity}) - Rs.${item.price * item.quantity}`
+        ).join('<br>'),
+        total: `Rs.${total.toLocaleString()}`
       };
 
-      // Calculate total
-      const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      console.log("Sending email with params:", templateParams);
 
-      emailjs.send("service_wb7evwg", "template_rrqt08w", {
-        name: customerData.name,
-        email: customerData.email,
-        number: customerData.number,
-        location: customerData.location,
-        items: cart.map(item => `${item.name} x${item.quantity} = Rs.${item.price * item.quantity}`).join('\n'),
-        total: `Rs.${total.toLocaleString()}`
-      }).then(
-        response => {
+      // Send email using EmailJS
+      emailjs.send('service_wb7evwg', 'template_rrqt08w', templateParams)
+        .then(function(response) {
+          console.log('SUCCESS!', response.status, response.text);
           alert("Order placed successfully! We'll contact you soon.");
           cart = [];
           updateCheckoutPopup();
           closePopup();
           this.reset();
-        },
-        error => {
-          alert("Failed to send order. Please try again or contact us directly.");
-          console.error("EmailJS error:", error);
-        }
-      );
+        }, function(error) {
+          console.error('FAILED...', error);
+          alert("Failed to send order. Please try again or contact us directly. Error: " + error.text);
+        });
     });
 
     // Close popup when clicking outside of it
