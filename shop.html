@@ -73,14 +73,9 @@
       color: #e63946;
     }
 
-    .nav__right {
-      display: flex;
-      align-items: center;
-    }
-
     .search-bar {
       display: flex;
-      margin-left: auto;
+      margin-left: 1.5rem;
     }
 
     .search-bar input {
@@ -96,6 +91,11 @@
       border: none;
       border-radius: 0 4px 4px 0;
       cursor: pointer;
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
     }
 
     .banner {
@@ -306,7 +306,7 @@
         display: block;
       }
 
-      nav ul {
+      .nav-container {
         display: none;
         flex-direction: column;
         width: 100%;
@@ -317,8 +317,13 @@
         padding: 1rem;
       }
 
-      nav ul.active {
+      .nav-container.active {
         display: flex;
+      }
+
+      nav ul {
+        flex-direction: column;
+        width: 100%;
       }
 
       nav ul li {
@@ -329,19 +334,6 @@
         margin: 1rem 0 0 0;
         width: 100%;
       }
-
-      .header-container {
-        flex-wrap: wrap;
-      }
-
-      .nav__right {
-        width: 100%;
-        display: none;
-      }
-
-      nav ul.active + .nav__right {
-        display: flex;
-      }
     }
   </style>
 </head>
@@ -351,15 +343,15 @@
       <div class="logo">Aaila <span>Pasa</span></div>
       <button class="hamburger" onclick="toggleMenu()">☰</button>
     </div>
-    <nav id="nav-menu">
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="shop.html">Shop</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-    </nav>
-    <div class="nav__right">
+    <div class="nav-container" id="nav-container">
+      <nav id="nav-menu">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="shop.html">Shop</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
       <div class="search-bar">
         <input type="text" placeholder="Search..." />
         <button><i class="fas fa-search"></i></button>
@@ -619,16 +611,7 @@
     });
 
     function toggleMenu() {
-      const navMenu = document.getElementById('nav-menu');
-      navMenu.classList.toggle('active');
-      
-      // Toggle the search bar visibility on mobile
-      const navRight = document.querySelector('.nav__right');
-      if (navMenu.classList.contains('active')) {
-        navRight.style.display = 'flex';
-      } else {
-        navRight.style.display = 'none';
-      }
+      document.getElementById('nav-container').classList.toggle('active');
     }
 
     // Close popup when clicking outside of it
