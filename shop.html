@@ -247,15 +247,53 @@
       background: gray;
       color: white;
     }
+    .menu-toggle {
+  font-size: 28px;
+  cursor: pointer;
+  display: none;
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-wrapper {
+    display: none;
+    width: 100%;
+  }
+
+  .nav-wrapper ul {
+    flex-direction: column;
+    background: #111;
+    padding: 10px;
+  }
+
+  .nav-wrapper ul li {
+    margin: 10px 0;
+  }
+
+  .nav-wrapper.active {
+    display: block;
+  }
+
+  .nav__right {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    padding: 10px 0;
+  }
+}
   </style>
 </head>
 <body>
-
 <header>
   <div class="header-container">
     <div class="logo">Aaila <span>Pasa</span></div>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
   </div>
-  <nav>
+  <nav class="nav-wrapper" id="nav-menu">
     <ul>
       <li><a href="index.html">Home</a></li>
       <li><a href="shop.html">Shop</a></li>
@@ -270,7 +308,6 @@
     </div>
   </div>
 </header>
-
 <section class="banner">
   <h1>Our Full Collection</h1>
   <p>Browse all our premium spirits, wines, and liquors.</p>
@@ -506,6 +543,11 @@ emailjs.send("service_wb7evwg", "template_rrqt08w", {
     cart = [];
     closePopup();
   });
+  <script>
+  function toggleMenu() {
+    document.getElementById('nav-menu').classList.toggle('active');
+  }
+</script>
 </script>
 </body>
 </html>
