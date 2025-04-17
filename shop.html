@@ -4,108 +4,126 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Shop | Aaila Pasa</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTTXREp2U6Y1jczJz9K+K0VbL5zlvO7HK+GK5V2PyzgEX4lphI6QbR6wOcdC9R1c7VPsYc5Kxw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
-    * {
+    /* HEADER STYLES - COPIED FROM INDEX.HTML */
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-
-    body {
-      background-color: #f5f5f5;
-      color: #333;
-      line-height: 1.6;
-    }
-
     header {
-      background-color: #1a1a1a;
-      color: white;
-      padding: 1rem;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .header-top {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      z-index: 1000;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .logo {
-      font-size: 1.8rem;
-      font-weight: bold;
-    }
-
-    .logo span {
-      color: #e63946;
-    }
-
-    .hamburger {
-      background: none;
-      border: none;
+      padding: 15px 20px;
+      background: #111;
       color: white;
-      font-size: 1.5rem;
-      cursor: pointer;
-      display: none;
+      flex-wrap: wrap;
     }
-
-    .header-bottom {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding-top: 1rem;
-    }
-
-    .search-bar {
+    .header-container {
       display: flex;
-      width: 300px;
-    }
-
-    .search-bar input {
-      padding: 0.5rem;
-      border: none;
-      border-radius: 4px 0 0 4px;
+      justify-content: space-between;
+      align-items: center;
       width: 100%;
     }
-
-    .search-bar button {
-      padding: 0.5rem;
-      background-color: #e63946;
+    .logo {
+      font-size: 32px;
+      font-weight: 700;
+      animation: fadeInDown 1s ease-in-out;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
       color: white;
-      border: none;
-      border-radius: 0 4px 4px 0;
-      cursor: pointer;
     }
-
-    nav {
-      margin-left: auto;
+    .logo span {
+      color: #ff6600;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
     }
-
+    .brand-subtitle {
+      font-size: 12px;
+      margin: 0;
+      color: #ccc;
+    }
+    .header-logo img {
+      height: 110px; width: 110px;
+      object-fit: contain;
+      border-radius: 8px;
+      animation: zoomIn 1.2s ease-in-out;
+    }
     nav ul {
-      display: flex;
       list-style: none;
+      display: flex;
+      gap: 20px;
+      padding: 0;
+      margin: 0;
     }
-
-    nav ul li {
-      margin-left: 1.5rem;
-    }
-
     nav ul li a {
       color: white;
       text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s;
+    }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      margin: 4px 0;
+    }
+    .mobile-nav {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      background-color: #111;
+      overflow: hidden;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      padding: 10px;
+      border-top: 1px solid #333;
+      color: white;
+      text-decoration: none;
+    }
+    .nav__right {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .search-bar {
+      display: flex;
+      gap: 5px;
+      margin-top: 10px;
+      height: 32px;
+      align-items: center;
+    }
+    .search-bar input {
+      padding: 5px;
+      flex: 1;
+    }
+    .search-bar button {
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes zoomIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+    @media (max-width: 768px) {
+      header { flex-direction: column; align-items: stretch; gap: 10px; }
+      nav ul { display: none; }
+      .hamburger { display: flex; }
     }
 
-    nav ul li a:hover {
-      color: #e63946;
-    }
-
+    /* ALL ORIGINAL SHOP.HTML STYLES REMAIN BELOW */
     .banner {
       background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
                   url('https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
@@ -115,6 +133,7 @@
       text-align: center;
       padding: 4rem 1rem;
       margin-bottom: 2rem;
+      margin-top: 140px;
     }
 
     .banner h1 {
@@ -308,64 +327,43 @@
     .socials a:hover {
       color: #e63946;
     }
-
-    @media (max-width: 768px) {
-      .hamburger {
-        display: block;
-      }
-
-      nav ul {
-        display: none;
-        flex-direction: column;
-        position: absolute;
-        right: 1rem;
-        top: 80px;
-        background-color: #1a1a1a;
-        padding: 1rem;
-        border-radius: 4px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-      }
-
-      nav ul.active {
-        display: flex;
-      }
-
-      nav ul li {
-        margin: 0.5rem 0;
-      }
-
-      .header-bottom {
-        padding-top: 1rem;
-      }
-
-      .search-bar {
-        width: 100%;
-      }
-    }
   </style>
 </head>
 <body>
+  <!-- HEADER COPIED FROM INDEX.HTML -->
   <header>
-    <div class="header-top">
-      <div class="logo">Aaila <span>Pasa</span></div>
-      <button class="hamburger" onclick="toggleMenu()">☰</button>
+    <div class="header-container">
+      <div class="logo">
+        Aaila <span>Pasa</span>
+        <p class="brand-subtitle">Ghar Ghar Mai Delivery</p>
+      </div>
+      <div class="hamburger" onclick="toggleMobileMenu()">
+        <div></div><div></div><div></div>
+      </div>
     </div>
-    <div class="header-bottom">
+    <nav>
+      <ul class="desktop-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      <div class="mobile-nav" id="mobileNav">
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+      </div>
+    </nav>
+    <div class="nav__right">
       <div class="search-bar">
         <input type="text" placeholder="Search..." />
-        <button><i class="fas fa-search"></i></button>
+        <button>🔍</button>
       </div>
-      <nav id="nav-menu">
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="shop.html">Shop</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
-      </nav>
     </div>
   </header>
 
+  <!-- ALL ORIGINAL SHOP.HTML CONTENT REMAINS BELOW -->
   <section class="banner">
     <h1>Our Full Collection</h1>
     <p>Browse all our premium spirits, wines, and liquors.</p>
@@ -511,6 +509,12 @@
       emailjs.init("jRW7p7WnU3zCVXhn3");
     })();
 
+    // Mobile menu toggle function from index.html
+    function toggleMobileMenu() {
+      const mobileNav = document.getElementById("mobileNav");
+      mobileNav.classList.toggle("open");
+    }
+
     let cart = [];
 
     function updateCheckoutPopup() {
@@ -616,11 +620,6 @@
         }
       );
     });
-
-    function toggleMenu() {
-      const navMenu = document.querySelector('nav ul');
-      navMenu.classList.toggle('active');
-    }
 
     // Close popup when clicking outside of it
     document.addEventListener('click', function(event) {
