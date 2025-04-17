@@ -397,18 +397,22 @@
   }
 
   // Add product to cart and open modal
-  function goToCheckout(button) {
-    const product = button.closest(".product");
-    const productName = product.querySelector("h3").textContent;
-    const productPrice = product.querySelector(".price").textContent.replace('Rs.', '').trim();
-    const productQuantity = product.querySelector(".quantity-selector").value;
+  
+function goToCheckout(button) {
+  const product = button.closest(".product");
+  const productName = product.querySelector("h3").textContent;
+  const productPrice = parseFloat(product.querySelector(".price").textContent.replace(/[^\d.]/g, ''));
+  const productQuantity = parseInt(product.querySelector(".quantity-selector").value);
 
-    // Update cart
-    cart.push({ name: productName, price: parseFloat(productPrice), quantity: parseInt(productQuantity) });
+  cart.push({
+    name: productName,
+    price: productPrice,
+    quantity: productQuantity
+  });
 
-    updateCartPreview();
-    openModal();
-  }
+  updateCartPreview();
+  openModal();
+}
 
   // Update cart preview
   function updateCartPreview() {
