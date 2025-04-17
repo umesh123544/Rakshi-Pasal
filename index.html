@@ -205,6 +205,26 @@
       width: 80px;
       height: auto;
     }
+    .products h2,
+.logos h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #222;
+  position: relative;
+  display: inline-block;
+  margin-bottom: 30px;
+}
+.products h2::after,
+.logos h2::after {
+  content: "";
+  position: absolute;
+  width: 50%;
+  height: 4px;
+  background: linear-gradient(to right, #ff6600, #ff9933);
+  bottom: -8px;
+  left: 0;
+  border-radius: 2px;
+}
     footer {
       background: #222;
       color: white;
