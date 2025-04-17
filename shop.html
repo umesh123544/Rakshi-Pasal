@@ -284,16 +284,50 @@
     width: 100%;
     padding: 10px 0;
   }
+  .hamburger {
+  display: none;
+  font-size: 26px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+
+  nav#nav-menu {
+    display: none;
+    width: 100%;
+  }
+
+  nav#nav-menu.active {
+    display: block;
+    background: #111;
+  }
+
+  nav#nav-menu ul {
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 0;
+  }
+
+  .nav__right {
+    display: none;
+  }
 }
   </style>
 </head>
 <body>
 <header>
+<header>
   <div class="header-container">
     <div class="logo">Aaila <span>Pasa</span></div>
-    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
   </div>
-  <nav class="nav-wrapper" id="nav-menu">
+  <nav id="nav-menu">
     <ul>
       <li><a href="index.html">Home</a></li>
       <li><a href="shop.html">Shop</a></li>
@@ -548,6 +582,11 @@ emailjs.send("service_wb7evwg", "template_rrqt08w", {
     document.getElementById('nav-menu').classList.toggle('active');
   }
 </script>
+  <script>
+  function toggleMenu() {
+    document.getElementById('nav-menu').classList.toggle('active');
+  }
+  </script>
 </script>
 </body>
 </html>
