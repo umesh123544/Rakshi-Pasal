@@ -33,6 +33,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
     .logo {
@@ -53,13 +55,20 @@
       display: none;
     }
 
+    .nav-container {
+      display: flex;
+      align-items: center;
+      flex-grow: 1;
+    }
+
     nav ul {
       display: flex;
       list-style: none;
+      margin-left: 2rem;
     }
 
     nav ul li {
-      margin-left: 1.5rem;
+      margin-right: 1.5rem;
     }
 
     nav ul li a {
@@ -75,7 +84,7 @@
 
     .search-bar {
       display: flex;
-      margin-left: 1.5rem;
+      margin-left: auto;
     }
 
     .search-bar input {
@@ -91,11 +100,6 @@
       border: none;
       border-radius: 0 4px 4px 0;
       cursor: pointer;
-    }
-
-    .nav-container {
-      display: flex;
-      align-items: center;
     }
 
     .banner {
@@ -306,9 +310,10 @@
         display: block;
       }
 
-      .nav-container {
+      nav ul {
         display: none;
         flex-direction: column;
+        margin-left: 0;
         width: 100%;
         background-color: #1a1a1a;
         position: absolute;
@@ -317,13 +322,8 @@
         padding: 1rem;
       }
 
-      .nav-container.active {
+      nav ul.active {
         display: flex;
-      }
-
-      nav ul {
-        flex-direction: column;
-        width: 100%;
       }
 
       nav ul li {
@@ -331,8 +331,18 @@
       }
 
       .search-bar {
-        margin: 1rem 0 0 0;
+        margin-left: 0;
+        margin-top: 1rem;
         width: 100%;
+      }
+
+      .nav-container {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .header-container {
+        flex-wrap: wrap;
       }
     }
   </style>
@@ -341,20 +351,20 @@
   <header>
     <div class="header-container">
       <div class="logo">Aaila <span>Pasa</span></div>
-      <button class="hamburger" onclick="toggleMenu()">☰</button>
-    </div>
-    <div class="nav-container" id="nav-container">
-      <nav id="nav-menu">
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="shop.html">Shop</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
-      </nav>
-      <div class="search-bar">
-        <input type="text" placeholder="Search..." />
-        <button><i class="fas fa-search"></i></button>
+      <div class="nav-container">
+        <nav id="nav-menu">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </nav>
+        <div class="search-bar">
+          <input type="text" placeholder="Search..." />
+          <button><i class="fas fa-search"></i></button>
+        </div>
+        <button class="hamburger" onclick="toggleMenu()">☰</button>
       </div>
     </div>
   </header>
@@ -611,7 +621,8 @@
     });
 
     function toggleMenu() {
-      document.getElementById('nav-container').classList.toggle('active');
+      const navMenu = document.querySelector('nav ul');
+      navMenu.classList.toggle('active');
     }
 
     // Close popup when clicking outside of it
