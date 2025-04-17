@@ -475,6 +475,20 @@
       location: formData.get('location'),
       items: [...cart] // Copy of cart items
     };
+// Send email using EmailJS
+emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+  name: customerData.name,
+  email: customerData.email,
+  number: customerData.number,
+  location: customerData.location,
+  items: cart.map(item => `${item.name} x${item.quantity} = Rs.${item.price * item.quantity}`).join('\n')
+})
+.then(function(response) {
+   alert("Order placed! Email sent successfully.");
+}, function(error) {
+   alert("Order placed, but failed to send email.");
+   console.error("EmailJS error:", error);
+});
 
     // Here you would typically send this data to your server
     console.log("Order Details:", customerData);
