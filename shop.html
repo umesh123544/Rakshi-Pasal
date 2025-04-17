@@ -397,10 +397,7 @@
 </footer>
   
 <script>
-  const cart = [];
-  const cartContainer = document.getElementById('cart');
-  const cartItemsList = document.getElementById('cart-items');
-  const cartTotal = document.getElementById('cart-total');
+  let selectedItem = null;
 
   document.querySelectorAll('.product').forEach((productCard) => {
     const button = productCard.querySelector('button');
@@ -412,180 +409,48 @@
       const price = parseInt(priceText.replace('Rs.', '').replace(',', ''));
       const quantity = parseInt(quantitySelector.value);
 
-      const existingItem = cart.find(item => item.name === name);
-      if (existingItem) {
-        existingItem.quantity += quantity;
-      } else {
-        cart.push({ name, price, quantity });
-      }
-
-      updateCart();
-      cartContainer.style.display = 'block';
+      selectedItem = { name, price, quantity };
+      document.getElementById('checkout-item').innerText =
+        `${name} x${quantity} - Rs.${(price * quantity).toLocaleString()}`;
+      document.getElementById('checkout-popup').style.display = 'block';
     });
   });
 
-  function updateCart() {
-    cartItemsList.innerHTML = '';
-    let total = 0;
-
-    cart.forEach((item, index) => {
-      const itemTotal = item.price * item.quantity;
-      total += itemTotal;
-
-      const li = document.createElement('li');
-      li.innerHTML = `
-        ${item.name} x${item.quantity} - Rs.${itemTotal.toLocaleString()}
-        <button onclick="removeFromCart(${index})" style="margin-left:10px;color:red;border:none;background:none;cursor:pointer;">❌</button>
-      `;
-      cartItemsList.appendChild(li);
-    });
-
-    cartTotal.textContent = `Total: Rs.${total.toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
+  function closePopup() {
+    selectedItem = null;
+    document.getElementById('checkout-popup').style.display = 'none';
   }
 
-  function removeFromCart(index) {
-    cart.splice(index, 1);
-    updateCart();
-    if (cart.length === 0) {
-      cartContainer.style.display = 'none';
-    }
+  function removeItem() {
+    selectedItem = null;
+    document.getElementById('checkout-item').innerText = '';
+    alert("Item removed.");
+    closePopup();
   }
 
-  const checkoutBtn = document.getElementById('checkout-btn');
-  const checkoutModal = document.getElementById('checkout-modal');
-  const checkoutForm = document.getElementById('checkout-form');
-
-  checkoutBtn.addEventListener('click', () => {
-    if (cart.length === 0) {
-      alert("Your cart is empty!");
+  document.getElementById('checkout-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!selectedItem) {
+      alert("No item selected.");
       return;
     }
-    checkoutModal.style.display = 'block';
-  });
 
-  checkoutForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const formData = new FormData(checkoutForm);
+    const formData = new FormData(this);
     const customerData = {
-      name: formData.get('name'),
+      name: formData.get('fullname'),
       email: formData.get('email'),
       number: formData.get('number'),
       location: formData.get('location'),
     };
 
-    console.log("Order placed by:", customerData);
-    console.log("Order items:", cart);
+    console.log("Customer Details:", customerData);
+    console.log("Ordered Item:", selectedItem);
 
-    alert("Thank you! Your order has been placed.");
-    cart.length = 0;
-    updateCart();
-    checkoutForm.reset();
-    checkoutModal.style.display = 'none';
-  });
-
-  function closeModal() {
-    checkoutModal.style.display = 'none';
-  }
-  let selectedItem = null;
-
-document.querySelectorAll('.product').forEach((productCard) => {
-  const button = productCard.querySelector('button');
-  const quantitySelector = productCard.querySelector('.quantity-selector');
-
-  button.addEventListener('click', () => {
-    const name = productCard.querySelector('h3').innerText;
-    const priceText = productCard.querySelector('.price').innerText;
-    const price = parseInt(priceText.replace('Rs.', '').replace(',', ''));
-    const quantity = parseInt(quantitySelector.value);
-
-    selectedItem = { name, price, quantity };
-    document.getElementById('checkout-item').innerText = `${name} x${quantity} - Rs.${(price * quantity).toLocaleString()}`;
-    document.getElementById('checkout-popup').style.display = 'block';
-  });
-});
-
-function closePopup() {
-  selectedItem = null;
-  document.getElementById('checkout-popup').style.display = 'none';
-}
-<!-- Your existing HTML content -->
-
-<!-- Checkout Form Popup HTML here -->
-
-<!-- Your other content -->
-
-<!-- Place the script just before the closing </body> tag -->
-<script>
-let cart = [];
-
-function updateCheckoutPopup() {
-  const container = document.getElementById('checkout-items');
-  container.innerHTML = '';
-
-  let total = 0;
-
-  cart.forEach((item, index) => {
-    const itemTotal = item.price * item.quantity;
-    total += itemTotal;
-
-    const div = document.createElement('div');
-    div.innerHTML = `
-      ${item.name} x${item.quantity} - Rs.${itemTotal.toLocaleString()}
-      <button onclick="removeCartItem(${index})" style="margin-left:10px; background:#dc3545; color:white; border:none; padding:2px 8px; border-radius:3px;">Remove</button>
-    `;
-    container.appendChild(div);
-  });
-
-  document.getElementById('checkout-total').innerText = `Total: Rs.${total.toLocaleString()}`;
-}
-
-function removeCartItem(index) {
-  cart.splice(index, 1);
-  updateCheckoutPopup();
-
-  if (cart.length === 0) {
+    alert("Order placed successfully!");
+    this.reset();
+    selectedItem = null;
     closePopup();
-  }
-}
-
-function closePopup() {
-  document.getElementById('checkout-popup').style.display = 'none';
-}
-
-document.querySelectorAll('.product').forEach((productCard) => {
-  const button = productCard.querySelector('button');
-  const quantitySelector = productCard.querySelector('.quantity-selector');
-
-  button.addEventListener('click', () => {
-    const name = productCard.querySelector('h3').innerText;
-    const price = parseInt(productCard.querySelector('.price').innerText.replace('Rs.', '').replace(',', ''));
-    const quantity = parseInt(quantitySelector.value);
-
-    cart.push({ name, price, quantity });
-
-    updateCheckoutPopup();
-    document.getElementById('checkout-popup').style.display = 'block';
   });
-});
-
-document.getElementById('checkout-form').addEventListener('submit', function (e) {
-  e.preventDefault();
-
-  if (cart.length === 0) return alert("No items to order.");
-
-  const name = this.fullname.value;
-  const email = this.email.value;
-  const number = this.number.value;
-  const location = this.location.value;
-
-  let summary = cart.map(item => `${item.name} x${item.quantity} - Rs.${item.price * item.quantity}`).join('\n');
-
-  alert(`Order placed!\n\n${summary}\n\nName: ${name}\nEmail: ${email}\nPhone: ${number}\nLocation: ${location}`);
-
-  this.reset();
-  cart = [];
-  closePopup();
-});
 </script>
 </body>
 </html>
