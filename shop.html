@@ -6,7 +6,343 @@
   <title>Shop | Aaila Pasa</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTTXREp2U6Y1jczJz9K+K0VbL5zlvO7HK+GK5V2PyzgEX4lphI6QbR6wOcdC9R1c7VPsYc5Kxw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
-    /* ... [Same CSS from your original code, unchanged] ... */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f5f5f5;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: #1a1a1a;
+      color: white;
+      padding: 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+
+    .logo span {
+      color: #e63946;
+    }
+
+    .hamburger {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      display: none;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+
+    nav ul li {
+      margin-left: 1.5rem;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #e63946;
+    }
+
+    .nav__right {
+      display: flex;
+      align-items: center;
+    }
+
+    .search-bar {
+      display: flex;
+      margin-left: auto;
+    }
+
+    .search-bar input {
+      padding: 0.5rem;
+      border: none;
+      border-radius: 4px 0 0 4px;
+    }
+
+    .search-bar button {
+      padding: 0.5rem;
+      background-color: #e63946;
+      color: white;
+      border: none;
+      border-radius: 0 4px 4px 0;
+      cursor: pointer;
+    }
+
+    .banner {
+      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                  url('https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      text-align: center;
+      padding: 4rem 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .banner h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .products {
+      padding: 1rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .products h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 2rem;
+      color: #1a1a1a;
+    }
+
+    .product-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .product {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+    }
+
+    .product:hover {
+      transform: translateY(-5px);
+    }
+
+    .product img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .product h3 {
+      padding: 0.5rem 1rem;
+      font-size: 1.2rem;
+    }
+
+    .price {
+      padding: 0 1rem;
+      font-weight: bold;
+      color: #e63946;
+      font-size: 1.1rem;
+    }
+
+    .product label {
+      display: block;
+      padding: 0.5rem 1rem;
+    }
+
+    .quantity-selector {
+      padding: 0.3rem;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+    }
+
+    .product button {
+      display: block;
+      width: calc(100% - 2rem);
+      margin: 1rem;
+      padding: 0.5rem;
+      background-color: #e63946;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .product button:hover {
+      background-color: #c1121f;
+    }
+
+    #checkout-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      width: 90%;
+      max-width: 500px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    #checkout-popup h2 {
+      margin-bottom: 1rem;
+      text-align: center;
+      color: #1a1a1a;
+    }
+
+    #checkout-items {
+      margin-bottom: 1rem;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .checkout-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .remove-btn {
+      background: #e63946;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 0 0.5rem;
+      cursor: pointer;
+    }
+
+    #checkout-total {
+      font-weight: bold;
+      text-align: right;
+      margin: 1rem 0;
+      font-size: 1.2rem;
+    }
+
+    #checkout-form input {
+      display: block;
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    .form-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .form-buttons button {
+      flex: 1;
+      padding: 0.5rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #submit-order {
+      background-color: #e63946;
+      color: white;
+    }
+
+    #cancel-order {
+      background-color: #ddd;
+    }
+
+    footer {
+      background-color: #1a1a1a;
+      color: white;
+      text-align: center;
+      padding: 2rem 1rem;
+      margin-top: 2rem;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .socials {
+      margin-top: 1rem;
+    }
+
+    .socials a {
+      color: white;
+      margin: 0 0.5rem;
+      text-decoration: none;
+    }
+
+    .socials a:hover {
+      color: #e63946;
+    }
+
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+      }
+
+      nav ul {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color: #1a1a1a;
+        position: absolute;
+        left: 0;
+        top: 60px;
+        padding: 1rem;
+      }
+
+      nav ul.active {
+        display: flex;
+      }
+
+      nav ul li {
+        margin: 0.5rem 0;
+      }
+
+      .search-bar {
+        margin: 1rem 0 0 0;
+        width: 100%;
+      }
+
+      .header-container {
+        flex-wrap: wrap;
+      }
+
+      .nav__right {
+        width: 100%;
+        display: none;
+      }
+
+      nav ul.active + .nav__right {
+        display: flex;
+      }
+    }
   </style>
 </head>
 <body>
@@ -39,20 +375,107 @@
   <section class="products">
     <h2>All Products</h2>
     <div class="product-list">
-      <!-- Repeat this block for each product -->
+      <!-- Product 1 -->
       <div class="product">
         <img src="https://i.ibb.co/RGcqhj8Q/bundles.webp" alt="Red Wine" />
         <h3>French Red Wine</h3>
         <p class="price">Rs.2,100</p>
         <label>Qty:
           <select class="quantity-selector">
-            <option value="1">1</option><option value="2">2</option><option value="3">3</option>
-            <option value="4">4</option><option value="5">5</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
           </select>
         </label>
         <button>Add to Cart</button>
       </div>
-      <!-- Add more product divs as needed -->
+      
+      <!-- Product 2 -->
+      <div class="product">
+        <img src="https://i.ibb.co/0jq7Py0/whiskey.jpg" alt="Whiskey" />
+        <h3>Premium Whiskey</h3>
+        <p class="price">Rs.3,500</p>
+        <label>Qty:
+          <select class="quantity-selector">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </label>
+        <button>Add to Cart</button>
+      </div>
+      
+      <!-- Product 3 -->
+      <div class="product">
+        <img src="https://i.ibb.co/6Rg1s4T/vodka.jpg" alt="Vodka" />
+        <h3>Classic Vodka</h3>
+        <p class="price">Rs.1,800</p>
+        <label>Qty:
+          <select class="quantity-selector">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </label>
+        <button>Add to Cart</button>
+      </div>
+      
+      <!-- Product 4 -->
+      <div class="product">
+        <img src="https://i.ibb.co/7yXJQ1G/gin.jpg" alt="Gin" />
+        <h3>London Dry Gin</h3>
+        <p class="price">Rs.2,300</p>
+        <label>Qty:
+          <select class="quantity-selector">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </label>
+        <button>Add to Cart</button>
+      </div>
+      
+      <!-- Product 5 -->
+      <div class="product">
+        <img src="https://i.ibb.co/5Kj9y3Z/tequila.jpg" alt="Tequila" />
+        <h3>Silver Tequila</h3>
+        <p class="price">Rs.2,700</p>
+        <label>Qty:
+          <select class="quantity-selector">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </label>
+        <button>Add to Cart</button>
+      </div>
+      
+      <!-- Product 6 -->
+      <div class="product">
+        <img src="https://i.ibb.co/6bX3xH0/rum.jpg" alt="Rum" />
+        <h3>Aged Dark Rum</h3>
+        <p class="price">Rs.2,400</p>
+        <label>Qty:
+          <select class="quantity-selector">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </label>
+        <button>Add to Cart</button>
+      </div>
     </div>
   </section>
 
@@ -63,7 +486,7 @@
     <form id="checkout-form">
       <input type="text" name="fullname" placeholder="Full Name" required>
       <input type="email" name="email" placeholder="Email" required>
-      <input type="text" name="number" placeholder="Phone Number" required>
+      <input type="tel" name="number" placeholder="Phone Number" required>
       <input type="text" name="location" placeholder="Location" required>
       <div class="form-buttons">
         <button type="submit" id="submit-order">Place Order</button>
@@ -76,9 +499,9 @@
     <div class="footer-content">
       <p>© 2025 Aaila Pasa. All rights reserved.</p>
       <div class="socials">
-        <a href="#">Facebook</a>
-        <a href="#">Instagram</a>
-        <a href="#">Twitter</a>
+        <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
+        <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+        <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
       </div>
     </div>
   </footer>
@@ -95,6 +518,12 @@
       const container = document.getElementById('checkout-items');
       container.innerHTML = '';
       let total = 0;
+
+      if (cart.length === 0) {
+        container.innerHTML = '<p>Your cart is empty</p>';
+        document.getElementById('checkout-total').textContent = `Total: Rs.0`;
+        return;
+      }
 
       cart.forEach((item, index) => {
         const itemTotal = item.price * item.quantity;
@@ -121,6 +550,11 @@
       document.getElementById('checkout-popup').style.display = 'none';
     }
 
+    function openPopup() {
+      document.getElementById('checkout-popup').style.display = 'block';
+      updateCheckoutPopup();
+    }
+
     document.querySelectorAll('.product').forEach(productCard => {
       const button = productCard.querySelector('button');
       const quantitySelector = productCard.querySelector('.quantity-selector');
@@ -138,8 +572,7 @@
           cart.push({ name, price, quantity });
         }
 
-        updateCheckoutPopup();
-        document.getElementById('checkout-popup').style.display = 'block';
+        openPopup();
       });
     });
 
@@ -160,29 +593,51 @@
         items: [...cart]
       };
 
+      // Calculate total
+      const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
       emailjs.send("service_wb7evwg", "template_rrqt08w", {
         name: customerData.name,
         email: customerData.email,
         number: customerData.number,
         location: customerData.location,
-        items: cart.map(item => `${item.name} x${item.quantity} = Rs.${item.price * item.quantity}`).join('\n')
+        items: cart.map(item => `${item.name} x${item.quantity} = Rs.${item.price * item.quantity}`).join('\n'),
+        total: `Rs.${total.toLocaleString()}`
       }).then(
         response => {
-          alert("Order placed! Email sent successfully.");
+          alert("Order placed successfully! We'll contact you soon.");
           cart = [];
           updateCheckoutPopup();
           closePopup();
+          this.reset();
         },
         error => {
-          alert("Order placed, but failed to send email.");
+          alert("Failed to send order. Please try again or contact us directly.");
           console.error("EmailJS error:", error);
         }
       );
     });
 
     function toggleMenu() {
-      document.getElementById('nav-menu').classList.toggle('active');
+      const navMenu = document.getElementById('nav-menu');
+      navMenu.classList.toggle('active');
+      
+      // Toggle the search bar visibility on mobile
+      const navRight = document.querySelector('.nav__right');
+      if (navMenu.classList.contains('active')) {
+        navRight.style.display = 'flex';
+      } else {
+        navRight.style.display = 'none';
+      }
     }
+
+    // Close popup when clicking outside of it
+    document.addEventListener('click', function(event) {
+      const popup = document.getElementById('checkout-popup');
+      if (event.target === popup) {
+        closePopup();
+      }
+    });
   </script>
 </body>
 </html>
