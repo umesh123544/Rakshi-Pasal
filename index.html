@@ -4,10 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Aaila Pasa</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; }
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Poppins', sans-serif;
       margin: 0;
       padding: 0;
     }
@@ -31,11 +33,21 @@
       width: 100%;
     }
     .logo {
-      font-size: 28px;
-      font-weight: bold;
+      font-size: 32px;
+      font-weight: 700;
       animation: fadeInDown 1s ease-in-out;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+      color: white;
     }
-    .logo span { color: #ff6600; }
+    .logo span {
+      color: #ff6600;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+    }
+    .brand-subtitle {
+      font-size: 12px;
+      margin: 0;
+      color: #ccc;
+    }
     .header-logo img {
       height: 110px; width: 110px;
       object-fit: contain;
@@ -128,9 +140,12 @@
       text-decoration: none;
       margin-top: 20px;
       border-radius: 6px;
-      transition: background 0.3s ease;
+      transition: background 0.3s ease, transform 0.3s ease;
     }
-    .banner .btn:hover { background: #e65c00; }
+    .banner .btn:hover {
+      background: #e65c00;
+      transform: translateY(-2px);
+    }
     .products {
       padding: 40px 20px;
       text-align: center;
@@ -294,6 +309,9 @@
     </div>
   </div>
 </header>
+
+<!-- Your remaining sections stay unchanged (Banner, Products, Logos, Modal, Footer, Script) -->
+
 <!-- Banner -->
 <section class="banner">
   <h1>Welcome to Aaila Pasa</h1>
