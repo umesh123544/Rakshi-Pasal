@@ -5,19 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Shop | Aaila Pasa</title>
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTTXREp2U6Y1jczJz9K+K0VbL5zlvO7HK+GK5V2PyzgEX4lphI6QbR6wOcdC9R1c7VPsYc5Kxw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
-    /* HEADER STYLES - COPIED FROM INDEX.HTML */
-    * { box-sizing: border-box; }
-    body {
-      font-family: 'Poppins', sans-serif;
+    * { 
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #333;
+      line-height: 1.6;
+      background-color: #f5f5f5;
+    }
+
+    /* Header Styles */
     header {
       position: fixed;
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
       width: 100%;
       z-index: 1000;
       display: flex;
@@ -28,12 +36,14 @@
       color: white;
       flex-wrap: wrap;
     }
+    
     .header-container {
       display: flex;
       justify-content: space-between;
       align-items: center;
       width: 100%;
     }
+    
     .logo {
       font-size: 32px;
       font-weight: 700;
@@ -41,21 +51,18 @@
       text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
       color: white;
     }
+    
     .logo span {
       color: #ff6600;
       text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
     }
+    
     .brand-subtitle {
       font-size: 12px;
       margin: 0;
       color: #ccc;
     }
-    .header-logo img {
-      height: 110px; width: 110px;
-      object-fit: contain;
-      border-radius: 8px;
-      animation: zoomIn 1.2s ease-in-out;
-    }
+    
     nav ul {
       list-style: none;
       display: flex;
@@ -63,21 +70,31 @@
       padding: 0;
       margin: 0;
     }
+    
     nav ul li a {
       color: white;
       text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
     }
+    
+    nav ul li a:hover {
+      color: #ff6600;
+    }
+    
     .hamburger {
       display: none;
       flex-direction: column;
       cursor: pointer;
     }
+    
     .hamburger div {
       width: 25px;
       height: 3px;
       background-color: white;
       margin: 4px 0;
     }
+    
     .mobile-nav {
       display: none;
       flex-direction: column;
@@ -85,13 +102,18 @@
       background-color: #111;
       overflow: hidden;
     }
-    .mobile-nav.open { display: flex; }
+    
+    .mobile-nav.open {
+      display: flex;
+    }
+    
     .mobile-nav a {
       padding: 10px;
       border-top: 1px solid #333;
       color: white;
       text-decoration: none;
     }
+    
     .nav__right {
       display: flex;
       gap: 15px;
@@ -99,6 +121,7 @@
       flex-wrap: wrap;
       margin-top: 10px;
     }
+    
     .search-bar {
       display: flex;
       gap: 5px;
@@ -106,132 +129,204 @@
       height: 32px;
       align-items: center;
     }
+    
     .search-bar input {
       padding: 5px;
       flex: 1;
+      border: none;
+      border-radius: 4px;
     }
+    
     .search-bar button {
       padding: 5px 10px;
       cursor: pointer;
-    }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes zoomIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
-    @media (max-width: 768px) {
-      header { flex-direction: column; align-items: stretch; gap: 10px; }
-      nav ul { display: none; }
-      .hamburger { display: flex; }
-    }
-
-    /* PRODUCT IMAGE AND BUTTON STYLES */
-    .product img {
-      width: 100%;
-      height: 250px; /* Increased height for better display */
-      object-fit: contain; /* Changed to contain to fit entire image */
-      background: #f5f5f5; /* Added background for transparent images */
-      padding: 10px; /* Added padding around images */
-    }
-    
-    .product button {
-      background-color: #ff6600 !important; /* Orange color */
+      background: #ff6600;
       color: white;
       border: none;
-      transition: all 0.3s ease;
-    }
-    
-    .product button:hover {
-      background-color: #e65c00 !important; /* Darker orange on hover */
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-radius: 4px;
     }
 
-    /* ALL ORIGINAL SHOP.HTML STYLES REMAIN BELOW */
+    /* Banner Styles */
     .banner {
       background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
-                  url('https://i.ibb.co/mrGv2Jxy/jaeger.jpg');
+                  url('https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
       background-size: cover;
       background-position: center;
       color: white;
       text-align: center;
-      padding: 4rem 1rem;
-      margin-bottom: 2rem;
+      padding: 6rem 1rem;
+      margin-bottom: 3rem;
       margin-top: 140px;
     }
-
+    
     .banner h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+      letter-spacing: 1px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+    
+    .banner p {
+      font-size: 1.3rem;
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+      line-height: 1.6;
+      font-weight: 400;
     }
 
+    /* Products Section */
     .products {
-      padding: 1rem;
+      padding: 2rem 1rem;
       max-width: 1200px;
       margin: 0 auto;
     }
-
+    
     .products h2 {
       text-align: center;
-      margin-bottom: 2rem;
-      font-size: 2rem;
-      color: #1a1a1a;
+      margin-bottom: 3rem;
+      font-size: 2.2rem;
+      color: #222;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      position: relative;
+      padding-bottom: 15px;
     }
-
+    
+    .products h2::after {
+      content: '';
+      position: absolute;
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(to right, #ff6600, #ff9933);
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+    
     .product-list {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 2rem;
     }
-
+    
     .product {
       background: white;
-      border-radius: 8px;
+      border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
       display: flex;
       flex-direction: column;
     }
-
+    
     .product:hover {
-      transform: translateY(-5px);
+      transform: translateY(-10px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
     }
-
+    
+    .product img {
+      width: 100%;
+      height: 250px;
+      object-fit: contain;
+      background: #f9f9f9;
+      padding: 15px;
+    }
+    
     .product h3 {
-      padding: 0.5rem 1rem;
-      font-size: 1.2rem;
+      padding: 1rem 1.2rem 0.5rem;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #333;
+      margin: 0;
+      letter-spacing: 0.5px;
+      text-transform: capitalize;
+      position: relative;
+      display: inline-block;
     }
-
+    
+    .product h3::after {
+      content: '';
+      position: absolute;
+      width: 50px;
+      height: 3px;
+      background: #ff6600;
+      bottom: 0;
+      left: 1.2rem;
+      transition: width 0.3s ease;
+    }
+    
+    .product:hover h3::after {
+      width: 80px;
+    }
+    
     .price {
-      padding: 0 1rem;
-      font-weight: bold;
-      color: #e63946;
-      font-size: 1.1rem;
+      padding: 0.5rem 1.2rem;
+      font-weight: 700;
+      color: #ff6600;
+      font-size: 1.4rem;
+      display: block;
     }
-
+    
+    .price::before {
+      content: 'Price: ';
+      font-weight: 500;
+      color: #666;
+      font-size: 0.95rem;
+    }
+    
     .product label {
       display: block;
-      padding: 0.5rem 1rem;
+      padding: 0.8rem 1.2rem 0.3rem;
+      color: #555;
+      font-size: 0.95rem;
+      font-weight: 500;
     }
-
+    
     .quantity-selector {
-      padding: 0.3rem;
-      border-radius: 4px;
+      padding: 0.6rem;
+      border-radius: 6px;
       border: 1px solid #ddd;
+      margin-left: 5px;
+      background: #f9f9f9;
+      transition: all 0.3s ease;
+      font-family: 'Poppins', sans-serif;
     }
-
+    
+    .quantity-selector:focus {
+      outline: none;
+      border-color: #ff6600;
+      box-shadow: 0 0 0 2px rgba(255,102,0,0.2);
+    }
+    
     .product button {
       display: block;
-      width: calc(100% - 2rem);
-      margin: 1rem;
-      padding: 0.7rem;
+      width: calc(100% - 2.4rem);
+      margin: 1.2rem;
+      padding: 0.8rem;
+      background-color: #ff6600;
       color: white;
       border: none;
-      border-radius: 4px;
+      border-radius: 6px;
       cursor: pointer;
       font-weight: 600;
-      margin-top: auto; /* Pushes button to bottom */
+      font-size: 1rem;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+      margin-top: auto;
+    }
+    
+    .product button:hover {
+      background-color: #e65c00;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
 
+    /* Checkout Popup */
     #checkout-popup {
       display: none;
       position: fixed;
@@ -248,103 +343,185 @@
       max-height: 80vh;
       overflow-y: auto;
     }
-
+    
     #checkout-popup h2 {
       margin-bottom: 1rem;
       text-align: center;
       color: #1a1a1a;
+      font-size: 1.8rem;
     }
-
+    
     #checkout-items {
       margin-bottom: 1rem;
       max-height: 200px;
       overflow-y: auto;
     }
-
+    
     .checkout-item {
       display: flex;
       justify-content: space-between;
-      padding: 0.5rem 0;
+      padding: 0.8rem 0;
       border-bottom: 1px solid #eee;
+      align-items: center;
     }
-
+    
     .remove-btn {
       background: #e63946;
       color: white;
       border: none;
       border-radius: 4px;
-      padding: 0 0.5rem;
+      padding: 0.3rem 0.6rem;
       cursor: pointer;
+      font-size: 0.8rem;
     }
-
+    
     #checkout-total {
       font-weight: bold;
       text-align: right;
-      margin: 1rem 0;
-      font-size: 1.2rem;
+      margin: 1.5rem 0;
+      font-size: 1.3rem;
+      color: #333;
     }
-
+    
     #checkout-form input {
       display: block;
       width: 100%;
-      padding: 0.5rem;
+      padding: 0.8rem;
       margin-bottom: 1rem;
       border: 1px solid #ddd;
       border-radius: 4px;
+      font-family: 'Poppins', sans-serif;
     }
-
+    
     .form-buttons {
       display: flex;
       gap: 1rem;
+      margin-top: 1.5rem;
     }
-
+    
     .form-buttons button {
       flex: 1;
-      padding: 0.5rem;
+      padding: 0.8rem;
       border: none;
       border-radius: 4px;
       cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
     }
-
+    
     #submit-order {
       background-color: #ff6600;
       color: white;
     }
-
+    
     #cancel-order {
       background-color: #ddd;
+      color: #333;
     }
 
+    /* Footer */
     footer {
       background-color: #1a1a1a;
       color: white;
       text-align: center;
-      padding: 2rem 1rem;
-      margin-top: 2rem;
+      padding: 2.5rem 1rem;
+      margin-top: 3rem;
     }
-
+    
     .footer-content {
       max-width: 1200px;
       margin: 0 auto;
     }
-
+    
     .socials {
-      margin-top: 1rem;
+      margin-top: 1.5rem;
     }
-
+    
     .socials a {
       color: white;
-      margin: 0 0.5rem;
+      margin: 0 0.8rem;
       text-decoration: none;
+      font-size: 1.2rem;
+      transition: color 0.3s;
+    }
+    
+    .socials a:hover {
+      color: #ff6600;
     }
 
-    .socials a:hover {
-      color: #e63946;
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes zoomIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+      }
+      
+      nav ul {
+        display: none;
+      }
+      
+      .hamburger {
+        display: flex;
+      }
+      
+      .banner {
+        padding: 4rem 1rem;
+        margin-top: 160px;
+      }
+      
+      .banner h1 {
+        font-size: 2.2rem;
+      }
+      
+      .banner p {
+        font-size: 1.1rem;
+      }
+      
+      .products h2 {
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+      }
+      
+      .product-list {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .banner {
+        margin-top: 180px;
+      }
+      
+      .product-list {
+        grid-template-columns: 1fr;
+      }
+      
+      #checkout-popup {
+        width: 95%;
+        padding: 1.5rem;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- HEADER COPIED FROM INDEX.HTML -->
+  <!-- Header -->
   <header>
     <div class="header-container">
       <div class="logo">
@@ -372,17 +549,126 @@
     <div class="nav__right">
       <div class="search-bar">
         <input type="text" placeholder="Search..." />
-        <button>🔍</button>
+        <button><i class="fas fa-search"></i></button>
       </div>
     </div>
   </header>
 
-  <!-- ALL ORIGINAL SHOP.HTML CONTENT REMAINS BELOW -->
+  <!-- Banner -->
   <section class="banner">
-    <h1>Our Full Collection</h1>
-    <p>Browse all our premium spirits, wines, and liquors.</p>
+    <h1>Our Premium Collection</h1>
+    <p>Discover exquisite spirits curated for the most discerning tastes. Each bottle tells a story of craftsmanship and tradition.</p>
   </section>
 
+  <!-- Featured Products Section -->
+  <section class="products">
+    <h2>Featured Products</h2>
+    <div class="product-list">
+      <!-- Product 1 -->
+      <div class="product">
+        <img src="https://i.ibb.co/RGcqhj8Q/bundles.webp" alt="Red Wine" />
+        <h3>French Red Wine</h3>
+        <p class="price">Rs.2,100</p>
+        <label>Quantity:
+          <select class="quantity-selector">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </label>
+        <button>Add to Cart</button>
+      </div>
+      
+      <!-- Product 2 -->
+      <div class="product">
+        <img src="https://i.ibb.co/0jq7Py0/whiskey.jpg" alt="Whiskey" />
+        <h3>Premium Whiskey</h3>
+        <p class="price">Rs.3,500</p>
+        <label>Quantity:
+          <select class="quantity-selector">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </label>
+        <button>Add to Cart</button>
+      </div>
+      
+      <!-- Product 3 -->
+      <div class="product">
+        <img src="https://i.ibb.co/6Rg1s4T/vodka.jpg" alt="Vodka" />
+        <h3>Classic Vodka</h3>
+        <p class="price">Rs.1,800</p>
+        <label>Quantity:
+          <select class="quantity-selector">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </label>
+        <button>Add to Cart</button>
+      </div>
+      
+      <!-- Product 4 -->
+      <div class="product">
+        <img src="https://i.ibb.co/7yXJQ1G/gin.jpg" alt="Gin" />
+        <h3>London Dry Gin</h3>
+        <p class="price">Rs.2,300</p>
+        <label>Quantity:
+          <select class="quantity-selector">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </label>
+        <button>Add to Cart</button>
+      </div>
+      
+      <!-- Product 5 -->
+      <div class="product">
+        <img src="https://i.ibb.co/5Kj9y3Z/tequila.jpg" alt="Tequila" />
+        <h3>Silver Tequila</h3>
+        <p class="price">Rs.2,700</p>
+        <label>Quantity:
+          <select class="quantity-selector">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </label>
+        <button>Add to Cart</button>
+      </div>
+      
+      <!-- Product 6 -->
+      <div class="product">
+        <img src="https://i.ibb.co/6bX3xH0/rum.jpg" alt="Rum" />
+        <h3>Aged Dark Rum</h3>
+        <p class="price">Rs.2,400</p>
+        <label>Quantity:
+          <select class="quantity-selector">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </label>
+        <button>Add to Cart</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- All Products Section -->
   <section class="products">
     <h2>All Products</h2>
     <div class="product-list">
@@ -490,6 +776,7 @@
     </div>
   </section>
 
+  <!-- Checkout Popup -->
   <div id="checkout-popup">
     <h2>Checkout</h2>
     <div id="checkout-items"></div>
@@ -506,6 +793,7 @@
     </form>
   </div>
 
+  <!-- Footer -->
   <footer>
     <div class="footer-content">
       <p>© 2025 Aaila Pasa. All rights reserved.</p>
@@ -523,7 +811,7 @@
       emailjs.init("jRW7p7WnU3zCVXhn3");
     })();
 
-    // Mobile menu toggle function from index.html
+    // Mobile menu toggle
     function toggleMobileMenu() {
       const mobileNav = document.getElementById("mobileNav");
       mobileNav.classList.toggle("open");
