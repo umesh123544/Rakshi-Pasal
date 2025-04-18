@@ -25,9 +25,9 @@
     header {
       position: fixed;
       top: 0;
-      left: 0;
       width: 100%;
       z-index: 1000;
+      height: auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -156,9 +156,10 @@
       text-align: center;
       padding: 6rem 1rem;
       margin-bottom: 3rem;
-      margin-top: calc(100px + 1rem); /* Header height + optional spacing */
-  }
-    .banner h1 {
+      padding-top: 80px; /* Match this to your header's actual height */
+    }
+    
+      .banner h1 {
       font-size: 3rem;
       margin-bottom: 1.5rem;
       text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
