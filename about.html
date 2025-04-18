@@ -4,15 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Shop | Aaila Pasa</title>
+
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTTXREp2U6Y1jczJz9K+K0VbL5zlvO7HK+GK5V2PyzgEX4lphI6QbR6wOcdC9R1c7VPsYc5Kxw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
   <style>
     * { box-sizing: border-box; }
     body {
       font-family: 'Poppins', sans-serif;
       margin: 0;
       padding: 0;
+      background-color: #fffaf7;
+      color: #333;
     }
     header {
       position: fixed;
@@ -48,12 +52,6 @@
       font-size: 12px;
       margin: 0;
       color: #ccc;
-    }
-    .header-logo img {
-      height: 110px; width: 110px;
-      object-fit: contain;
-      border-radius: 8px;
-      animation: zoomIn 1.2s ease-in-out;
     }
     nav ul {
       list-style: none;
@@ -147,10 +145,30 @@
       background: #e65c00;
       transform: translateY(-2px);
     }
-  </style>
-</head>
-<body>
-   }
+
+    .container {
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+
+    footer {
+      text-align: center;
+      margin: 60px auto 20px;
+      font-size: 0.9em;
+      color: #aaa;
+    }
+
+    h1 {
+      color: #d96c06;
+      font-size: 2.5em;
+      margin-bottom: 0.5em;
+    }
+    h2 {
+      font-size: 1.5em;
+      margin-top: 1.5em;
+      color: #444;
+    }
 
     @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
@@ -167,17 +185,22 @@
       .banner h1 { font-size: 28px; }
       .banner p { font-size: 16px; }
     }
+
     @media (max-width: 480px) {
       .banner {
         margin-top: 200px;
         height: 350px;
       }
-      .product-list {
-        grid-template-columns: 1fr;
-      }
     }
   </style>
+
+  <script>
+    function toggleMobileMenu() {
+      document.getElementById('mobileNav').classList.toggle('open');
+    }
+  </script>
 </head>
+
 <body>
   <!-- Header -->
   <header>
@@ -219,6 +242,7 @@
     <a href="#products" class="btn">Shop Now</a>
   </section>
 
+  <!-- About Section -->
   <div class="container">
     <h1>About Aaila Pasa</h1>
     <p>Welcome to <strong>Aaila Pasa</strong> – your go-to destination for handpicked, high-quality products made with love and care. We’re more than just a shop – we’re a community that celebrates creativity, quality, and the little joys in everyday life.</p>
@@ -237,11 +261,9 @@
     <h2>Thank You</h2>
     <p>We’re grateful to everyone who supports this journey – from first-time visitors to loyal customers. Your trust means the world to us, and we’re excited to keep growing with you.</p>
 
-    <p><strong>Stay close. Stay inspired.  
-    <br>– Team Aaila Pasa</strong></p>
+    <p><strong>Stay close. Stay inspired.<br>– Team Aaila Pasa</strong></p>
   </div>
 
   <footer>&copy; 2025 Aaila Pasa. All rights reserved.</footer>
-
 </body>
 </html>
