@@ -3,95 +3,153 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Aaila Pasa | Home</title>
+  <title>Shop | Aaila Pasa</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTTXREp2U6Y1jczJz9K+K0VbL5zlvO7HK+GK5V2PyzgEX4lphI6QbR6wOcdC9R1c7VPsYc5Kxw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
-    * {
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      line-height: 1.6;
-      background-color: #fffaf7;
-      color: #333;
     }
     header {
-      background-color: #fff;
-      padding: 20px 40px;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      z-index: 1000;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+      padding: 15px 20px;
+      background: #111;
+      color: white;
+      flex-wrap: wrap;
+    }
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
     }
     .logo {
-      font-size: 1.8em;
-      font-weight: bold;
-      color: #d96c06;
+      font-size: 32px;
+      font-weight: 700;
+      animation: fadeInDown 1s ease-in-out;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+      color: white;
+    }
+    .logo span {
+      color: #ff6600;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+    }
+    .brand-subtitle {
+      font-size: 12px;
+      margin: 0;
+      color: #ccc;
+    }
+    .header-logo img {
+      height: 110px; width: 110px;
+      object-fit: contain;
+      border-radius: 8px;
+      animation: zoomIn 1.2s ease-in-out;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      padding: 0;
+      margin: 0;
+    }
+    nav ul li a {
+      color: white;
       text-decoration: none;
     }
-    nav a {
-      margin-left: 25px;
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      margin: 4px 0;
+    }
+    .mobile-nav {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      background-color: #111;
+      overflow: hidden;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      padding: 10px;
+      border-top: 1px solid #333;
+      color: white;
       text-decoration: none;
-      color: #333;
-      font-weight: 500;
-      transition: color 0.3s;
     }
-    nav a:hover {
-      color: #d96c06;
+    .nav__right {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 10px;
     }
-    .container {
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 20px;
+    .search-bar {
+      display: flex;
+      gap: 5px;
+      margin-top: 10px;
+      height: 32px;
+      align-items: center;
     }
-    h1 {
-      color: #d96c06;
-      font-size: 2.5em;
-      margin-bottom: 0.5em;
+    .search-bar input {
+      padding: 5px;
+      flex: 1;
     }
-    h2 {
-      font-size: 1.5em;
-      margin-top: 1.5em;
-      color: #444;
+    .search-bar button {
+      padding: 5px 10px;
+      cursor: pointer;
     }
-    p {
-      margin: 1em 0;
-    }
-    footer {
+    .banner {
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url('https://i.ibb.co/jkXh8T0W/istockphoto-1129343516-612x612.jpg') no-repeat center center/cover;
+      height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       text-align: center;
-      margin: 60px auto 20px;
-      font-size: 0.9em;
-      color: #aaa;
+      color: white;
+      flex-direction: column;
+      padding: 20px;
+      margin-top: 140px;
+      animation: fadeIn 1.5s ease;
     }
-
-    /* Responsive */
-    @media (max-width: 600px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      nav {
-        margin-top: 10px;
-      }
-      nav a {
-        margin: 0 15px 0 0;
-      }
+    .banner h1 { font-size: 34px; margin: 0; font-weight: bold; }
+    .banner p {
+      font-size: 18px;
+      margin: 15px 0;
+      max-width: 90%;
+    }
+    .banner .btn {
+      background: #ff6600;
+      color: white;
+      padding: 12px 24px;
+      font-size: 16px;
+      text-decoration: none;
+      margin-top: 20px;
+      border-radius: 6px;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+    .banner .btn:hover {
+      background: #e65c00;
+      transform: translateY(-2px);
     }
   </style>
 </head>
 <body>
-
-  <header>
-    <a href="#" class="logo">Aaila Pasa</a>
-    <nav>
-      <a href="#">Home</a>
-      <a href="/shop.html">Shop</a>
-    </nav>
-  </header>
 
   <div class="container">
     <h1>About Aaila Pasa</h1>
