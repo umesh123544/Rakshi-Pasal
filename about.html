@@ -150,6 +150,74 @@
   </style>
 </head>
 <body>
+   }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes zoomIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+
+    @media (max-width: 768px) {
+      header { flex-direction: column; align-items: stretch; gap: 10px; }
+      nav ul { display: none; }
+      .hamburger { display: flex; }
+      .banner {
+        margin-top: 180px;
+        height: 400px;
+      }
+      .banner h1 { font-size: 28px; }
+      .banner p { font-size: 16px; }
+    }
+    @media (max-width: 480px) {
+      .banner {
+        margin-top: 200px;
+        height: 350px;
+      }
+      .product-list {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="header-container">
+      <div class="logo">
+        Aaila <span>Pasa</span>
+        <p class="brand-subtitle">Ghar Ghar Mai Delivery</p>
+      </div>
+      <div class="hamburger" onclick="toggleMobileMenu()">
+        <div></div><div></div><div></div>
+      </div>
+    </div>
+    <nav>
+      <ul class="desktop-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      <div class="mobile-nav" id="mobileNav">
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="about.html">About</a>
+        <a href="#">Contact</a>
+      </div>
+    </nav>
+    <div class="nav__right">
+      <div class="search-bar">
+        <input type="text" placeholder="Search..." />
+        <button>🔍</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Banner -->
+  <section class="banner">
+    <h1>Our Premium Collection</h1>
+    <p>Discover exquisite spirits curated for the most discerning tastes. Each bottle tells a story of craftsmanship and tradition.</p>
+    <a href="#products" class="btn">Shop Now</a>
+  </section>
 
   <div class="container">
     <h1>About Aaila Pasa</h1>
