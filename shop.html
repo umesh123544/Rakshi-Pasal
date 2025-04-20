@@ -383,37 +383,163 @@
     }
     .newsletter-form {
       display: flex;
-      margin-top: 15px;
-    }
-    .newsletter-form input {
-      flex: 1;
-      padding: 10px;
-      border: none;
-      border-radius: 4px 0 0 4px;
-    }
-    .newsletter-form button {
-      background: #ff6600;
-      color: white;
-      border: none;
-      padding: 0 15px;
-      border-radius: 0 4px 4px 0;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    .newsletter-form button:hover {
-      background: #e65c00;
-    }
-    .footer-bottom {
-      text-align: center;
-      padding-top: 20px;
-      margin-top: 30px;
-      border-top: 1px solid #333;
-      color: #999;
-      font-size: 0.9rem;
-    }
-    .footer-bottom i {
-      color: #ff6600;
-    }
+/* Footer Styles */
+footer {
+  background: #111;
+  color: white;
+  padding: 40px 20px 20px;
+  text-align: center;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-center {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 30px;
+}
+
+.footer-section {
+  text-align: left;
+  max-width: 300px;
+  flex: 1;
+  min-width: 250px;
+}
+
+.footer-section h3 {
+  color: #ff6600;
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.footer-section h3::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 50px;
+  height: 2px;
+  background: #ff6600;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+  color: #ddd;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-section ul li a:hover {
+  color: #ff6600;
+}
+
+.footer-section p {
+  color: #bbb;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.socials {
+  display: flex;
+  gap: 15px;
+  margin: 15px 0;
+  justify-content: center;
+}
+
+.socials a {
+  color: white;
+  background: #333;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.socials a:hover {
+  background: #ff6600;
+  transform: translateY(-3px);
+}
+
+.newsletter-form {
+  display: flex;
+  margin-top: 15px;
+}
+
+.newsletter-form input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 4px 0 0 4px;
+}
+
+.newsletter-form button {
+  background: #ff6600;
+  color: white;
+  border: none;
+  padding: 0 15px;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.newsletter-form button:hover {
+  background: #e65c00;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 20px;
+  margin-top: 30px;
+  border-top: 1px solid #333;
+  color: #999;
+  font-size: 0.9rem;
+}
+
+.footer-bottom i {
+  color: #ff6600;
+}
+
+@media (max-width: 768px) {
+  .footer-center {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+  
+  .footer-section {
+    text-align: center;
+  }
+  
+  .footer-section h3::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .footer-section p {
+    justify-content: center;
+  }
+}
 
     @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
@@ -652,8 +778,9 @@
   </div>
 
   <!-- Footer -->
-  <footer>
-    <div class="footer-content">
+<footer>
+  <div class="footer-content">
+    <div class="footer-center">
       <div class="footer-section">
         <h3>Quick Links</h3>
         <ul>
@@ -687,7 +814,8 @@
     <div class="footer-bottom">
       <p>&copy; 2025 Aaila Pasa. All Rights Reserved. | Designed with <i class="fas fa-heart"></i> by Aaila Pasa Team</p>
     </div>
-  </footer>
+  </div>
+</footer>
 
   <script>
     let cart = [];
