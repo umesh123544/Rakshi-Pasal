@@ -1026,8 +1026,7 @@ function continueShopping() {
           return emailjs.send('service_wb7evwg', 'template_38h10bx', orderData);
         })
         .then(() => {
-          alert("Order placed successfully! Check your email for confirmation.");
-          cart = [];
+          showConfirmation(orderData);  // Shows the new confirmation section
           updateCartPreview();
           closeModal();
           this.reset();
