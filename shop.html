@@ -122,7 +122,7 @@
       color: white;
       flex-direction: column;
       padding: 20px;
-      margin-top: 0;
+      margin-top: 120px; /* Adjusted to account for fixed header */
       animation: fadeIn 1.5s ease;
     }
     .banner h1 { font-size: 34px; margin: 0; font-weight: bold; }
@@ -462,6 +462,7 @@
       }
       .banner {
         height: 400px;
+        margin-top: 100px; /* Adjusted for mobile */
       }
       .banner h1 { font-size: 28px; }
       .banner p { font-size: 16px; }
@@ -484,6 +485,7 @@
     @media (max-width: 480px) {
       .banner {
         height: 350px;
+        margin-top: 90px; /* Adjusted for small mobile */
       }
       .product-list {
         grid-template-columns: 1fr;
@@ -881,6 +883,18 @@
       });
       noResults.classList.remove('show');
     }
+
+    // Dynamic banner margin adjustment
+    document.addEventListener('DOMContentLoaded', function() {
+      const header = document.querySelector('header');
+      const banner = document.querySelector('.banner');
+      banner.style.marginTop = header.offsetHeight + 'px';
+      
+      // Adjust on window resize
+      window.addEventListener('resize', function() {
+        banner.style.marginTop = header.offsetHeight + 'px';
+      });
+    });
   </script>
 </body>
 </html>
