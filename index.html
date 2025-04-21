@@ -8,6 +8,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- EmailJS SDK -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <style>
     * { box-sizing: border-box; }
     body {
@@ -596,10 +598,10 @@
     </div>
     <div class="checkout-form">
       <form id="order-form">
-        <input type="text" placeholder="Full Name" required />
-        <input type="email" placeholder="Email Address" required />
-        <input type="tel" placeholder="Phone Number" required />
-        <textarea placeholder="Address" rows="4" required></textarea>
+        <input type="text" id="customer-name" placeholder="Full Name" required />
+        <input type="email" id="customer-email" placeholder="Email Address" required />
+        <input type="tel" id="customer-phone" placeholder="Phone Number" required />
+        <textarea id="customer-address" placeholder="Address" rows="4" required></textarea>
         <button type="submit">Place Order</button>
         <button type="button" class="cancel-btn" onclick="closeModal()">Cancel</button>
       </form>
@@ -651,6 +653,9 @@
 </footer>
 
 <script>
+  // Initialize EmailJS with your User ID
+  emailjs.init('YOUR_EMAILJS_USER_ID'); // Replace with your actual EmailJS user ID
+
   let cart = [];
   const cartModal = document.getElementById("checkoutModal");
   const checkoutCartItems = document.getElementById("checkout-cart-items");
@@ -746,6 +751,50 @@
     if (e.key === 'Enter') {
       searchProducts();
     }
+  });
+
+  // Handle form submission
+  document.getElementById('order-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Get form values
+    const name = document.getElementById('customer-name').value;
+    const email = document.getElementById('customer-email').value;
+    const phone = document.getElementById('customer-phone').value;
+    const address = document.getElementById('customer-address').value;
+    
+    // Format cart items for email
+    let cartItemsText = '';
+    let total = 0;
+    cart.forEach(item => {
+      cartItemsText += `${item.name} (x${item.quantity}) - Rs.${(item.price * item.quantity).toFixed(2)}\n`;
+      total += item.price * item.quantity;
+    });
+    
+    // Prepare email parameters
+    const templateParams = {
+      customer_name: name,
+      customer_email: email,
+      customer_phone: phone,
+      customer_address: address,
+      order_items: cartItemsText,
+      order_total: `Rs.${total.toFixed(2)}`,
+      order_date: new Date().toLocaleString()
+    };
+    
+    // Send email using EmailJS
+    emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+      .then(function(response) {
+        alert('Order placed successfully! We will contact you shortly.');
+        // Reset cart and close modal
+        cart = [];
+        closeModal();
+        // Reset form
+        document.getElementById('order-form').reset();
+      }, function(error) {
+        alert('Failed to send order. Please try again or contact us directly.');
+        console.error('EmailJS error:', error);
+      });
   });
 </script>
 </body>
