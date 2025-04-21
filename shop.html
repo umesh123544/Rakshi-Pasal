@@ -147,6 +147,28 @@
       background: #e65c00;
       transform: translateY(-2px);
     }
+        
+  #search-form {
+   display: flex;
+   gap: 5px;
+ }
+
+  #search-input {
+   padding: 5px;
+   flex: 1;
+   min-width: 150px;
+ }
+
+  .no-results {
+   grid-column: 1 / -1;
+   text-align: center;
+   padding: 2rem;
+   display: none;
+}
+
+ .no-results.show {
+   display: block;
+}
 
     /* Shop Products Section */
     .products {
@@ -495,12 +517,12 @@
         <a href="#">Contact</a>
       </div>
     </nav>
-    <div class="nav__right">
-      <div class="search-bar">
-        <input type="text" placeholder="Search..." />
-        <button>🔍</button>
-      </div>
-    </div>
+    <div class="search-bar">
+  <form id="search-form">
+    <input type="text" id="search-input" placeholder="Search products..." />
+    <button type="submit">🔍</button>
+  </form>
+</div>
   </header>
 
   <!-- Banner -->
@@ -803,6 +825,40 @@
       if (event.target === cartModal) {
         closeModal();
       }
+      // Search functionality
+     const searchForm = document.getElementById('search-form');
+     const searchInput = document.getElementById('search-input');
+     const products = document.querySelectorAll('.product');
+
+     searchForm.addEventListener('submit', function(e) {
+     e.preventDefault();
+     const searchTerm = searchInput.value.toLowerCase().trim();
+  
+     products.forEach(product => {
+     const productName = product.querySelector('h3').textContent.toLowerCase();
+     const productMatches = productName.includes(searchTerm);
+    
+    product.style.display = productMatches ? 'flex' : 'none';
+  });
+});
+
+// Add input event for real-time search (optional)
+searchInput.addEventListener('input', function() {
+ const searchTerm = this.value.toLowerCase().trim();
+  
+  if (searchTerm === '') {
+    products.forEach(product => {
+      product.style.display = 'flex';
+    });
+    return;
+  }
+  
+  products.forEach(product => {
+    const productName = product.querySelector('h3').textContent.toLowerCase();
+    const productMatches = productName.includes(searchTerm);
+    
+    product.style.display = productMatches ? 'flex' : 'none';
+  });
     });
   </script>
 </body>
