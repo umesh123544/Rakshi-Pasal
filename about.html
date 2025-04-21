@@ -3,369 +3,233 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>About | Aaila Pasa</title>
-  <meta name="description" content="Discover Aaila Pasa - Your trusted source for quality products with home delivery service.">
-
+  <title>About Us - Aaila Pasa</title>
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
-    :root {
-      --primary-color: #ff6600;
-      --primary-dark: #e65c00;
-      --secondary-color: #111;
-      --light-bg: #fffaf7;
-      --text-color: #333;
-      --light-text: #777;
-      --white: #ffffff;
-      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      --transition: all 0.3s ease;
-    }
-    
-    * { 
-      box-sizing: border-box;
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
       margin: 0;
       padding: 0;
     }
-    
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: var(--light-bg);
-      color: var(--text-color);
-      line-height: 1.6;
-      padding-top: 140px;
-    }
-    
-    /* Header Styles */
     header {
       position: fixed;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
       width: 100%;
       z-index: 1000;
-      background: var(--secondary-color);
-      color: var(--white);
-      box-shadow: var(--shadow);
-      padding: 15px 5%;
-    }
-    
-    .header-container {
       display: flex;
-      flex-direction: column;
-      max-width: 1400px;
-      margin: 0 auto;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      background: #111;
+      color: white;
+      flex-wrap: wrap;
     }
-    
-    .header-top {
+    .header-container {
       display: flex;
       justify-content: space-between;
       align-items: center;
       width: 100%;
     }
-    
     .logo {
-      display: flex;
-      align-items: center;
-      font-size: 28px;
+      font-size: 32px;
       font-weight: 700;
-      animation: fadeInDown 0.8s ease-in-out;
-      color: var(--white);
+      animation: fadeInDown 1s ease-in-out;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+      color: white;
     }
-    
     .logo span {
-      color: var(--primary-color);
-      margin-left: 5px;
+      color: #ff6600;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
     }
-    
     .brand-subtitle {
       font-size: 12px;
-      font-weight: 300;
+      margin: 0;
       color: #ccc;
-      margin-left: 10px;
     }
-    
-    /* Navigation */
-    nav {
-      display: flex;
-      align-items: center;
+    .header-logo img {
+      height: 110px; width: 110px;
+      object-fit: contain;
+      border-radius: 8px;
+      animation: zoomIn 1.2s ease-in-out;
     }
-    
-    .desktop-nav {
-      display: flex;
+    nav ul {
       list-style: none;
-      gap: 25px;
+      display: flex;
+      gap: 20px;
+      padding: 0;
+      margin: 0;
     }
-    
-    .desktop-nav li a {
-      color: var(--white);
+    nav ul li a {
+      color: white;
       text-decoration: none;
-      font-weight: 500;
-      font-size: 16px;
-      transition: var(--transition);
-      position: relative;
     }
-    
-    .desktop-nav li a:hover {
-      color: var(--primary-color);
-    }
-    
-    .desktop-nav li a::after {
-      content: '';
-      position: absolute;
-      width: 0;
-      height: 2px;
-      background: var(--primary-color);
-      bottom: -5px;
-      left: 0;
-      transition: var(--transition);
-    }
-    
-    .desktop-nav li a:hover::after {
-      width: 100%;
-    }
-    
-    .header-bottom {
-      width: 100%;
-      margin-top: 15px;
-      display: flex;
-      justify-content: center;
-    }
-    
-    .search-bar {
-      display: flex;
-      align-items: center;
-      width: 100%;
-      max-width: 500px;
-    }
-    
-    .search-bar input {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 30px 0 0 30px;
-      width: 100%;
-      font-size: 14px;
-      outline: none;
-    }
-    
-    .search-bar button {
-      background: var(--primary-color);
-      color: var(--white);
-      border: none;
-      padding: 10px 20px;
-      border-radius: 0 30px 30px 0;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-    
-    .search-bar button:hover {
-      background: var(--primary-dark);
-    }
-    
-    /* Mobile Navigation */
     .hamburger {
       display: none;
       flex-direction: column;
       cursor: pointer;
-      gap: 5px;
-      z-index: 1001;
     }
-    
     .hamburger div {
       width: 25px;
       height: 3px;
-      background-color: var(--white);
-      transition: var(--transition);
+      background-color: white;
+      margin: 4px 0;
     }
-    
     .mobile-nav {
-      position: fixed;
-      top: 0;
-      right: -100%;
-      width: 80%;
-      max-width: 300px;
-      height: 100vh;
-      background: var(--secondary-color);
-      z-index: 1000;
-      padding: 80px 20px 20px;
-      transition: var(--transition);
-      box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
-    }
-    
-    .mobile-nav.open {
-      right: 0;
-    }
-    
-    .mobile-nav a {
-      display: block;
-      padding: 12px 0;
-      color: var(--white);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      transition: var(--transition);
-    }
-    
-    .mobile-nav a:hover {
-      color: var(--primary-color);
-      padding-left: 10px;
-    }
-    
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
+      display: none;
+      flex-direction: column;
       width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 999;
-      opacity: 0;
-      visibility: hidden;
-      transition: var(--transition);
+      background-color: #111;
+      overflow: hidden;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      padding: 10px;
+      border-top: 1px solid #333;
+      color: white;
+      text-decoration: none;
+    }
+    .nav__right {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .search-bar {
+      display: flex;
+      gap: 5px;
+      margin-top: 10px;
+      height: 32px;
+      align-items: center;
+    }
+    .search-bar input {
+      padding: 5px;
+      flex: 1;
+    }
+    .search-bar button {
+      padding: 5px 10px;
+      cursor: pointer;
     }
     
-    .overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-    
-    /* Banner */
-    .banner {
-      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-        url('https://i.ibb.co/jkXh8T0W/istockphoto-1129343516-612x612.jpg') no-repeat center center/cover;
-      height: 400px;
+    /* About Page Specific Styles */
+    .about-hero {
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url('https://i.ibb.co/jkXh8T0W/istockphoto-1129343516-612x612.jpg') no-repeat center center/cover;
+      height: 300px;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      color: var(--white);
+      color: white;
       flex-direction: column;
       padding: 20px;
-      margin-bottom: 40px;
-      animation: fadeIn 1s ease;
-      margin-top: -14px;
+      margin-top: 140px;
+      animation: fadeIn 1.5s ease;
     }
     
-    .banner h1 {
-      font-size: 2.5rem;
-      margin-bottom: 15px;
-      font-weight: 700;
+    .about-hero h1 {
+      font-size: 34px;
+      margin: 0;
+      font-weight: bold;
     }
     
-    .banner p {
-      font-size: 1.1rem;
-      margin-bottom: 25px;
-      max-width: 700px;
-      font-weight: 300;
-    }
-    
-    .btn {
-      background: var(--primary-color);
-      color: var(--white);
-      padding: 12px 30px;
-      font-size: 1rem;
-      text-decoration: none;
-      border-radius: 30px;
-      transition: var(--transition);
-      font-weight: 500;
-      border: none;
-      cursor: pointer;
-      display: inline-block;
-    }
-    
-    .btn:hover {
-      background: var(--primary-dark);
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(230, 92, 0, 0.3);
-    }
-    
-    /* Main Content */
-    .container {
+    .about-container {
       max-width: 1200px;
-      margin: 0 auto 60px;
+      margin: 40px auto;
       padding: 0 20px;
     }
     
     .about-section {
-      background: var(--white);
-      border-radius: 10px;
-      padding: 40px;
-      box-shadow: var(--shadow);
-      margin-bottom: 40px;
-    }
-    
-    .about-section h1 {
-      color: var(--primary-color);
-      font-size: 2.2rem;
-      margin-bottom: 20px;
-      position: relative;
-      padding-bottom: 10px;
-    }
-    
-    .about-section h1::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 60px;
-      height: 3px;
-      background: var(--primary-color);
+      margin-bottom: 50px;
     }
     
     .about-section h2 {
-      font-size: 1.5rem;
-      margin: 30px 0 15px;
-      color: var(--secondary-color);
+      color: #ff6600;
+      margin-bottom: 20px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .about-section h2::after {
+      content: "";
+      position: absolute;
+      width: 50%;
+      height: 4px;
+      background: linear-gradient(to right, #ff6600, #ff9933);
+      bottom: -8px;
+      left: 0;
+      border-radius: 2px;
     }
     
     .about-section p {
-      margin-bottom: 15px;
-      color: var(--light-text);
+      line-height: 1.8;
+      color: #555;
     }
     
-    .about-section strong {
-      color: var(--text-color);
-    }
-    
-    /* Features Section */
-    .features {
+    .mission-vision {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 30px;
-      margin: 50px 0;
+      margin: 40px 0;
     }
     
-    .feature-card {
-      background: var(--white);
+    .mission-card, .vision-card {
+      background: #f9f9f9;
       padding: 30px;
-      border-radius: 10px;
-      box-shadow: var(--shadow);
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .mission-card h3, .vision-card h3 {
+      color: #ff6600;
+      margin-top: 0;
+    }
+    
+    .team-section {
       text-align: center;
-      transition: var(--transition);
+      margin-top: 60px;
     }
     
-    .feature-card:hover {
-      transform: translateY(-10px);
+    .team-members {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-top: 30px;
     }
     
-    .feature-icon {
-      font-size: 2.5rem;
-      color: var(--primary-color);
-      margin-bottom: 20px;
+    .team-member {
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
     
-    .feature-card h3 {
+    .team-member img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
       margin-bottom: 15px;
-      color: var(--secondary-color);
+      border: 3px solid #ff6600;
     }
     
-    .feature-card p {
-      color: var(--light-text);
+    .team-member h3 {
+      margin: 10px 0 5px;
     }
     
-    /* Footer */
+    .team-member p {
+      color: #777;
+      margin: 0;
+    }
+    
+    /* Updated Footer Styles */
     footer {
-      background: var(--secondary-color);
-      color: var(--white);
+      background: #000;
+      color: white;
       padding: 40px 20px;
       text-align: center;
     }
@@ -376,36 +240,37 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 30px;
-      text-align: left;
+      text-align: center;
     }
     
     .footer-column h3 {
-      color: var(--primary-color);
+      color: #ff6600;
       margin-bottom: 20px;
       font-size: 1.2rem;
     }
     
-    .footer-column p, .footer-column a {
-      color: #ccc;
+    .footer-column p, 
+    .footer-column a {
+      color: white;
       margin-bottom: 10px;
       display: block;
       text-decoration: none;
-      transition: var(--transition);
+      transition: all 0.3s ease;
     }
     
     .footer-column a:hover {
-      color: var(--primary-color);
-      padding-left: 5px;
+      color: #ff6600;
     }
     
     .social-links {
       display: flex;
       gap: 15px;
       margin-top: 20px;
+      justify-content: center;
     }
     
     .social-links a {
-      color: var(--white);
+      color: white;
       background: rgba(255, 255, 255, 0.1);
       width: 40px;
       height: 40px;
@@ -413,11 +278,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: var(--transition);
+      transition: all 0.3s ease;
     }
     
     .social-links a:hover {
-      background: var(--primary-color);
+      background: #ff6600;
       transform: translateY(-3px);
     }
     
@@ -428,201 +293,130 @@
       color: #aaa;
       font-size: 0.9rem;
     }
-    
-    /* Animations */
-    @keyframes fadeIn { 
-      from { opacity: 0; transform: translateY(20px); } 
-      to { opacity: 1; transform: translateY(0); } 
-    }
-    
-    @keyframes fadeInDown { 
-      from { opacity: 0; transform: translateY(-20px); } 
-      to { opacity: 1; transform: translateY(0); } 
-    }
-    
-    /* Responsive Styles */
-    @media (max-width: 992px) {
-      .header-container {
-        padding: 0;
-      }
-    }
-    
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes zoomIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
     @media (max-width: 768px) {
-      body {
-        padding-top: 120px;
+      header { flex-direction: column; align-items: stretch; gap: 10px; }
+      nav ul { display: none; }
+      .hamburger { display: flex; }
+      .about-hero {
+        margin-top: 180px;
+        height: 250px;
       }
-      
-      .desktop-nav {
-        display: none;
-      }
-      
-      .hamburger {
-        display: flex;
-      }
-      
-      .banner h1 {
-        font-size: 2rem;
-      }
-      
-      .banner p {
-        font-size: 1rem;
-      }
-      
-      .about-section {
-        padding: 30px 20px;
-      }
-      
-      .about-section h1 {
-        font-size: 1.8rem;
-      }
-    }
-    
-    @media (max-width: 576px) {
-      .banner {
-        height: 300px;
-      }
-      
-      .banner h1 {
-        font-size: 1.6rem;
-      }
-      
-      .btn {
-        padding: 10px 20px;
-        font-size: 0.9rem;
-      }
-      
-      .footer-content {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
-      
-      .social-links {
-        justify-content: center;
-      }
-      
-      .logo {
-        font-size: 24px;
-      }
-      
-      .brand-subtitle {
-        font-size: 10px;
+      .about-hero h1 {
+        font-size: 28px;
       }
     }
   </style>
 </head>
-
 <body>
-  <!-- Header -->
-  <header>
-    <div class="header-container">
-      <div class="header-top">
-        <div class="logo">
-          Aaila<span>Pasa</span>
-          <p class="brand-subtitle">Ghar Ghar Mai Delivery</p>
-        </div>
-        
-        <nav class="desktop-nav">
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="shop.html">Shop</a></li>
-            <li><a href="about.html" class="active">About</a></li>
-            <li><a href="contact.html">Contact</a></li>
-          </ul>
-        </nav>
-        
-        <div class="hamburger" onclick="toggleMobileMenu()">
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
+<!-- Header -->
+<header>
+  <div class="header-container">
+    <div class="logo">
+      Aaila <span>Pasa</span>
+      <p class="brand-subtitle">Ghar Ghar Mai Delivery</p>
+    </div>
+    <div class="hamburger" onclick="toggleMobileMenu()">
+      <div></div><div></div><div></div>
+    </div>
+  </div>
+  <nav>
+    <ul class="desktop-nav">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="mobile-nav" id="mobileNav">
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+  <div class="nav__right">
+    <div class="search-bar">
+      <input type="text" placeholder="Search..." />
+      <button>🔍</button>
+    </div>
+  </div>
+</header>
+
+<!-- About Hero Section -->
+<section class="about-hero">
+  <h1>About Aaila Pasa</h1>
+  <p>Your trusted partner for premium liquor delivery service in Nepal</p>
+</section>
+
+<!-- About Content -->
+<div class="about-container">
+  <div class="about-section">
+    <h2>Our Story</h2>
+    <p>Aaila Pasa was founded in 2020 with a simple mission: to bring Nepal's finest alcoholic beverages directly to your doorstep. What started as a small delivery service in Kathmandu has grown into one of the most trusted liquor delivery platforms in the country.</p>
+    <p>Our name "Aaila Pasa" reflects our commitment to being your reliable neighbor ("pasa") who brings ("aaila") quality products with convenience and care. We take pride in our curated selection of products, exceptional customer service, and fast, reliable delivery.</p>
+  </div>
+  
+  <div class="mission-vision">
+    <div class="mission-card">
+      <h3>Our Mission</h3>
+      <p>To revolutionize liquor retail in Nepal by providing a seamless online shopping experience with the widest selection of premium products, competitive prices, and fastest delivery service.</p>
+    </div>
+    
+    <div class="vision-card">
+      <h3>Our Vision</h3>
+      <p>To become Nepal's most trusted liquor delivery service, known for quality, convenience, and customer satisfaction, while promoting responsible drinking.</p>
+    </div>
+  </div>
+  
+  <div class="about-section">
+    <h2>Why Choose Us?</h2>
+    <p>At Aaila Pasa, we go beyond just delivering liquor. Here's what sets us apart:</p>
+    <ul style="line-height: 1.8; color: #555;">
+      <li><strong>Curated Selection:</strong> We carefully select each product in our inventory to ensure quality and variety.</li>
+      <li><strong>Fast Delivery:</strong> Our efficient delivery network ensures your order reaches you within hours.</li>
+      <li><strong>Competitive Pricing:</strong> We offer the best prices without compromising on quality.</li>
+      <li><strong>Customer Service:</strong> Our team is available 24/7 to assist with any queries or special requests.</li>
+      <li><strong>Responsible Service:</strong> We verify age and promote responsible drinking practices.</li>
+    </ul>
+  </div>
+  
+  <div class="team-section">
+    <h2>Meet Our Team</h2>
+    <p>The passionate individuals behind Aaila Pasa's success</p>
+    
+    <div class="team-members">
+      <div class="team-member">
+        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Team Member">
+        <h3>Rajesh Shrestha</h3>
+        <p>Founder & CEO</p>
       </div>
       
-      <div class="header-bottom">
-        <div class="search-bar">
-          <input type="text" placeholder="Search products..." />
-          <button><i class="fas fa-search"></i></button>
-        </div>
+      <div class="team-member">
+        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Team Member">
+        <h3>Anjali Gurung</h3>
+        <p>Operations Manager</p>
+      </div>
+      
+      <div class="team-member">
+        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Team Member">
+        <h3>Bikram Thapa</h3>
+        <p>Head of Delivery</p>
+      </div>
+      
+      <div class="team-member">
+        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Team Member">
+        <h3>Priya Tamang</h3>
+        <p>Customer Service</p>
       </div>
     </div>
-  </header>
-  
-  <!-- Mobile Navigation -->
-  <div class="mobile-nav" id="mobileNav">
-    <a href="index.html">Home</a>
-    <a href="shop.html">Shop</a>
-    <a href="about.html" class="active">About</a>
-    <a href="contact.html">Contact</a>
   </div>
-  <div class="overlay" id="overlay" onclick="toggleMobileMenu()"></div>
+</div>
 
-  <!-- Banner -->
-  <section class="banner">
-    <h1>Our Story</h1>
-    <p>Discover the journey behind Aaila Pasa and our commitment to bringing quality products to your doorstep</p>
-    <a href="#about" class="btn">Learn More</a>
-  </section>
-
-  <!-- Main Content -->
-  <div class="container">
-    <section class="about-section" id="about">
-      <h1>About Aaila Pasa</h1>
-      <p>Welcome to <strong>Aaila Pasa</strong> – your trusted destination for handpicked, high-quality products delivered with care and convenience. We're more than just an online shop – we're a community that celebrates quality, convenience, and the little joys in everyday life.</p>
-
-      <h2>Our Story</h2>
-      <p>Aaila Pasa was founded with a simple yet powerful vision: to bridge the gap between quality products and your doorstep. What began as a small initiative to serve our local community has blossomed into a platform that brings carefully curated products to households across the region.</p>
-
-      <p>Our journey started when we recognized the need for reliable home delivery of essential and specialty products. Today, we take pride in being your go-to solution for all your shopping needs, combining traditional values with modern convenience.</p>
-
-      <h2>Our Mission</h2>
-      <p>At Aaila Pasa, we're committed to:</p>
-      <ul style="list-style-type: none; margin: 15px 0 25px; color: var(--light-text);">
-        <li><i class="fas fa-check-circle" style="color: var(--primary-color); margin-right: 8px;"></i> Providing high-quality products you can trust</li>
-        <li><i class="fas fa-check-circle" style="color: var(--primary-color); margin-right: 8px;"></i> Offering competitive prices with no compromise on quality</li>
-        <li><i class="fas fa-check-circle" style="color: var(--primary-color); margin-right: 8px;"></i> Ensuring prompt and reliable delivery to your doorstep</li>
-        <li><i class="fas fa-check-circle" style="color: var(--primary-color); margin-right: 8px;"></i> Delivering exceptional customer service at every step</li>
-      </ul>
-
-      <h2>Why Choose Us?</h2>
-      <p>What sets Aaila Pasa apart is our unwavering focus on customer satisfaction. We carefully select each product in our inventory, ensuring it meets our stringent quality standards. Our dedicated delivery network ensures your orders reach you fresh and on time, every time.</p>
-
-      <div class="features">
-        <div class="feature-card">
-          <div class="feature-icon">
-            <i class="fas fa-award"></i>
-          </div>
-          <h3>Quality Assurance</h3>
-          <p>Every product goes through rigorous quality checks before it reaches you.</p>
-        </div>
-        
-        <div class="feature-card">
-          <div class="feature-icon">
-            <i class="fas fa-truck"></i>
-          </div>
-          <h3>Fast Delivery</h3>
-          <p>Prompt delivery service to ensure you get your products when you need them.</p>
-        </div>
-        
-        <div class="feature-card">
-          <div class="feature-icon">
-            <i class="fas fa-headset"></i>
-          </div>
-          <h3>Customer Support</h3>
-          <p>Our support team is always ready to assist you with any queries or concerns.</p>
-        </div>
-      </div>
-
-      <h2>The Meaning Behind "Aaila Pasa"</h2>
-      <p><em>"Aaila Pasa"</em> – which translates to "Come Closer" – embodies our philosophy of bringing products closer to you, eliminating barriers, and creating a seamless shopping experience right at your doorstep.</p>
-
-      <h2>Our Promise to You</h2>
-      <p>We promise to continue innovating, expanding our product range, and enhancing our services to serve you better. Your trust is our most valued asset, and we're committed to maintaining it through transparency, quality, and exceptional service.</p>
-
-      <p style="font-style: italic; margin-top: 30px;"><strong>Thank you for choosing Aaila Pasa. We're honored to be part of your daily life and look forward to serving you for years to come.</strong></p>
-    </section>
-  </div>
-
-  <!-- Footer -->
-  <footer>
+<!-- Footer -->
+<footer>
     <div class="footer-content">
       <div class="footer-column">
         <h3>Aaila Pasa</h3>
@@ -653,42 +447,23 @@
       
       <div class="footer-column">
         <h3>Contact Us</h3>
-        <p><i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i> Kathmandu, Nepal</p>
-        <p><i class="fas fa-phone" style="margin-right: 10px;"></i> +977 9841XXXXXX</p>
-        <p><i class="fas fa-envelope" style="margin-right: 10px;"></i> info@aailapasa.com</p>
+        <p><i class="fas fa-map-marker-alt"></i> Kathmandu, Nepal</p>
+        <p><i class="fas fa-phone"></i> +977 9813197704</p>
+        <p><i class="fas fa-envelope"></i> info@aailapasa.com</p>
       </div>
     </div>
     
     <div class="copyright">
       &copy; 2025 Aaila Pasa. All rights reserved.
     </div>
-  </footer>
+</footer>
 
-  <script>
-    function toggleMobileMenu() {
-      const mobileNav = document.getElementById('mobileNav');
-      const overlay = document.getElementById('overlay');
-      const hamburger = document.querySelector('.hamburger');
-      
-      mobileNav.classList.toggle('open');
-      overlay.classList.toggle('active');
-      hamburger.classList.toggle('active');
-      
-      // Toggle hamburger animation
-      if (hamburger.classList.contains('active')) {
-        document.body.style.overflow = 'hidden';
-      } else {
-        document.body.style.overflow = 'auto';
-      }
-    }
-    
-    // Close mobile menu when clicking on a link
-    const mobileLinks = document.querySelectorAll('.mobile-nav a');
-    mobileLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        toggleMobileMenu();
-      });
-    });
-  </script>
+<script>
+  // Toggle mobile navigation
+  function toggleMobileMenu() {
+    const mobileNav = document.getElementById("mobileNav");
+    mobileNav.classList.toggle("open");
+  }
+</script>
 </body>
 </html>
