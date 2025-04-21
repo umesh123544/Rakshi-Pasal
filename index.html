@@ -109,10 +109,19 @@
     .search-bar input {
       padding: 5px;
       flex: 1;
+      border-radius: 4px;
+      border: none;
     }
     .search-bar button {
       padding: 5px 10px;
       cursor: pointer;
+      background: #ff6600;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+    .search-bar button:hover {
+      background: #e65c00;
     }
     .banner {
       background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
@@ -166,6 +175,11 @@
       background: #fafafa;
       box-sizing: border-box;
       border-radius: 8px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .product:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     }
     .product img {
       width: 100%;
@@ -186,6 +200,7 @@
       border: none;
       cursor: pointer;
       border-radius: 4px;
+      transition: background 0.3s ease;
     }
     .product button:hover {
       background: #e65c00;
@@ -354,6 +369,13 @@
     .cancel-btn {
       background: #999;
     }
+    .no-results {
+      text-align: center;
+      padding: 20px;
+      font-size: 18px;
+      color: #666;
+      display: none;
+    }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes zoomIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
@@ -398,8 +420,8 @@
   </nav>
   <div class="nav__right">
     <div class="search-bar">
-      <input type="text" placeholder="Search..." />
-      <button>🔍</button>
+      <input type="text" id="searchInput" placeholder="Search products..." />
+      <button onclick="searchProducts()">🔍</button>
     </div>
   </div>
 </header>
@@ -414,7 +436,10 @@
 <!-- Products -->
 <section class="products">
   <h2>Best Sellers</h2>
-  <div class="product-list">
+  <div class="no-results" id="noResults">
+    No products found matching your search.
+  </div>
+  <div class="product-list" id="productList">
     <div class="product">
       <img src="https://i.ibb.co/fGnwYyV2/9d6a25ad33d78e416a97696d4a8e1587.jpg" alt="Red Wine" />
       <h3>Canvas Sweet Red Wine</h3>
@@ -448,8 +473,6 @@
       </label>
       <button onclick="goToCheckout(this)">Add to Cart</button>
     </div>
-  </div>
-  </div>
     <div class="product">
       <img src="https://i.ibb.co/NdBR861Z/old-durbar-750ml-73537.jpg" alt="Whiskey" />
       <h3>Old Durbar Whiskey</h3>
@@ -472,8 +495,6 @@
       </label>
       <button onclick="goToCheckout(this)">Add to Cart</button>
     </div>
-</div>
-  </div>
     <div class="product">
       <img src="https://i.ibb.co/NdBR861Z/old-durbar-750ml-73537.jpg" alt="Whiskey" />
       <h3>Old Durbar Whiskey</h3>
@@ -496,8 +517,6 @@
       </label>
       <button onclick="goToCheckout(this)">Add to Cart</button>
     </div>
-  </div>
-  </div>
     <div class="product">
       <img src="https://i.ibb.co/NdBR861Z/old-durbar-750ml-73537.jpg" alt="Whiskey" />
       <h3>Old Durbar Whiskey</h3>
@@ -520,7 +539,6 @@
       </label>
       <button onclick="goToCheckout(this)">Add to Cart</button>
     </div>
-  </div>
     <div class="product">
       <img src="https://i.ibb.co/NdBR861Z/old-durbar-750ml-73537.jpg" alt="Whiskey" />
       <h3>Old Durbar Whiskey</h3>
@@ -543,8 +561,6 @@
       </label>
       <button onclick="goToCheckout(this)">Add to Cart</button>
     </div>
-  </div>
-  </div>
     <div class="product">
       <img src="https://i.ibb.co/NdBR861Z/old-durbar-750ml-73537.jpg" alt="Whiskey" />
       <h3>Old Durbar Whiskey</h3>
@@ -556,42 +572,6 @@
       </label>
       <button onclick="goToCheckout(this)">Add to Cart</button>
     </div>
-    <div class="product">
-      <img src="https://i.ibb.co/5xMmr8jZ/strong-1.jpg" alt="Whiskey" />
-      <h3>Nepal Ice</h3>
-      <p class="price">Rs.2,950</p>
-      <label>Qty:
-        <select class="quantity-selector">
-          <option value="1">1</option><option value="2">2</option><option value="3">3</option>
-        </select>
-      </label>
-      <button onclick="goToCheckout(this)">Add to Cart</button>
-    </div>
-  </div>
-  </div>
-    <div class="product">
-      <img src="https://i.ibb.co/NdBR861Z/old-durbar-750ml-73537.jpg" alt="Whiskey" />
-      <h3>Old Durbar Whiskey</h3>
-      <p class="price">Rs.2,950</p>
-      <label>Qty:
-        <select class="quantity-selector">
-          <option value="1">1</option><option value="2">2</option><option value="3">3</option>
-        </select>
-      </label>
-      <button onclick="goToCheckout(this)">Add to Cart</button>
-    </div>
-    <div class="product">
-      <img src="https://i.ibb.co/5xMmr8jZ/strong-1.jpg" alt="Whiskey" />
-      <h3>Nepal Ice</h3>
-      <p class="price">Rs.2,950</p>
-      <label>Qty:
-        <select class="quantity-selector">
-          <option value="1">1</option><option value="2">2</option><option value="3">3</option>
-        </select>
-      </label>
-      <button onclick="goToCheckout(this)">Add to Cart</button>
-    </div>
-  </div>
   </div>
 </section>
 
@@ -675,6 +655,10 @@
   const cartModal = document.getElementById("checkoutModal");
   const checkoutCartItems = document.getElementById("checkout-cart-items");
   const checkoutTotal = document.getElementById("checkout-total");
+  const searchInput = document.getElementById("searchInput");
+  const productList = document.getElementById("productList");
+  const noResults = document.getElementById("noResults");
+  const products = document.querySelectorAll('.product');
 
   // Toggle mobile navigation
   function toggleMobileMenu() {
@@ -732,6 +716,37 @@
   function closeModal() {
     cartModal.style.display = 'none';
   }
+
+  // Search products
+  function searchProducts() {
+    const searchTerm = searchInput.value.toLowerCase();
+    let hasResults = false;
+    
+    products.forEach(product => {
+      const productName = product.querySelector('h3').textContent.toLowerCase();
+      if (productName.includes(searchTerm)) {
+        product.style.display = '';
+        hasResults = true;
+      } else {
+        product.style.display = 'none';
+      }
+    });
+    
+    if (hasResults) {
+      noResults.style.display = 'none';
+      productList.style.display = 'flex';
+    } else {
+      noResults.style.display = 'block';
+      productList.style.display = 'none';
+    }
+  }
+
+  // Add event listener for Enter key in search
+  searchInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      searchProducts();
+    }
+  });
 </script>
 </body>
 </html>
