@@ -1,1145 +1,1054 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Aaila Pasa</title>
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  <!-- Font Awesome for icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <!-- EmailJS SDK -->
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      font-family: 'Poppins', sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      z-index: 1000;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 20px;
-      background: #111;
-      color: white;
-      flex-wrap: wrap;
-    }
-    .header-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-    }
-    .logo {
-      font-size: 32px;
-      font-weight: 700;
-      animation: fadeInDown 1s ease-in-out;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
-      color: white;
-    }
-    .logo span {
-      color: #ff6600;
-      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
-    }
-    .brand-subtitle {
-      font-size: 12px;
-      margin: 0;
-      color: #ccc;
-    }
-    .header-logo img {
-      height: 110px; width: 110px;
-      object-fit: contain;
-      border-radius: 8px;
-      animation: zoomIn 1.2s ease-in-out;
-    }
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 20px;
-      padding: 0;
-      margin: 0;
-    }
-    nav ul li a {
-      color: white;
-      text-decoration: none;
-    }
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      cursor: pointer;
-    }
-    .hamburger div {
-      width: 25px;
-      height: 3px;
-      background-color: white;
-      margin: 4px 0;
-    }
-    .mobile-nav {
-      display: none;
-      flex-direction: column;
-      width: 100%;
-      background-color: #111;
-      overflow: hidden;
-    }
-    .mobile-nav.open { display: flex; }
-    .mobile-nav a {
-      padding: 10px;
-      border-top: 1px solid #333;
-      color: white;
-      text-decoration: none;
-    }
-    .nav__right {
-      display: flex;
-      gap: 15px;
-      align-items: center;
-      flex-wrap: wrap;
-      margin-top: 10px;
-    }
-    .search-bar {
-      display: flex;
-      gap: 5px;
-      margin-top: 10px;
-      height: 32px;
-      align-items: center;
-    }
-    .search-bar input {
-      padding: 5px;
-      flex: 1;
-      border-radius: 4px;
-      border: none;
-    }
-    .search-bar button {
-      padding: 5px 10px;
-      cursor: pointer;
-      background: #ff6600;
-      color: white;
-      border: none;
-      border-radius: 4px;
-    }
-    .search-bar button:hover {
-      background: #e65c00;
-    }
-    .banner {
-      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-      url('https://i.ibb.co/bgx0ZBfz/Untitled-design-2.png') no-repeat center center/cover;
-      height: 500px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: white;
-      flex-direction: column;
-      padding: 20px;
-      margin-top: 140px;
-      animation: fadeIn 1.5s ease;
-    }
-    .banner h1 { font-size: 34px; margin: 0; font-weight: bold; }
-    .banner p {
-      font-size: 18px;
-      margin: 15px 0;
-      max-width: 90%;
-    }
-    .banner .btn {
-      background: #ff6600;
-      color: white;
-      padding: 12px 24px;
-      font-size: 16px;
-      text-decoration: none;
-      margin-top: 20px;
-      border-radius: 6px;
-      transition: background 0.3s ease, transform 0.3s ease;
-    }
-    .banner .btn:hover {
-      background: #e65c00;
-      transform: translateY(-2px);
-    }
-    .products {
-      padding: 40px 20px;
-      text-align: center;
-    }
-    .product-list {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-    .product {
-      border: 1px solid #ddd;
-      padding: 10px;
-      width: calc(50% - 20px);
-      max-width: 300px;
-      background: #fafafa;
-      box-sizing: border-box;
-      border-radius: 8px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .product:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
-    .product img {
-      width: 100%;
-      height: 180px;
-      object-fit: contain;
-      border-radius: 8px;
-    }
-    .product h3 { margin: 10px 0 5px; }
-    .product .price {
-      font-weight: bold;
-      color: #333;
-    }
-    .product button {
-      margin-top: 10px;
-      padding: 8px 12px;
-      background: #ff6600;
-      color: white;
-      border: none;
-      cursor: pointer;
-      border-radius: 4px;
-      transition: background 0.3s ease;
-    }
-    .product button:hover {
-      background: #e65c00;
-    }
-    .logos {
-      text-align: center;
-      padding: 40px 20px;
-      background-color: #f2f2f2;
-    }
-    .logos h2 { margin-bottom: 20px; }
-    .logo-container {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-    .logo-container img {
-      width: 80px;
-      height: auto;
-    }
-    .products h2,
-    .logos h2 {
-      font-size: 28px;
-      font-weight: 700;
-      color: #222;
-      position: relative;
-      display: inline-block;
-      margin-bottom: 30px;
-    }
-    .products h2::after,
-    .logos h2::after {
-      content: "";
-      position: absolute;
-      width: 50%;
-      height: 4px;
-      background: linear-gradient(to right, #ff6600, #ff9933);
-      bottom: -8px;
-      left: 0;
-      border-radius: 2px;
-    }
-    
-    /* Updated Footer Styles */
-    footer {
-      background: #000;
-      color: white;
-      padding: 40px 20px;
-      text-align: center;
-    }
-    
-    .footer-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
-      text-align: center;
-    }
-    
-    .footer-column h3 {
-      color: #ff6600;
-      margin-bottom: 20px;
-      font-size: 1.2rem;
-    }
-    
-    .footer-column p, 
-    .footer-column a {
-      color: white;
-      margin-bottom: 10px;
-      display: block;
-      text-decoration: none;
-      transition: all 0.3s ease;
-    }
-    
-    .footer-column a:hover {
-      color: #ff6600;
-    }
-    
-    .social-links {
-      display: flex;
-      gap: 15px;
-      margin-top: 20px;
-      justify-content: center;
-    }
-    
-    .social-links a {
-      color: white;
-      background: rgba(255, 255, 255, 0.1);
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-    }
-    
-    .social-links a:hover {
-      background: #ff6600;
-      transform: translateY(-3px);
-    }
-    
-    .copyright {
-      margin-top: 40px;
-      padding-top: 20px;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      color: #aaa;
-      font-size: 0.9rem;
-    }
-
-    /* Updated Checkout Modal for Mobile Keyboard */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 2000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.6);
-      justify-content: center;
-      align-items: flex-start;
-      padding-top: 20px;
-      padding-bottom: 20px;
-      overflow-y: auto;
-    }
-    
-    .modal-content {
-      background-color: white;
-      padding: 20px;
-      max-width: 500px;
-      width: 90%;
-      max-height: 90vh;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-      overflow-y: auto;
-      margin: auto;
-    }
-    
-    .checkout-form-container {
-      max-height: 50vh;
-      overflow-y: auto;
-      padding-right: 5px;
-    }
-    
-    .form-buttons {
-      display: flex;
-      gap: 10px;
-      margin-top: 15px;
-    }
-    
-    .cart-summary ul {
-      padding: 0;
-      list-style: none;
-    }
-    
-    .checkout-form input,
-    .checkout-form textarea {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    
-    .checkout-form button {
-      background: #ff6600;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      margin-right: 10px;
-    }
-    
-    .remove-btn {
-      margin-left: 10px;
-      padding: 2px 6px;
-      background-color: #ff4d4d;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    
-    .remove-btn:hover {
-      background-color: #e60000;
-    }
-    
-    .cancel-btn {
-      background: #999;
-    }
-    
-    .no-results {
-      text-align: center;
-      padding: 20px;
-      font-size: 18px;
-      color: #666;
-      display: none;
-    }
-    
-    /* Delivery Options */
-    .delivery-options {
-      margin: 15px 0;
-    }
-    
-    .delivery-option {
-      display: flex;
-      align-items: center;
-      margin-bottom: 10px;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    
-    .delivery-option:hover {
-      border-color: #ff6600;
-    }
-    
-    .delivery-option input {
-      margin-right: 10px;
-    }
-    
-    .delivery-option label {
-      flex: 1;
-      cursor: pointer;
-    }
-    
-    .delivery-option .price {
-      font-weight: bold;
-      color: #ff6600;
-    }
-    
-    .delivery-charge {
-      margin: 10px 0;
-      padding: 10px;
-      background: #f5f5f5;
-      border-radius: 4px;
-      font-size: 16px;
-    }
-    
-    .delivery-charge span {
-      font-weight: bold;
-      color: #ff6600;
-    }
-    
-    /* Order Confirmation Styles */
-    .order-confirmation {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.9);
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      animation: fadeIn 0.3s ease;
-    }
-    
-    .confirmation-container {
-      background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
-      padding: 40px;
-      border-radius: 20px;
-      text-align: center;
-      max-width: 600px;
-      width: 100%;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-      position: relative;
-    }
-    
-    .confirmation-icon {
-      width: 80px;
-      height: 80px;
-      background: #4CAF50;
-      border-radius: 50%;
-      margin: 0 auto 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .confirmation-icon svg {
-      width: 40px;
-      height: 40px;
-      stroke: white;
-      stroke-width: 2;
-    }
-    
-    .order-confirmation h2 {
-      color: #fff;
-      font-size: 2.2em;
-      margin-bottom: 20px;
-    }
-    
-    .confirmation-details {
-      background: rgba(255,255,255,0.1);
-      padding: 25px;
-      border-radius: 12px;
-      margin: 20px 0;
-      text-align: left;
-    }
-    
-    .confirmation-details p {
-      color: #fff;
-      font-size: 1.1em;
-      margin: 15px 0;
-      line-height: 1.6;
-    }
-    
-    .confirmation-details span {
-      color: #4CAF50;
-      font-weight: 600;
-    }
-    
-    .btn-continue {
-      background: #4CAF50;
-      color: white;
-      padding: 15px 40px;
-      border: none;
-      border-radius: 30px;
-      font-size: 1.1em;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      margin-top: 20px;
-    }
-    
-    .btn-continue:hover {
-      background: #45a049;
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(76,175,80,0.3);
-    }
-    
-    .confirmation-note {
-      margin-top: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      color: #fff;
-      font-size: 0.95em;
-    }
-    
-    .confirmation-note i {
-      color: #4CAF50;
-      font-size: 1.2em;
-    }
-    
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes zoomIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
-    
-    @media (max-width: 768px) {
-      header { flex-direction: column; align-items: stretch; gap: 10px; }
-      nav ul { display: none; }
-      .hamburger { display: flex; }
-      .product {
-        width: 100%;
-        max-width: 100%;
-      }
-      .confirmation-container {
-        padding: 25px;
-      }
-      .order-confirmation h2 {
-        font-size: 1.8em;
-      }
-      .confirmation-details p {
-        font-size: 1em;
-      }
-      .modal {
-        align-items: flex-start;
-        padding-top: 10px;
-      }
-      .modal-content {
-        width: 95%;
-        max-height: 85vh;
-      }
-      .checkout-form-container {
-        max-height: 40vh;
-      }
-      .form-buttons {
-        flex-direction: column;
-      }
-      .form-buttons button {
-        width: 100%;
-      }
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aaila Pasa</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- EmailJS SDK -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      background: #111;
+      color: white;
+      flex-wrap: wrap;
+    }
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+    .logo {
+      font-size: 32px;
+      font-weight: 700;
+      animation: fadeInDown 1s ease-in-out;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+      color: white;
+    }
+    .logo span {
+      color: #ff6600;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+    }
+    .brand-subtitle {
+      font-size: 12px;
+      margin: 0;
+      color: #ccc;
+    }
+    .header-logo img {
+      height: 110px; width: 110px;
+      object-fit: contain;
+      border-radius: 8px;
+      animation: zoomIn 1.2s ease-in-out;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      padding: 0;
+      margin: 0;
+    }
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+    }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      margin: 4px 0;
+    }
+    .mobile-nav {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      background-color: #111;
+      overflow: hidden;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      padding: 10px;
+      border-top: 1px solid #333;
+      color: white;
+      text-decoration: none;
+    }
+    .nav__right {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .search-bar {
+      display: flex;
+      gap: 5px;
+      margin-top: 10px;
+      height: 32px;
+      align-items: center;
+    }
+    .search-bar input {
+      padding: 5px;
+      flex: 1;
+      border-radius: 4px;
+      border: none;
+    }
+    .search-bar button {
+      padding: 5px 10px;
+      cursor: pointer;
+      background: #ff6600;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+    .search-bar button:hover {
+      background: #e65c00;
+    }
+    .banner {
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url('https://i.ibb.co/bgx0ZBfz/Untitled-design-2.png') no-repeat center center/cover;
+      height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      flex-direction: column;
+      padding: 20px;
+      margin-top: 140px;
+      animation: fadeIn 1.5s ease;
+    }
+    .banner h1 { font-size: 34px; margin: 0; font-weight: bold; }
+    .banner p {
+      font-size: 18px;
+      margin: 15px 0;
+      max-width: 90%;
+    }
+    .banner .btn {
+      background: #ff6600;
+      color: white;
+      padding: 12px 24px;
+      font-size: 16px;
+      text-decoration: none;
+      margin-top: 20px;
+      border-radius: 6px;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+    .banner .btn:hover {
+      background: #e65c00;
+      transform: translateY(-2px);
+    }
+    .products {
+      padding: 40px 20px;
+      text-align: center;
+    }
+    .product-list {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .product {
+      border: 1px solid #ddd;
+      padding: 10px;
+      width: calc(50% - 20px);
+      max-width: 300px;
+      background: #fafafa;
+      box-sizing: border-box;
+      border-radius: 8px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .product:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .product img {
+      width: 100%;
+      height: 180px;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+    .product h3 { margin: 10px 0 5px; }
+    .product .price {
+      font-weight: bold;
+      color: #333;
+    }
+    .product button {
+      margin-top: 10px;
+      padding: 8px 12px;
+      background: #ff6600;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.3s ease;
+    }
+    .product button:hover {
+      background: #e65c00;
+    }
+    .logos {
+      text-align: center;
+      padding: 40px 20px;
+      background-color: #f2f2f2;
+    }
+    .logos h2 { margin-bottom: 20px; }
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .logo-container img {
+      width: 80px;
+      height: auto;
+    }
+    .products h2,
+    .logos h2 {
+      font-size: 28px;
+      font-weight: 700;
+      color: #222;
+      position: relative;
+      display: inline-block;
+      margin-bottom: 30px;
+    }
+    .products h2::after,
+    .logos h2::after {
+      content: "";
+      position: absolute;
+      width: 50%;
+      height: 4px;
+      background: linear-gradient(to right, #ff6600, #ff9933);
+      bottom: -8px;
+      left: 0;
+      border-radius: 2px;
+    }
+    
+    /* Updated Footer Styles */
+    footer {
+      background: #000;
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      text-align: center;
+    }
+    
+    .footer-column h3 {
+      color: #ff6600;
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+    }
+    
+    .footer-column p, 
+    .footer-column a {
+      color: white;
+      margin-bottom: 10px;
+      display: block;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .footer-column a:hover {
+      color: #ff6600;
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+      justify-content: center;
+    }
+    
+    .social-links a {
+      color: white;
+      background: rgba(255, 255, 255, 0.1);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+    
+    .social-links a:hover {
+      background: #ff6600;
+      transform: translateY(-3px);
+    }
+    
+    .copyright {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: #aaa;
+      font-size: 0.9rem;
+    }
+    /* Checkout Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0; top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background-color: white;
+      padding: 20px;
+      max-width: 500px;
+      width: 90%;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    .modal-content h3 {
+      margin-top: 0;
+    }
+    .cart-summary ul {
+      padding: 0;
+      list-style: none;
+    }
+    .checkout-form input,
+    .checkout-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .checkout-form button {
+      background: #ff6600;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+    .remove-btn {
+      margin-left: 10px;
+      padding: 2px 6px;
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .remove-btn:hover {
+      background-color: #e60000;
+    }
+    .cancel-btn {
+      background: #999;
+    }
+    .no-results {
+      text-align: center;
+      padding: 20px;
+      font-size: 18px;
+      color: #666;
+      display: none;
+    }
+    
+    /* Delivery Options */
+    .delivery-options {
+      margin: 15px 0;
+    }
+    .delivery-option {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .delivery-option:hover {
+      border-color: #ff6600;
+    }
+    .delivery-option input {
+      margin-right: 10px;
+    }
+    .delivery-option label {
+      flex: 1;
+      cursor: pointer;
+    }
+    .delivery-option .price {
+      font-weight: bold;
+      color: #ff6600;
+    }
+    .delivery-charge {
+      margin: 10px 0;
+      padding: 10px;
+      background: #f5f5f5;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    .delivery-charge span {
+      font-weight: bold;
+      color: #ff6600;
+    }
+    
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes zoomIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+    
+    /* Order Confirmation Styles */
+    .order-confirmation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    .confirmation-container {
+      background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      position: relative;
+    }
+    
+    .confirmation-icon {
+      width: 80px;
+      height: 80px;
+      background: #4CAF50;
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .confirmation-icon svg {
+      width: 40px;
+      height: 40px;
+      stroke: white;
+      stroke-width: 2;
+    }
+    
+    .order-confirmation h2 {
+      color: #fff;
+      font-size: 2.2em;
+      margin-bottom: 20px;
+    }
+    
+    .confirmation-details {
+      background: rgba(255,255,255,0.1);
+      padding: 25px;
+      border-radius: 12px;
+      margin: 20px 0;
+      text-align: left;
+    }
+    
+    .confirmation-details p {
+      color: #fff;
+      font-size: 1.1em;
+      margin: 15px 0;
+      line-height: 1.6;
+    }
+    
+    .confirmation-details span {
+      color: #4CAF50;
+      font-weight: 600;
+    }
+    
+    .btn-continue {
+      background: #4CAF50;
+      color: white;
+      padding: 15px 40px;
+      border: none;
+      border-radius: 30px;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 20px;
+    }
+    
+    .btn-continue:hover {
+      background: #45a049;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(76,175,80,0.3);
+    }
+    
+    .confirmation-note {
+      margin-top: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: #fff;
+      font-size: 0.95em;
+    }
+    
+    .confirmation-note i {
+      color: #4CAF50;
+      font-size: 1.2em;
+    }
+    
+    @media (max-width: 768px) {
+      header { flex-direction: column; align-items: stretch; gap: 10px; }
+      nav ul { display: none; }
+      .hamburger { display: flex; }
+      .product {
+        width: 100%;
+        max-width: 100%;
+      }
+      .confirmation-container {
+        padding: 25px;
+      }
+      .order-confirmation h2 {
+        font-size: 1.8em;
+      }
+      .confirmation-details p {
+        font-size: 1em;
+      }
+    }
+  </style>
 </head>
 <body>
 <!-- Header -->
 <header>
-  <div class="header-container">
-    <div class="logo">
-      Aaila <span>Pasa</span>
-      <p class="brand-subtitle">Ghar Ghar Mai Delivery</p>
-    </div>
-    <div class="hamburger" onclick="toggleMobileMenu()">
-      <div></div><div></div><div></div>
-    </div>
-  </div>
-  <nav>
-    <ul class="desktop-nav">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="shop.html">Shop</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-    <div class="mobile-nav" id="mobileNav">
-      <a href="index.html">Home</a>
-      <a href="shop.html">Shop</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-    </div>
-  </nav>
-  <div class="nav__right">
-    <div class="search-bar">
-      <input type="text" id="searchInput" placeholder="Search products..." />
-      <button onclick="searchProducts()">🔍</button>
-    </div>
-  </div>
+  <div class="header-container">
+    <div class="logo">
+      Aaila <span>Pasa</span>
+      <p class="brand-subtitle">Ghar Ghar Mai Delivery</p>
+    </div>
+    <div class="hamburger" onclick="toggleMobileMenu()">
+      <div></div><div></div><div></div>
+    </div>
+  </div>
+  <nav>
+    <ul class="desktop-nav">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="mobile-nav" id="mobileNav">
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+  <div class="nav__right">
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search products..." />
+      <button onclick="searchProducts()">🔍</button>
+    </div>
+  </div>
 </header>
-
 <!-- Banner -->
 <section class="banner">
-  <h1>Welcome to Aaila Pasa</h1>
-  <p>Explore our curated selection of luxury spirits. From fine wines to bold whiskeys, we bring the bar to your home.</p>
-  <a href="shop.html" class="btn">Shop Now</a>
+  <h1>Welcome to Aaila Pasa</h1>
+  <p>Explore our curated selection of luxury spirits. From fine wines to bold whiskeys, we bring the bar to your home.</p>
+  <a href="shop.html" class="btn">Shop Now</a>
 </section>
-
 <!-- Products -->
 <section class="products">
-  <h2>Best Sellers</h2>
-  <div class="no-results" id="noResults">
-    No products found matching your search.
-  </div>
-  <div class="product-list" id="productList">
-    <div class="product">
-      <img src="https://i.ibb.co/fGnwYyV2/9d6a25ad33d78e416a97696d4a8e1587.jpg" alt="Red Wine" />
-      <h3>Canvas Sweet Red Wine</h3>
-      <p class="price">Rs.2,100</p>
-      <label>Qty:
-        <select class="quantity-selector">
-          <option value="1">1</option><option value="2">2</option><option value="3">3</option>
-        </select>
-      </label>
-      <button onclick="goToCheckout(this)">Add to Cart</button>
-    </div>
-    <div class="product">
-      <img src="https://i.ibb.co/NdBR861Z/old-durbar-750ml-73537.jpg" alt="Whiskey" />
-      <h3>Old Durbar Whiskey</h3>
-      <p class="price">Rs.2,950</p>
-      <label>Qty:
-        <select class="quantity-selector">
-          <option value="1">1</option><option value="2">2</option><option value="3">3</option>
-        </select>
-      </label>
-      <button onclick="goToCheckout(this)">Add to Cart</button>
-    </div>
-    <div class="product">
-      <img src="https://i.ibb.co/5xMmr8jZ/strong-1.jpg" alt="Whiskey" />
-      <h3>Nepal Ice</h3>
-      <p class="price">Rs.2,950</p>
-      <label>Qty:
-        <select class="quantity-selector">
-          <option value="1">1</option><option value="2">2</option><option value="3">3</option>
-        </select>
-      </label>
-      <button onclick="goToCheckout(this)">Add to Cart</button>
-    </div>
-    <div class="product">
-      <img src="https://i.ibb.co/NdBR861Z/old-durbar-750ml-73537.jpg" alt="Whiskey" />
-      <h3>Old Durbar Whiskey</h3>
-      <p class="price">Rs.2,950</p>
-      <label>Qty:
-        <select class="quantity-selector">
-          <option value="1">1</option><option value="2">2</option><option value="3">3</option>
-        </select>
-      </label>
-      <button onclick="goToCheckout(this)">Add to Cart</button>
-    </div>
-    <div class="product">
-      <img src="https://i.ibb.co/5xMmr8jZ/strong-1.jpg" alt="Whiskey" />
-      <h3>Nepal Ice</h3>
-      <p class="price">Rs.2,950</p>
-      <label>Qty:
-        <select class="quantity-selector">
-          <option value="1">1</option><option value="2">2</option><option value="3">3</option>
-        </select>
-      </label>
-      <button onclick="goToCheckout(this)">Add to Cart</button>
-    </div>
-    <div class="product">
-      <img src="https://i.ibb.co/NdBR861Z/old-durbar-750ml-73537.jpg" alt="Whiskey" />
-      <h3>Old Durbar Whiskey</h3>
-      <p class="price">Rs.2,950</p>
-      <label>Qty:
-        <select class="quantity-selector">
-          <option value="1">1</option><option value="2">2</option><option value="3">3</option>
-        </select>
-      </label>
-      <button onclick="goToCheckout(this)">Add to Cart</button>
-    </div>
-    <div class="product">
-      <img src="https://i.ibb.co/5xMmr8jZ/strong-1.jpg" alt="Whiskey" />
-      <h3>Nepal Ice</h3>
-      <p class="price">Rs.2,950</p>
-      <label>Qty:
-        <select class="quantity-selector">
-          <option value="1">1</option><option value="2">2</option><option value="3">3</option>
-        </select>
-      </label>
-      <button onclick="goToCheckout(this)">Add to Cart</button>
-    </div>
-    <div class="product">
-      <img src="https://i.ibb.co/NdBR861Z/old-durbar-750ml-73537.jpg" alt="Whiskey" />
-      <h3>Old Durbar Whiskey</h3>
-      <p class="price">Rs.2,950</p>
-      <label>Qty:
-        <select class="quantity-selector">
-          <option value="1">1</option><option value="2">2</option><option value="3">3</option>
-        </select>
-      </label>
-      <button onclick="goToCheckout(this)">Add to Cart</button>
-    </div>
-    <div class="product">
-      <img src="https://i.ibb.co/5xMmr8jZ/strong-1.jpg" alt="Whiskey" />
-      <h3>Nepal Ice</h3>
-      <p class="price">Rs.2,950</p>
-      <label>Qty:
-        <select class="quantity-selector">
-          <option value="1">1</option><option value="2">2</option><option value="3">3</option>
-        </select>
-      </label>
-      <button onclick="goToCheckout(this)">Add to Cart</button>
-    </div>
-    <div class="product">
-      <img src="https://i.ibb.co/NdBR861Z/old-durbar-750ml-73537.jpg" alt="Whiskey" />
-      <h3>Old Durbar Whiskey</h3>
-      <p class="price">Rs.2,950</p>
-      <label>Qty:
-        <select class="quantity-selector">
-          <option value="1">1</option><option value="2">2</option><option value="3">3</option>
-        </select>
-      </label>
-      <button onclick="goToCheckout(this)">Add to Cart</button>
-    </div>
-    <div class="product">
-      <img src="https://i.ibb.co/5xMmr8jZ/strong-1.jpg" alt="Whiskey" />
-      <h3>Nepal Ice</h3>
-      <p class="price">Rs.2,950</p>
-      <label>Qty:
-        <select class="quantity-selector">
-          <option value="1">1</option><option value="2">2</option><option value="3">3</option>
-        </select>
-      </label>
-      <button onclick="goToCheckout(this)">Add to Cart</button>
-    </div>
-    <div class="product">
-      <img src="https://i.ibb.co/NdBR861Z/old-durbar-750ml-73537.jpg" alt="Whiskey" />
-      <h3>Old Durbar Whiskey</h3>
-      <p class="price">Rs.2,950</p>
-      <label>Qty:
-        <select class="quantity-selector">
-          <option value="1">1</option><option value="2">2</option><option value="3">3</option>
-        </select>
-      </label>
-      <button onclick="goToCheckout(this)">Add to Cart</button>
-    </div>
-  </div>
+  <h2>Best Sellers</h2>
+  <div class="no-results" id="noResults">
+    No products found matching your search.
+  </div>
+  <div class="product-list" id="productList">
+    <div class="product">
+      <img src="https://i.ibb.co/fGnwYyV2/9d6a25ad33d78e416a97696d4a8e1587.jpg" alt="Red Wine" />
+      <h3>Canvas Sweet Red Wine</h3>
+      <p class="price">Rs.2,100</p>
+      <label>Qty:
+        <select class="quantity-selector">
+          <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+        </select>
+      </label>
+      <button onclick="goToCheckout(this)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://i.ibb.co/NdBR861Z/old-durbar-750ml-73537.jpg" alt="Whiskey" />
+      <h3>Old Durbar Whiskey</h3>
+      <p class="price">Rs.2,950</p>
+      <label>Qty:
+        <select class="quantity-selector">
+          <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+        </select>
+      </label>
+      <button onclick="goToCheckout(this)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://i.ibb.co/5xMmr8jZ/strong-1.jpg" alt="Whiskey" />
+      <h3>Nepal Ice</h3>
+      <p class="price">Rs.2,950</p>
+      <label>Qty:
+        <select class="quantity-selector">
+          <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+        </select>
+      </label>
+      <button onclick="goToCheckout(this)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://i.ibb.co/NdBR861Z/old-durbar-750ml-73537.jpg" alt="Whiskey" />
+      <h3>Old Durbar Whiskey</h3>
+      <p class="price">Rs.2,950</p>
+      <label>Qty:
+        <select class="quantity-selector">
+          <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+        </select>
+      </label>
+      <button onclick="goToCheckout(this)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://i.ibb.co/5xMmr8jZ/strong-1.jpg" alt="Whiskey" />
+      <h3>Nepal Ice</h3>
+      <p class="price">Rs.2,950</p>
+      <label>Qty:
+        <select class="quantity-selector">
+          <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+        </select>
+      </label>
+      <button onclick="goToCheckout(this)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://i.ibb.co/NdBR861Z/old-durbar-750ml-73537.jpg" alt="Whiskey" />
+      <h3>Old Durbar Whiskey</h3>
+      <p class="price">Rs.2,950</p>
+      <label>Qty:
+        <select class="quantity-selector">
+          <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+        </select>
+      </label>
+      <button onclick="goToCheckout(this)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://i.ibb.co/5xMmr8jZ/strong-1.jpg" alt="Whiskey" />
+      <h3>Nepal Ice</h3>
+      <p class="price">Rs.2,950</p>
+      <label>Qty:
+        <select class="quantity-selector">
+          <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+        </select>
+      </label>
+      <button onclick="goToCheckout(this)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://i.ibb.co/NdBR861Z/old-durbar-750ml-73537.jpg" alt="Whiskey" />
+      <h3>Old Durbar Whiskey</h3>
+      <p class="price">Rs.2,950</p>
+      <label>Qty:
+        <select class="quantity-selector">
+          <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+        </select>
+      </label>
+      <button onclick="goToCheckout(this)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://i.ibb.co/5xMmr8jZ/strong-1.jpg" alt="Whiskey" />
+      <h3>Nepal Ice</h3>
+      <p class="price">Rs.2,950</p>
+      <label>Qty:
+        <select class="quantity-selector">
+          <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+        </select>
+      </label>
+      <button onclick="goToCheckout(this)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://i.ibb.co/NdBR861Z/old-durbar-750ml-73537.jpg" alt="Whiskey" />
+      <h3>Old Durbar Whiskey</h3>
+      <p class="price">Rs.2,950</p>
+      <label>Qty:
+        <select class="quantity-selector">
+          <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+        </select>
+      </label>
+      <button onclick="goToCheckout(this)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://i.ibb.co/5xMmr8jZ/strong-1.jpg" alt="Whiskey" />
+      <h3>Nepal Ice</h3>
+      <p class="price">Rs.2,950</p>
+      <label>Qty:
+        <select class="quantity-selector">
+          <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+        </select>
+      </label>
+      <button onclick="goToCheckout(this)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://i.ibb.co/NdBR861Z/old-durbar-750ml-73537.jpg" alt="Whiskey" />
+      <h3>Old Durbar Whiskey</h3>
+      <p class="price">Rs.2,950</p>
+      <label>Qty:
+        <select class="quantity-selector">
+          <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+        </select>
+      </label>
+      <button onclick="goToCheckout(this)">Add to Cart</button>
+    </div>
+  </div>
 </section>
-
 <!-- Logos -->
 <section class="logos">
-  <h2>Trusted Brands</h2>
-  <div class="logo-container">
-    <img src="https://i.ibb.co/V03LpVLy/1779456.webp" alt="Brand 1" />
-    <img src="https://dev-api.citi977.com.np/images/image-1679898129905.webp" alt="Brand 2" />
-    <img src="https://nepalice.com.np/wp-content/uploads/2023/02/cropped-favicon.png" alt="Brand 3" />
-    <img src="https://i.ibb.co/39Q3n0jp/image-1679898083042.webp" alt="Brand 4" />
-  </div>
+  <h2>Trusted Brands</h2>
+  <div class="logo-container">
+    <img src="https://i.ibb.co/V03LpVLy/1779456.webp" alt="Brand 1" />
+    <img src="https://dev-api.citi977.com.np/images/image-1679898129905.webp" alt="Brand 2" />
+    <img src="https://nepalice.com.np/wp-content/uploads/2023/02/cropped-favicon.png" alt="Brand 3" />
+    <img src="https://i.ibb.co/39Q3n0jp/image-1679898083042.webp" alt="Brand 4" />
+  </div>
 </section>
-
-<!-- Updated Checkout Modal -->
+<!-- Checkout Modal -->
 <div class="modal" id="checkoutModal">
-  <div class="modal-content">
-    <h3>Your Cart</h3>
-    <div class="cart-summary">
-      <ul id="checkout-cart-items"></ul>
-      <div class="delivery-options">
-        <h4>Delivery Options</h4>
-        <div class="delivery-option" onclick="selectDeliveryOption(this, 100)">
-          <input type="radio" name="delivery" checked>
-          <label>Standard Delivery (2-3 hours)</label>
-          <span class="price">Rs.100</span>
-        </div>
-        <div class="delivery-option" onclick="selectDeliveryOption(this, 200)">
-          <input type="radio" name="delivery">
-          <label>Express Delivery (1 hour)</label>
-          <span class="price">Rs.200</span>
-        </div>
-      </div>
-      <div class="delivery-charge">
-        <p>Delivery Charge: <span id="delivery-fee">Rs.100</span></p>
-      </div>
-      <p id="checkout-total"><strong>Total: Rs.0</strong></p>
-    </div>
-    <div class="checkout-form-container">
-      <form id="order-form">
-        <input type="text" id="customer-name" placeholder="Full Name" required />
-        <input type="email" id="customer-email" placeholder="Email Address" required />
-        <input type="tel" id="customer-phone" placeholder="Phone Number" required />
-        <textarea id="customer-address" placeholder="Full Address (Include Landmark)" rows="4" required></textarea>
-        <textarea id="customer-notes" placeholder="Special Instructions (Optional)" rows="2"></textarea>
-        <div class="form-buttons">
-          <button type="submit">Place Order</button>
-          <button type="button" class="cancel-btn" onclick="closeModal()">Cancel</button>
-        </div>
-      </form>
-    </div>
-  </div>
+  <div class="modal-content">
+    <h3>Your Cart</h3>
+    <div class="cart-summary">
+      <ul id="checkout-cart-items"></ul>
+      <div class="delivery-options">
+        <h4>Delivery Options</h4>
+        <div class="delivery-option" onclick="selectDeliveryOption(this, 100)">
+          <input type="radio" name="delivery" checked>
+          <label>Standard Delivery (2-3 hours)</label>
+          <span class="price">Rs.100</span>
+        </div>
+        <div class="delivery-option" onclick="selectDeliveryOption(this, 200)">
+          <input type="radio" name="delivery">
+          <label>Express Delivery (1 hour)</label>
+          <span class="price">Rs.200</span>
+        </div>
+      </div>
+      <div class="delivery-charge">
+        <p>Delivery Charge: <span id="delivery-fee">Rs.100</span></p>
+      </div>
+      <p id="checkout-total"><strong>Total: Rs.0</strong></p>
+    </div>
+    <div class="checkout-form">
+      <form id="order-form">
+        <input type="text" id="customer-name" placeholder="Full Name" required />
+        <input type="email" id="customer-email" placeholder="Email Address" required />
+        <input type="tel" id="customer-phone" placeholder="Phone Number" required />
+        <textarea id="customer-address" placeholder="Full Address (Include Landmark)" rows="4" required></textarea>
+        <textarea id="customer-notes" placeholder="Special Instructions (Optional)" rows="2"></textarea>
+        <button type="submit">Place Order</button>
+        <button type="button" class="cancel-btn" onclick="closeModal()">Cancel</button>
+      </form>
+    </div>
+  </div>
 </div>
-  
+  
 <!-- Order Confirmation Section -->
 <section class="order-confirmation" id="orderConfirmation" style="display: none;">
-  <div class="confirmation-container">
-    <div class="confirmation-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-        <polyline points="22 4 12 14.01 9 11.01"></polyline>
-      </svg>
-    </div>
-    <h2>Order Placed Successfully!</h2>
-    <div class="confirmation-details">
-      <p>Thank you for your purchase, <span id="confirm-name"></span>!</p>
-      <p>Your order <span id="confirm-number"></span> has been confirmed.</p>
-      <p>Total Amount: <span id="confirm-total"></span></p>
-      <p>We've sent a confirmation email to <span id="confirm-email"></span></p>
-    </div>
-    <div class="confirmation-actions">
-      <button onclick="continueShopping()" class="btn-continue">
-        Continue Shopping
-      </button>
-    </div>
-    <div class="confirmation-note">
-      <i class="fas fa-truck"></i>
-      <p>Your order will be delivered within <span id="delivery-time">2-3 hours</span></p>
-    </div>
-  </div>
+  <div class="confirmation-container">
+    <div class="confirmation-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+      </svg>
+    </div>
+    <h2>Order Placed Successfully!</h2>
+    <div class="confirmation-details">
+      <p>Thank you for your purchase, <span id="confirm-name"></span>!</p>
+      <p>Your order <span id="confirm-number"></span> has been confirmed.</p>
+      <p>Total Amount: <span id="confirm-total"></span></p>
+      <p>We've sent a confirmation email to <span id="confirm-email"></span></p>
+    </div>
+    <div class="confirmation-actions">
+      <button onclick="continueShopping()" class="btn-continue">
+        Continue Shopping
+      </button>
+    </div>
+    <div class="confirmation-note">
+      <i class="fas fa-truck"></i>
+      <p>Your order will be delivered within <span id="delivery-time">2-3 hours</span></p>
+    </div>
+  </div>
 </section>
-
 <!-- Updated Footer -->
 <footer>
-    <div class="footer-content">
-      <div class="footer-column">
-        <h3>Aaila Pasa</h3>
-        <p>Your trusted partner for quality products with convenient home delivery service.</p>
-        <div class="social-links">
-          <a href="#"><i class="fab fa-facebook-f"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
-          <a href="#"><i class="fab fa-twitter"></i></a>
-          <a href="#"><i class="fab fa-youtube"></i></a>
-        </div>
-      </div>
-      
-      <div class="footer-column">
-        <h3>Quick Links</h3>
-        <a href="index.html">Home</a>
-        <a href="shop.html">Shop</a>
-        <a href="about.html">About Us</a>
-        <a href="contact.html">Contact</a>
-      </div>
-      
-      <div class="footer-column">
-        <h3>Customer Service</h3>
-        <a href="#">FAQs</a>
-        <a href="#">Shipping Policy</a>
-        <a href="#">Return Policy</a>
-        <a href="#">Privacy Policy</a>
-      </div>
-      
-      <div class="footer-column">
-        <h3>Contact Us</h3>
-        <p><i class="fas fa-map-marker-alt"></i> Thulobharang Kathmandu, Nepal</p>
-        <p><i class="fas fa-phone"></i> +977 9813197704</p>
-        <p><i class="fas fa-envelope"></i> info@aailapasa.com</p>
-      </div>
-    </div>
-    
-    <div class="copyright">
-      &copy; 2025 Aaila Pasa. All rights reserved.
-    </div>
+    <div class="footer-content">
+      <div class="footer-column">
+        <h3>Aaila Pasa</h3>
+        <p>Your trusted partner for quality products with convenient home delivery service.</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      
+      <div class="footer-column">
+        <h3>Quick Links</h3>
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      
+      <div class="footer-column">
+        <h3>Customer Service</h3>
+        <a href="#">FAQs</a>
+        <a href="#">Shipping Policy</a>
+        <a href="#">Return Policy</a>
+        <a href="#">Privacy Policy</a>
+      </div>
+      
+      <div class="footer-column">
+        <h3>Contact Us</h3>
+        <p><i class="fas fa-map-marker-alt"></i> Thulobharang Kathmandu, Nepal</p>
+        <p><i class="fas fa-phone"></i> +977 9813197704</p>
+        <p><i class="fas fa-envelope"></i> info@aailapasa.com</p>
+      </div>
+    </div>
+    
+    <div class="copyright">
+      &copy; 2025 Aaila Pasa. All rights reserved.
+    </div>
 </footer>
-
 <script>
-  // Initialize EmailJS with your User ID
-  emailjs.init('jRW7p7WnU3zCVXhn3'); // Replace with your actual EmailJS user ID
-
-  let cart = [];
-  let deliveryFee = 100;
-  let deliveryTime = "2-3 hours";
-  const cartModal = document.getElementById("checkoutModal");
-  const checkoutCartItems = document.getElementById("checkout-cart-items");
-  const checkoutTotal = document.getElementById("checkout-total");
-  const searchInput = document.getElementById("searchInput");
-  const productList = document.getElementById("productList");
-  const noResults = document.getElementById("noResults");
-  const products = document.querySelectorAll('.product');
-  const deliveryFeeElement = document.getElementById("delivery-fee");
-
-  // Toggle mobile navigation
-  function toggleMobileMenu() {
-    const mobileNav = document.getElementById("mobileNav");
-    mobileNav.classList.toggle("open");
-  }
-
-  // Add product to cart and open modal
-  function goToCheckout(button) {
-    const product = button.closest(".product");
-    const productName = product.querySelector("h3").textContent;
-    
-    // Remove Rs., commas, and any non-digit characters
-    const rawPrice = product.querySelector(".price").textContent;
-    const cleanedPrice = parseFloat(rawPrice.replace(/[^\d]/g, ''));
-    
-    const productQuantity = parseInt(product.querySelector(".quantity-selector").value);
-
-    // Check if product already exists in cart
-    const existingItemIndex = cart.findIndex(item => item.name === productName);
-    
-    if (existingItemIndex >= 0) {
-      // Update quantity if product already in cart
-      cart[existingItemIndex].quantity += productQuantity;
-    } else {
-      // Add new item to cart
-      cart.push({
-        name: productName,
-        price: cleanedPrice,
-        quantity: productQuantity
-      });
-    }
-
-    updateCartPreview();
-    openModal();
-  }
-
-  // Update cart preview
-  function updateCartPreview() {
-    checkoutCartItems.innerHTML = '';
-    let subtotal = 0;
-    cart.forEach((item, index) => {
-      const li = document.createElement("li");
-      li.innerHTML = `${item.name} (x${item.quantity}) - Rs.${(item.price * item.quantity).toFixed(2)}
-                      <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button>`;
-      checkoutCartItems.appendChild(li);
-      subtotal += item.price * item.quantity;
-    });
-    
-    const total = subtotal + deliveryFee;
-    checkoutTotal.textContent = `Total: Rs.${total.toFixed(2)}`;
-  }
-
-  // Remove item from cart
-  function removeFromCart(index) {
-    cart.splice(index, 1);
-    updateCartPreview();
-    
-    // Close modal if cart is empty
-    if (cart.length === 0) {
-      closeModal();
-    }
-  }
-
-  // Select delivery option
-  function selectDeliveryOption(element, fee) {
-    // Update all delivery options
-    const options = document.querySelectorAll('.delivery-option');
-    options.forEach(opt => {
-      opt.style.borderColor = '#ddd';
-    });
-    
-    // Highlight selected option
-    element.style.borderColor = '#ff6600';
-    
-    // Update delivery fee and time
-    deliveryFee = fee;
-    deliveryFeeElement.textContent = `Rs.${deliveryFee}`;
-    deliveryTime = fee === 100 ? "2-3 hours" : "1 hour";
-    
-    // Update total
-    updateCartPreview();
-  }
-
-  // Show order confirmation
-  function showConfirmation(orderData) {
-    const confirmationSection = document.getElementById('orderConfirmation');
-    const orderNumber = Date.now().toString().slice(-6);
-    
-    document.getElementById('confirm-name').textContent = orderData.customer_name;
-    document.getElementById('confirm-number').textContent = `#${orderNumber}`;
-    document.getElementById('confirm-total').textContent = `Rs.${orderData.order_total.toFixed(2)}`;
-    document.getElementById('confirm-email').textContent = orderData.customer_email;
-    document.getElementById('delivery-time').textContent = deliveryTime;
-
-    confirmationSection.style.display = 'flex';
-    setTimeout(() => {
-      confirmationSection.style.display = 'none';
-    }, 30000);
-  }
-
-  // Continue shopping button handler
-  function continueShopping() {
-    document.getElementById('orderConfirmation').style.display = 'none';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  // Open modal
-  function openModal() {
-    cartModal.style.display = 'flex';
-    document.querySelector('.modal-content').scrollTop = 0;
-    document.querySelector('.checkout-form-container').scrollTop = 0;
-  }
-
-  // Close modal
-  function closeModal() {
-    cartModal.style.display = 'none';
-  }
-
-  // Search products
-  function searchProducts() {
-    const searchTerm = searchInput.value.toLowerCase();
-    let hasResults = false;
-    
-    products.forEach(product => {
-      const productName = product.querySelector('h3').textContent.toLowerCase();
-      if (productName.includes(searchTerm)) {
-        product.style.display = '';
-        hasResults = true;
-      } else {
-        product.style.display = 'none';
-      }
-    });
-    
-    if (hasResults) {
-      noResults.style.display = 'none';
-      productList.style.display = 'flex';
-    } else {
-      noResults.style.display = 'block';
-      productList.style.display = 'none';
-    }
-  }
-
-  // Add event listener for Enter key in search
-  searchInput.addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
-      searchProducts();
-    }
-  });
-
-  // Auto-scroll to input when focused (for mobile keyboards)
-  document.querySelectorAll('#order-form input, #order-form textarea').forEach(input => {
-    input.addEventListener('focus', function() {
-      if (window.innerWidth <= 768) {
-        setTimeout(() => {
-          this.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 300);
-      }
-    });
-  });
-
-  // Handle form submission
-  document.getElementById('order-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    if (cart.length === 0) {
-      alert("Your cart is empty!");
-      return;
-    }
-
-    // Get form values
-    const orderData = {
-      customer_name: document.getElementById('customer-name').value,
-      customer_email: document.getElementById('customer-email').value,
-      customer_phone: document.getElementById('customer-phone').value,
-      customer_address: document.getElementById('customer-address').value,
-      customer_notes: document.getElementById('customer-notes').value,
-      order_items: cart.map(item => `${item.name} (x${item.quantity}) - Rs.${item.price * item.quantity}`).join('\n'),
-      order_subtotal: calculateSubtotal(),
-      delivery_fee: deliveryFee,
-      order_total: calculateTotal(),
-      delivery_time: deliveryTime
-    };
-
-    // Show loading state
-    const submitBtn = this.querySelector('button[type="submit"]');
-    const submitText = submitBtn.textContent;
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Processing...';
-
-    // Send email using EmailJS
-    emailjs.send('service_wb7evwg', 'template_0593y8t', orderData)
-      .then(() => {
-        // Send confirmation email to customer
-        return emailjs.send('service_wb7evwg', 'template_38h10bx', orderData);
-      })
-      .then(() => {
-        // Show confirmation
-        showConfirmation(orderData);
-        // Reset cart and close modal
-        cart = [];
-        updateCartPreview();
-        closeModal();
-        // Reset form
-        this.reset();
-      })
-      .catch((error) => {
-        console.error('Failed to send email:', error);
-        alert("There was an error processing your order. Please try again.");
-      })
-      .finally(() => {
-        submitBtn.disabled = false;
-        submitBtn.textContent = submitText;
-      });
-  });
-
-  // Helper function to calculate subtotal
-  function calculateSubtotal() {
-    return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-  }
-
-  // Helper function to calculate total with delivery
-  function calculateTotal() {
-    return calculateSubtotal() + deliveryFee;
-  }
+  // Initialize EmailJS with your User ID
+  emailjs.init('jRW7p7WnU3zCVXhn3'); // Replace with your actual EmailJS user ID
+  let cart = [];
+  let deliveryFee = 100;
+  let deliveryTime = "2-3 hours";
+  const cartModal = document.getElementById("checkoutModal");
+  const checkoutCartItems = document.getElementById("checkout-cart-items");
+  const checkoutTotal = document.getElementById("checkout-total");
+  const searchInput = document.getElementById("searchInput");
+  const productList = document.getElementById("productList");
+  const noResults = document.getElementById("noResults");
+  const products = document.querySelectorAll('.product');
+  const deliveryFeeElement = document.getElementById("delivery-fee");
+  // Toggle mobile navigation
+  function toggleMobileMenu() {
+    const mobileNav = document.getElementById("mobileNav");
+    mobileNav.classList.toggle("open");
+  }
+  // Add product to cart and open modal
+  function goToCheckout(button) {
+    const product = button.closest(".product");
+    const productName = product.querySelector("h3").textContent;
+    
+    // Remove Rs., commas, and any non-digit characters
+    const rawPrice = product.querySelector(".price").textContent;
+    const cleanedPrice = parseFloat(rawPrice.replace(/[^\d]/g, ''));
+    
+    const productQuantity = parseInt(product.querySelector(".quantity-selector").value);
+    // Check if product already exists in cart
+    const existingItemIndex = cart.findIndex(item => item.name === productName);
+    
+    if (existingItemIndex >= 0) {
+      // Update quantity if product already in cart
+      cart[existingItemIndex].quantity += productQuantity;
+    } else {
+      // Add new item to cart
+      cart.push({
+        name: productName,
+        price: cleanedPrice,
+        quantity: productQuantity
+      });
+    }
+    updateCartPreview();
+    openModal();
+  }
+  // Update cart preview
+  function updateCartPreview() {
+    checkoutCartItems.innerHTML = '';
+    let subtotal = 0;
+    cart.forEach((item, index) => {
+      const li = document.createElement("li");
+      li.innerHTML = `${item.name} (x${item.quantity}) - Rs.${(item.price * item.quantity).toFixed(2)}
+                      <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button>`;
+      checkoutCartItems.appendChild(li);
+      subtotal += item.price * item.quantity;
+    });
+    
+    const total = subtotal + deliveryFee;
+    checkoutTotal.textContent = `Total: Rs.${total.toFixed(2)}`;
+  }
+  // Remove item from cart
+  function removeFromCart(index) {
+    cart.splice(index, 1);
+    updateCartPreview();
+    
+    // Close modal if cart is empty
+    if (cart.length === 0) {
+      closeModal();
+    }
+  }
+  // Select delivery option
+  function selectDeliveryOption(element, fee) {
+    // Update all delivery options
+    const options = document.querySelectorAll('.delivery-option');
+    options.forEach(opt => {
+      opt.style.borderColor = '#ddd';
+    });
+    
+    // Highlight selected option
+    element.style.borderColor = '#ff6600';
+    
+    // Update delivery fee and time
+    deliveryFee = fee;
+    deliveryFeeElement.textContent = `Rs.${deliveryFee}`;
+    deliveryTime = fee === 100 ? "2-3 hours" : "1 hour";
+    
+    // Update total
+    updateCartPreview();
+  }
+  // Show order confirmation
+  function showConfirmation(orderData) {
+    const confirmationSection = document.getElementById('orderConfirmation');
+    const orderNumber = Date.now().toString().slice(-6);
+    
+    document.getElementById('confirm-name').textContent = orderData.customer_name;
+    document.getElementById('confirm-number').textContent = `#${orderNumber}`;
+    document.getElementById('confirm-total').textContent = `Rs.${orderData.order_total.toFixed(2)}`;
+    document.getElementById('confirm-email').textContent = orderData.customer_email;
+    document.getElementById('delivery-time').textContent = deliveryTime;
+    confirmationSection.style.display = 'flex';
+    setTimeout(() => {
+      confirmationSection.style.display = 'none';
+    }, 30000);
+  }
+  // Continue shopping button handler
+  function continueShopping() {
+    document.getElementById('orderConfirmation').style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  // Open modal
+  function openModal() {
+    cartModal.style.display = 'flex';
+  }
+  // Close modal
+  function closeModal() {
+    cartModal.style.display = 'none';
+  }
+  // Search products
+  function searchProducts() {
+    const searchTerm = searchInput.value.toLowerCase();
+    let hasResults = false;
+    
+    products.forEach(product => {
+      const productName = product.querySelector('h3').textContent.toLowerCase();
+      if (productName.includes(searchTerm)) {
+        product.style.display = '';
+        hasResults = true;
+      } else {
+        product.style.display = 'none';
+      }
+    });
+    
+    if (hasResults) {
+      noResults.style.display = 'none';
+      productList.style.display = 'flex';
+    } else {
+      noResults.style.display = 'block';
+      productList.style.display = 'none';
+    }
+  }
+  // Add event listener for Enter key in search
+  searchInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      searchProducts();
+    }
+  });
+  // Handle form submission
+  document.getElementById('order-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    if (cart.length === 0) {
+      alert("Your cart is empty!");
+      return;
+    }
+    // Get form values
+    const orderData = {
+      customer_name: document.getElementById('customer-name').value,
+      customer_email: document.getElementById('customer-email').value,
+      customer_phone: document.getElementById('customer-phone').value,
+      customer_address: document.getElementById('customer-address').value,
+      customer_notes: document.getElementById('customer-notes').value,
+      order_items: cart.map(item => `${item.name} (x${item.quantity}) - Rs.${item.price * item.quantity}`).join('\n'),
+      order_subtotal: calculateSubtotal(),
+      delivery_fee: deliveryFee,
+      order_total: calculateTotal(),
+      delivery_time: deliveryTime
+    };
+    // Show loading state
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const submitText = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Processing...';
+    // Send email using EmailJS
+    emailjs.send('service_wb7evwg', 'template_0593y8t', orderData)
+      .then(() => {
+        // Send confirmation email to customer
+        return emailjs.send('service_wb7evwg', 'template_38h10bx', orderData);
+      })
+      .then(() => {
+        // Show confirmation
+        showConfirmation(orderData);
+        // Reset cart and close modal
+        cart = [];
+        updateCartPreview();
+        closeModal();
+        // Reset form
+        this.reset();
+      })
+      .catch((error) => {
+        console.error('Failed to send email:', error);
+        alert("There was an error processing your order. Please try again.");
+      })
+      .finally(() => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = submitText;
+      });
+  });
+  // Helper function to calculate subtotal
+  function calculateSubtotal() {
+    return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+  }
+  // Helper function to calculate total with delivery
+  function calculateTotal() {
+    return calculateSubtotal() + deliveryFee;
+  }
 </script>
 </body>
 </html>
