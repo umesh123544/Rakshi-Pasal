@@ -312,33 +312,52 @@
       font-size: 0.9rem;
     }
 
-    /* Checkout Modal */
+    /* Updated Checkout Modal for Mobile Keyboard */
     .modal {
       display: none;
       position: fixed;
       z-index: 2000;
-      left: 0; top: 0;
+      left: 0;
+      top: 0;
       width: 100%;
       height: 100%;
       background-color: rgba(0,0,0,0.6);
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      overflow-y: auto;
     }
+    
     .modal-content {
       background-color: white;
       padding: 20px;
       max-width: 500px;
       width: 90%;
+      max-height: 90vh;
       border-radius: 8px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      overflow-y: auto;
+      margin: auto;
     }
-    .modal-content h3 {
-      margin-top: 0;
+    
+    .checkout-form-container {
+      max-height: 50vh;
+      overflow-y: auto;
+      padding-right: 5px;
     }
+    
+    .form-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    
     .cart-summary ul {
       padding: 0;
       list-style: none;
     }
+    
     .checkout-form input,
     .checkout-form textarea {
       width: 100%;
@@ -347,6 +366,7 @@
       border: 1px solid #ccc;
       border-radius: 4px;
     }
+    
     .checkout-form button {
       background: #ff6600;
       color: white;
@@ -356,6 +376,7 @@
       cursor: pointer;
       margin-right: 10px;
     }
+    
     .remove-btn {
       margin-left: 10px;
       padding: 2px 6px;
@@ -365,12 +386,15 @@
       border-radius: 4px;
       cursor: pointer;
     }
+    
     .remove-btn:hover {
       background-color: #e60000;
     }
+    
     .cancel-btn {
       background: #999;
     }
+    
     .no-results {
       text-align: center;
       padding: 20px;
@@ -383,6 +407,7 @@
     .delivery-options {
       margin: 15px 0;
     }
+    
     .delivery-option {
       display: flex;
       align-items: center;
@@ -393,20 +418,25 @@
       cursor: pointer;
       transition: all 0.3s ease;
     }
+    
     .delivery-option:hover {
       border-color: #ff6600;
     }
+    
     .delivery-option input {
       margin-right: 10px;
     }
+    
     .delivery-option label {
       flex: 1;
       cursor: pointer;
     }
+    
     .delivery-option .price {
       font-weight: bold;
       color: #ff6600;
     }
+    
     .delivery-charge {
       margin: 10px 0;
       padding: 10px;
@@ -414,14 +444,11 @@
       border-radius: 4px;
       font-size: 16px;
     }
+    
     .delivery-charge span {
       font-weight: bold;
       color: #ff6600;
     }
-    
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes zoomIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
     
     /* Order Confirmation Styles */
     .order-confirmation {
@@ -527,6 +554,10 @@
       font-size: 1.2em;
     }
     
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes zoomIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+    
     @media (max-width: 768px) {
       header { flex-direction: column; align-items: stretch; gap: 10px; }
       nav ul { display: none; }
@@ -543,6 +574,23 @@
       }
       .confirmation-details p {
         font-size: 1em;
+      }
+      .modal {
+        align-items: flex-start;
+        padding-top: 10px;
+      }
+      .modal-content {
+        width: 95%;
+        max-height: 85vh;
+      }
+      .checkout-form-container {
+        max-height: 40vh;
+      }
+      .form-buttons {
+        flex-direction: column;
+      }
+      .form-buttons button {
+        width: 100%;
       }
     }
   </style>
@@ -741,7 +789,7 @@
   </div>
 </section>
 
-<!-- Checkout Modal -->
+<!-- Updated Checkout Modal -->
 <div class="modal" id="checkoutModal">
   <div class="modal-content">
     <h3>Your Cart</h3>
@@ -765,15 +813,17 @@
       </div>
       <p id="checkout-total"><strong>Total: Rs.0</strong></p>
     </div>
-    <div class="checkout-form">
+    <div class="checkout-form-container">
       <form id="order-form">
         <input type="text" id="customer-name" placeholder="Full Name" required />
         <input type="email" id="customer-email" placeholder="Email Address" required />
         <input type="tel" id="customer-phone" placeholder="Phone Number" required />
         <textarea id="customer-address" placeholder="Full Address (Include Landmark)" rows="4" required></textarea>
         <textarea id="customer-notes" placeholder="Special Instructions (Optional)" rows="2"></textarea>
-        <button type="submit">Place Order</button>
-        <button type="button" class="cancel-btn" onclick="closeModal()">Cancel</button>
+        <div class="form-buttons">
+          <button type="submit">Place Order</button>
+          <button type="button" class="cancel-btn" onclick="closeModal()">Cancel</button>
+        </div>
       </form>
     </div>
   </div>
@@ -975,6 +1025,8 @@
   // Open modal
   function openModal() {
     cartModal.style.display = 'flex';
+    document.querySelector('.modal-content').scrollTop = 0;
+    document.querySelector('.checkout-form-container').scrollTop = 0;
   }
 
   // Close modal
@@ -1011,6 +1063,17 @@
     if (e.key === 'Enter') {
       searchProducts();
     }
+  });
+
+  // Auto-scroll to input when focused (for mobile keyboards)
+  document.querySelectorAll('#order-form input, #order-form textarea').forEach(input => {
+    input.addEventListener('focus', function() {
+      if (window.innerWidth <= 768) {
+        setTimeout(() => {
+          this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 300);
+      }
+    });
   });
 
   // Handle form submission
