@@ -491,194 +491,90 @@
     font-size: 1em;
   }
 }
-    /* Centered Footer Styles */
+    /* Updated Footer Styles (Same as index.html) */
     footer {
-      background: #111;
+      background: #000;
       color: white;
-      padding: 40px 20px 20px;
+      padding: 40px 20px;
       text-align: center;
     }
+    
     .footer-content {
       max-width: 1200px;
       margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      text-align: center;
     }
-    .footer-center {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 40px;
-      margin-bottom: 30px;
-    }
-    .footer-section {
-      text-align: left;
-      max-width: 300px;
-      flex: 1;
-      min-width: 250px;
-    }
-    .footer-section h3 {
+    
+    .footer-column h3 {
       color: #ff6600;
       margin-bottom: 20px;
       font-size: 1.2rem;
-      position: relative;
-      padding-bottom: 10px;
     }
-    .footer-section h3::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 50px;
-      height: 2px;
-      background: #ff6600;
-    }
-    .footer-section ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .footer-section ul li {
+    
+    .footer-column p, 
+    .footer-column a {
+      color: white;
       margin-bottom: 10px;
-    }
-    .footer-section ul li a {
-      color: #ddd;
+      display: block;
       text-decoration: none;
-      transition: color 0.3s;
+      transition: all 0.3s ease;
     }
-    .footer-section ul li a:hover {
+    
+    .footer-column a:hover {
       color: #ff6600;
     }
-    .footer-section p {
-      color: #bbb;
-      margin: 10px 0;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .socials {
+    
+    .social-links {
       display: flex;
       gap: 15px;
-      margin: 15px 0;
+      margin-top: 20px;
       justify-content: center;
     }
-    .socials a {
+    
+    .social-links a {
       color: white;
-      background: #333;
-      width: 36px;
-      height: 36px;
+      background: rgba(255, 255, 255, 0.1);
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.3s;
+      transition: all 0.3s ease;
     }
-    .socials a:hover {
+    
+    .social-links a:hover {
       background: #ff6600;
       transform: translateY(-3px);
     }
-    .newsletter-form {
-      display: flex;
-      margin-top: 15px;
-    }
-    .newsletter-form input {
-      flex: 1;
-      padding: 10px;
-      border: none;
-      border-radius: 4px 0 0 4px;
-    }
-    .newsletter-form button {
-      background: #ff6600;
-      color: white;
-      border: none;
-      padding: 0 15px;
-      border-radius: 0 4px 4px 0;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    .newsletter-form button:hover {
-      background: #e65c00;
-    }
-    .footer-bottom {
-      text-align: center;
+    
+    .copyright {
+      margin-top: 40px;
       padding-top: 20px;
-      margin-top: 30px;
-      border-top: 1px solid #333;
-      color: #999;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: #aaa;
       font-size: 0.9rem;
     }
-    .footer-bottom i {
-      color: #ff6600;
-    }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes zoomIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+
     @media (max-width: 768px) {
-      .header-container { 
-        flex-direction: column; 
-        align-items: stretch; 
-        gap: 10px; 
-        padding: 15px;
-      }
-      
-      .header-left {
-        width: 100%;
-      }
-      
-      .nav__right {
-        width: 100%;
-        justify-content: flex-start;
-        padding-left: 0;
-      }
-      
-      .search-bar {
-        width: 100%;
-        max-width: 300px;
-      }
-      
+      header { flex-direction: column; align-items: stretch; gap: 10px; }
       nav ul { display: none; }
-      
-      .hamburger { 
-        display: flex;
-        position: absolute;
-        top: 20px;
-        right: 20px;
-      }
-      
-      .mobile-nav {
-        order: 3;
+      .hamburger { display: flex; }
+      .product {
         width: 100%;
+        max-width: 100%;
       }
-      
-      .banner {
-        height: 400px;
-        margin-top: 140px;
+      .confirmation-container {
+        padding: 25px;
       }
-      .banner h1 { font-size: 28px; }
-      .banner p { font-size: 16px; }
-      
-      .footer-center {
-        flex-direction: column;
-        align-items: center;
-        gap: 30px;
+      .order-confirmation h2 {
+        font-size: 1.8em;
       }
-      .footer-section {
-        text-align: center;
-      }
-      .footer-section h3::after {
-        left: 50%;
-        transform: translateX(-50%);
-      }
-      .footer-section p {
-        justify-content: center;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .banner {
-        height: 350px;
-        margin-top: 130px;
-      }
-      .product-list {
-        grid-template-columns: 1fr;
+      .confirmation-details p {
+        font-size: 1em;
       }
     }
   </style>
@@ -933,7 +829,7 @@
     </div>
   </div>
 </section>
-  <!-- Centered Footer -->
+  <!-- Updated Footer (Same as index.html) -->
 <footer>
     <div class="footer-content">
       <div class="footer-column">
