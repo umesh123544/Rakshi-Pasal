@@ -507,6 +507,18 @@
   .confirmation-details p {
     font-size: 1em;
   }
+  .delivery-charge {
+  margin: 10px 0;
+  padding: 10px;
+  background: #f5f5f5;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.delivery-charge span {
+  font-weight: bold;
+  color: #ff6600;
+}
 }
   </style>
 </head>
@@ -709,6 +721,9 @@
   <div class="modal-content">
     <h3>Your Cart</h3>
     <div class="cart-summary">
+     <div class="delivery-charge">
+      <p>Delivery Charge: <span id="delivery-fee">Rs.100</span></p>
+   </div>
       <ul id="checkout-cart-items"></ul>
       <p id="checkout-total"><strong>Total: Rs.0</strong></p>
     </div>
@@ -796,70 +811,100 @@
     </div>
 </footer>
 <script>
-  // Initialize EmailJS with your User ID
-  emailjs.init('jRW7p7WnU3zCVXhn3'); // Replace with your actual EmailJS user ID
+ // Initialize EmailJS with your User ID
+emailjs.init('jRW7p7WnU3zCVXhn3'); // Replace with your actual EmailJS user ID
 
-  let cart = [];
-  const cartModal = document.getElementById("checkoutModal");
-  const checkoutCartItems = document.getElementById("checkout-cart-items");
-  const checkoutTotal = document.getElementById("checkout-total");
-  const searchInput = document.getElementById("searchInput");
-  const productList = document.getElementById("productList");
-  const noResults = document.getElementById("noResults");
-  const products = document.querySelectorAll('.product');
+// Configuration
+const DELIVERY_CHARGE = 100; // Set your delivery charge amount
+const MIN_ORDER_FOR_FREE_DELIVERY = 5000; // Set minimum order for free delivery
 
-  // Toggle mobile navigation
-  function toggleMobileMenu() {
-    const mobileNav = document.getElementById("mobileNav");
-    mobileNav.classList.toggle("open");
+let cart = [];
+const cartModal = document.getElementById("checkoutModal");
+const checkoutCartItems = document.getElementById("checkout-cart-items");
+const checkoutTotal = document.getElementById("checkout-total");
+const deliveryFeeElement = document.getElementById("delivery-fee");
+const searchInput = document.getElementById("searchInput");
+const productList = document.getElementById("productList");
+const noResults = document.getElementById("noResults");
+const products = document.querySelectorAll('.product');
+
+// Toggle mobile navigation
+function toggleMobileMenu() {
+  const mobileNav = document.getElementById("mobileNav");
+  mobileNav.classList.toggle("open");
+}
+
+// Calculate delivery charge
+function calculateDelivery(subtotal) {
+  return subtotal >= MIN_ORDER_FOR_FREE_DELIVERY ? 0 : DELIVERY_CHARGE;
+}
+
+// Calculate total including delivery
+function calculateTotalWithDelivery() {
+  const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+  const delivery = calculateDelivery(subtotal);
+  return {
+    subtotal,
+    delivery,
+    total: subtotal + delivery
+  };
+}
+
+// Add product to cart and open modal
+function goToCheckout(button) {
+  const product = button.closest(".product");
+  const productName = product.querySelector("h3").textContent;
+  const rawPrice = product.querySelector(".price").textContent;
+  const cleanedPrice = parseFloat(rawPrice.replace(/[^\d]/g, ''));
+  const productQuantity = parseInt(product.querySelector(".quantity-selector").value);
+
+  cart.push({
+    name: productName,
+    price: cleanedPrice,
+    quantity: productQuantity
+  });
+
+  updateCartPreview();
+  openModal();
+}
+
+// Update cart preview
+function updateCartPreview() {
+  checkoutCartItems.innerHTML = '';
+  const totals = calculateTotalWithDelivery();
+  
+  cart.forEach((item, index) => {
+    const li = document.createElement("li");
+    li.innerHTML = `${item.name} (x${item.quantity}) - Rs.${(item.price * item.quantity).toFixed(2)}
+                    <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button>`;
+    checkoutCartItems.appendChild(li);
+  });
+  
+  // Update delivery fee display
+  deliveryFeeElement.textContent = `Rs.${totals.delivery.toFixed(2)}`;
+  if (totals.delivery === 0) {
+    deliveryFeeElement.innerHTML += ' <span style="color:green">(Free delivery!)</span>';
   }
+  
+  // Update total display
+  checkoutTotal.innerHTML = `
+    <p>Subtotal: Rs.${totals.subtotal.toFixed(2)}</p>
+    <p><strong>Total: Rs.${totals.total.toFixed(2)}</strong></p>
+  `;
+}
 
-  // Add product to cart and open modal
-  function goToCheckout(button) {
-    const product = button.closest(".product");
-    const productName = product.querySelector("h3").textContent;
-    
-    // Remove Rs., commas, and any non-digit characters
-    const rawPrice = product.querySelector(".price").textContent;
-    const cleanedPrice = parseFloat(rawPrice.replace(/[^\d]/g, ''));
-    
-    const productQuantity = parseInt(product.querySelector(".quantity-selector").value);
+// Remove item from cart
+function removeFromCart(index) {
+  cart.splice(index, 1);
+  updateCartPreview();
+}
 
-    cart.push({
-      name: productName,
-      price: cleanedPrice,
-      quantity: productQuantity
-    });
-
-    updateCartPreview();
-    openModal();
-  }
-
-  // Update cart preview
-  function updateCartPreview() {
-    checkoutCartItems.innerHTML = '';
-    let total = 0;
-    cart.forEach((item, index) => {
-      const li = document.createElement("li");
-      li.innerHTML = `${item.name} (x${item.quantity}) - Rs.${(item.price * item.quantity).toFixed(2)}
-                      <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button>`;
-      checkoutCartItems.appendChild(li);
-      total += item.price * item.quantity;
-    });
-    checkoutTotal.textContent = `Total: Rs.${total.toFixed(2)}`;
-  }
-
-  // Remove item from cart
-  function removeFromCart(index) {
-    cart.splice(index, 1);
-    updateCartPreview();
-  }// Show order confirmation
+// Show order confirmation
 function showConfirmation(orderData) {
   const confirmationSection = document.getElementById('orderConfirmation');
-  const orderNumber = Date.now().toString().slice(-6);
   
   document.getElementById('confirm-name').textContent = orderData.customer_name;
-  document.getElementById('confirm-number').textContent = `#${orderNumber}`;
+  document.getElementById('confirm-number').textContent = orderData.order_number;
   document.getElementById('confirm-total').textContent = `Rs.${orderData.order_total.toFixed(2)}`;
   document.getElementById('confirm-email').textContent = orderData.customer_email;
 
@@ -875,48 +920,41 @@ function continueShopping() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-  // Open modal
-  function openModal() {
-    cartModal.style.display = 'flex';
-  }
+// Open modal
+function openModal() {
+  cartModal.style.display = 'flex';
+}
 
-  // Close modal
-  function closeModal() {
-    cartModal.style.display = 'none';
-  }
+// Close modal
+function closeModal() {
+  cartModal.style.display = 'none';
+}
 
-  // Search products
-  function searchProducts() {
-    const searchTerm = searchInput.value.toLowerCase();
-    let hasResults = false;
-    
-    products.forEach(product => {
-      const productName = product.querySelector('h3').textContent.toLowerCase();
-      if (productName.includes(searchTerm)) {
-        product.style.display = '';
-        hasResults = true;
-      } else {
-        product.style.display = 'none';
-      }
-    });
-    
-    if (hasResults) {
-      noResults.style.display = 'none';
-      productList.style.display = 'flex';
+// Search products
+function searchProducts() {
+  const searchTerm = searchInput.value.toLowerCase();
+  let hasResults = false;
+  
+  products.forEach(product => {
+    const productName = product.querySelector('h3').textContent.toLowerCase();
+    if (productName.includes(searchTerm)) {
+      product.style.display = '';
+      hasResults = true;
     } else {
-      noResults.style.display = 'block';
-      productList.style.display = 'none';
-    }
-  }
-
-  // Add event listener for Enter key in search
-  searchInput.addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
-      searchProducts();
+      product.style.display = 'none';
     }
   });
+  
+  if (hasResults) {
+    noResults.style.display = 'none';
+    productList.style.display = 'flex';
+  } else {
+    noResults.style.display = 'block';
+    productList.style.display = 'none';
+  }
+}
 
-  // Handle form submission
+// Handle form submission
 document.getElementById('order-form').addEventListener('submit', function(e) {
   e.preventDefault();
   
@@ -925,6 +963,9 @@ document.getElementById('order-form').addEventListener('submit', function(e) {
     return;
   }
 
+  // Calculate totals
+  const totals = calculateTotalWithDelivery();
+  
   // Get form values
   const orderData = {
     customer_name: document.getElementById('customer-name').value,
@@ -932,44 +973,65 @@ document.getElementById('order-form').addEventListener('submit', function(e) {
     customer_phone: document.getElementById('customer-phone').value,
     customer_address: document.getElementById('customer-address').value,
     order_items: cart.map(item => `${item.name} (x${item.quantity}) - Rs.${item.price * item.quantity}`).join('\n'),
-    order_total: calculateTotal()
+    order_subtotal: totals.subtotal,
+    delivery_charge: totals.delivery,
+    order_total: totals.total,
+    order_date: new Date().toLocaleString(),
+    order_number: '#' + Date.now().toString().slice(-6),
+    free_delivery_threshold: MIN_ORDER_FOR_FREE_DELIVERY,
+    delivery_message: totals.delivery === 0 ? 
+      `You qualified for free delivery on orders over Rs.${MIN_ORDER_FOR_FREE_DELIVERY}!` :
+      `Add Rs.${MIN_ORDER_FOR_FREE_DELIVERY - totals.subtotal} more to qualify for free delivery!`
   };
 
   // Show loading state
   const submitBtn = this.querySelector('button[type="submit"]');
+  const submitText = submitBtn.textContent;
   submitBtn.disabled = true;
   submitBtn.textContent = 'Processing...';
 
-  // Send email using EmailJS
-  emailjs.send('service_wb7evwg', 'template_0593y8t', orderData)
-    .then(() => {
-      // Send confirmation email to customer
-      return emailjs.send('service_wb7evwg', 'template_38h10bx', orderData);
+  // Send emails in parallel
+  Promise.all([
+    // Customer confirmation email
+    emailjs.send('service_wb7evwg', 'template_38h10bx', {
+      ...orderData,
+      to_email: orderData.customer_email,
+      subject: `Your Aaila Pasa Order Confirmation (${orderData.order_number})`
+    }),
+    
+    // Business notification email
+    emailjs.send('service_wb7evwg', 'template_0593y8t', {
+      ...orderData,
+      to_email: 'yourbusiness@email.com', // Replace with your business email
+      subject: `New Order Received (${orderData.order_number})`
     })
-    .then(() => {
-      // Show confirmation
-      showConfirmation(orderData);
-      // Reset cart and close modal
-      cart = [];
-      updateCartPreview();
-      closeModal();
-      // Reset form
-      this.reset();
-    })
-    .catch((error) => {
-      console.error('Failed to send email:', error);
-      alert("There was an error processing your order. Please try again.");
-    })
-    .finally(() => {
-      submitBtn.disabled = false;
-      submitText.textContent = 'Place Order';
-    });
+  ])
+  .then(() => {
+    // Show confirmation
+    showConfirmation(orderData);
+    // Reset cart and close modal
+    cart = [];
+    updateCartPreview();
+    closeModal();
+    // Reset form
+    this.reset();
+  })
+  .catch((error) => {
+    console.error('Failed to send email:', error);
+    alert("There was an error processing your order. Please try again.");
+  })
+  .finally(() => {
+    submitBtn.disabled = false;
+    submitBtn.textContent = submitText;
+  });
 });
 
-// Add this helper function if not already present
-function calculateTotal() {
-  return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-}
+// Add event listener for Enter key in search
+searchInput.addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') {
+    searchProducts();
+  }
+});
 </script>
 </body>
 </html>
