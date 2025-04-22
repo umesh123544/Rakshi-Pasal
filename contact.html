@@ -249,6 +249,109 @@
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
     
+    /* Subscription Section */
+    .newsletter-section {
+      background: #ff6600;
+      padding: 40px 20px;
+      text-align: center;
+      color: white;
+      margin: 40px 0;
+    }
+    
+    .newsletter-container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .newsletter-section h2 {
+      margin-top: 0;
+      font-size: 28px;
+    }
+    
+    .newsletter-section p {
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+    
+    .newsletter-form {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .newsletter-form input {
+      flex: 1;
+      min-width: 250px;
+      padding: 12px 15px;
+      border: none;
+      border-radius: 4px;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    .newsletter-form button {
+      background: #111;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    .newsletter-form button:hover {
+      background: #000;
+    }
+    
+    /* Thank You Modal */
+    .thank-you-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.8);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .thank-you-content {
+      background: white;
+      padding: 40px;
+      border-radius: 8px;
+      text-align: center;
+      max-width: 500px;
+      width: 90%;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    .thank-you-content h2 {
+      color: #ff6600;
+      margin-top: 0;
+    }
+    
+    .thank-you-content p {
+      margin-bottom: 20px;
+    }
+    
+    .thank-you-content button {
+      background: #ff6600;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    .thank-you-content button:hover {
+      background: #e65c00;
+    }
+    
     /* Updated Footer Styles */
     footer {
       background: #000;
@@ -330,6 +433,13 @@
       }
       .contact-hero h1 {
         font-size: 28px;
+      }
+      .newsletter-form {
+        flex-direction: column;
+      }
+      .newsletter-form input,
+      .newsletter-form button {
+        width: 100%;
       }
     }
   </style>
@@ -461,6 +571,27 @@
   </div>
 </div>
 
+<!-- Newsletter Subscription Section -->
+<section class="newsletter-section">
+  <div class="newsletter-container">
+    <h2>Subscribe to Our Newsletter</h2>
+    <p>Stay updated with our latest products, offers, and news. Subscribe to our newsletter today!</p>
+    <form id="newsletterForm" class="newsletter-form">
+      <input type="email" id="newsletterEmail" placeholder="Enter your email address" required>
+      <button type="submit">Subscribe</button>
+    </form>
+  </div>
+</section>
+
+<!-- Thank You Modal -->
+<div class="thank-you-modal" id="thankYouModal">
+  <div class="thank-you-content">
+    <h2>Thank You for Subscribing!</h2>
+    <p>You've been successfully added to our mailing list. Look forward to exciting updates and offers from Aaila Pasa.</p>
+    <button onclick="closeThankYouModal()">Close</button>
+  </div>
+</div>
+
 <!-- Footer -->
 <footer>
     <div class="footer-content">
@@ -517,6 +648,51 @@
     alert('Thank you for your message! We will get back to you soon.');
     this.reset();
   });
+
+  // Newsletter subscription handling
+  document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = document.getElementById('newsletterEmail').value;
+    
+    // Here you would typically send this to your server
+    // For demonstration, we'll just show the thank you modal
+    console.log('Subscribed email:', email);
+    
+    // Send email notification (this would be handled server-side in a real application)
+    // For now, we'll just log it
+    sendSubscriptionNotification(email);
+    
+    // Show thank you modal
+    document.getElementById('thankYouModal').style.display = 'flex';
+    
+    // Reset form
+    this.reset();
+  });
+
+  function closeThankYouModal() {
+    document.getElementById('thankYouModal').style.display = 'none';
+  }
+
+  // This function would be replaced with actual server-side code in production
+  function sendSubscriptionNotification(email) {
+    // In a real application, you would:
+    // 1. Send the email to your server
+    // 2. Your server would then send a notification email
+    // 3. Possibly store the email in your mailing list database
+    
+    console.log(`Notification would be sent to admin about new subscriber: ${email}`);
+    console.log(`Welcome email would be sent to: ${email}`);
+    
+    // Example of what you might do with a server-side script:
+    // fetch('subscribe.php', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({ email: email })
+    // })
+    // .then(response => response.json())
+    // .then(data => console.log('Success:', data))
+    // .catch(error => console.error('Error:', error));
+  }
 </script>
 </body>
 </html>
