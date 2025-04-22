@@ -335,6 +335,45 @@
     .cancel-btn {
       background: #999;
     }
+    /* Delivery Options */
+    .delivery-options {
+      margin: 15px 0;
+    }
+    .delivery-option {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .delivery-option:hover {
+      border-color: #ff6600;
+    }
+    .delivery-option input {
+      margin-right: 10px;
+    }
+    .delivery-option label {
+      flex: 1;
+      cursor: pointer;
+    }
+    .delivery-option .price {
+      font-weight: bold;
+      color: #ff6600;
+    }
+    .delivery-charge {
+      margin: 10px 0;
+      padding: 10px;
+      background: #f5f5f5;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    .delivery-charge span {
+      font-weight: bold;
+      color: #ff6600;
+    }
 /* Order Confirmation Styles */
 .order-confirmation {
   position: fixed;
@@ -836,6 +875,22 @@
       <h3>Your Cart</h3>
       <div class="cart-summary">
         <ul id="checkout-cart-items"></ul>
+        <div class="delivery-options">
+          <h4>Delivery Options</h4>
+          <div class="delivery-option" onclick="selectDeliveryOption(this, 100)">
+            <input type="radio" name="delivery" checked>
+            <label>Standard Delivery (2-3 hours)</label>
+            <span class="price">Rs.100</span>
+          </div>
+          <div class="delivery-option" onclick="selectDeliveryOption(this, 200)">
+            <input type="radio" name="delivery">
+            <label>Express Delivery (1 hour)</label>
+            <span class="price">Rs.200</span>
+          </div>
+        </div>
+        <div class="delivery-charge">
+          <p>Delivery Charge: <span id="delivery-fee">Rs.100</span></p>
+        </div>
         <p id="checkout-total"><strong>Total: Rs.0</strong></p>
       </div>
       <div class="checkout-form">
@@ -843,7 +898,8 @@
           <input type="text" id="full-name" placeholder="Full Name" required />
           <input type="email" id="email" placeholder="Email Address" required />
           <input type="tel" id="phone" placeholder="Phone Number" required />
-          <textarea id="address" placeholder="Address" rows="4" required></textarea>
+          <textarea id="address" placeholder="Full Address (Include Landmark)" rows="4" required></textarea>
+          <textarea id="customer-notes" placeholder="Special Instructions (Optional)" rows="2"></textarea>
           <button type="submit">Place Order</button>
           <button type="button" class="cancel-btn" onclick="closeModal()">Cancel</button>
         </form>
@@ -873,7 +929,7 @@
     </div>
     <div class="confirmation-note">
       <i class="fas fa-truck"></i>
-      <p>Your order will be delivered within 2-3 hours</p>
+      <p>Your order will be delivered within <span id="delivery-time">2-3 hours</span></p>
     </div>
   </div>
 </section>
@@ -918,14 +974,20 @@
   </footer>
   <script>
     let cart = [];
+    let deliveryFee = 100;
+    let deliveryTime = "2-3 hours";
     const cartModal = document.getElementById("checkoutModal");
     const checkoutCartItems = document.getElementById("checkout-cart-items");
     const checkoutTotal = document.getElementById("checkout-total");
+    const deliveryFeeElement = document.getElementById("delivery-fee");
+    const deliveryTimeElement = document.getElementById("delivery-time");
+    
     // Toggle mobile navigation
     function toggleMobileMenu() {
       const mobileNav = document.getElementById("mobileNav");
       mobileNav.classList.toggle("open");
     }
+    
     // Add product to cart and open modal
     document.querySelectorAll('.product button').forEach(button => {
       button.addEventListener('click', function() {
@@ -934,8 +996,10 @@
         const rawPrice = product.querySelector(".price").textContent;
         const cleanedPrice = parseFloat(rawPrice.replace(/[^\d]/g, ''));
         const productQuantity = parseInt(product.querySelector(".quantity-selector").value);
+        
         // Check if item already exists in cart
         const existingItemIndex = cart.findIndex(item => item.name === productName);
+        
         if (existingItemIndex >= 0) {
           cart[existingItemIndex].quantity += productQuantity;
         } else {
@@ -945,57 +1009,94 @@
             quantity: productQuantity
           });
         }
+        
         updateCartPreview();
         openModal();
       });
     });
+    
     // Update cart preview
     function updateCartPreview() {
       checkoutCartItems.innerHTML = '';
-      let total = 0;
+      let subtotal = 0;
+      
       cart.forEach((item, index) => {
         const li = document.createElement("li");
         li.innerHTML = `${item.name} (x${item.quantity}) - Rs.${(item.price * item.quantity).toFixed(2)}
                         <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button>`;
         checkoutCartItems.appendChild(li);
-        total += item.price * item.quantity;
+        subtotal += item.price * item.quantity;
       });
+      
+      const total = subtotal + deliveryFee;
       checkoutTotal.textContent = `Total: Rs.${total.toFixed(2)}`;
     }
+    
     // Remove item from cart
     function removeFromCart(index) {
       cart.splice(index, 1);
       updateCartPreview();
+      
+      // Close modal if cart is empty
+      if (cart.length === 0) {
+        closeModal();
+      }
     }
+    
+    // Select delivery option
+    function selectDeliveryOption(element, fee) {
+      // Update all delivery options
+      const options = document.querySelectorAll('.delivery-option');
+      options.forEach(opt => {
+        opt.style.borderColor = '#ddd';
+      });
+      
+      // Highlight selected option
+      element.style.borderColor = '#ff6600';
+      
+      // Update delivery fee and time
+      deliveryFee = fee;
+      deliveryFeeElement.textContent = `Rs.${deliveryFee}`;
+      deliveryTime = fee === 100 ? "2-3 hours" : "1 hour";
+      deliveryTimeElement.textContent = deliveryTime;
+      
+      // Update total
+      updateCartPreview();
+    }
+    
     // Show order confirmation
-function showConfirmation(orderData) {
-  const confirmationSection = document.getElementById('orderConfirmation');
-  const orderNumber = Date.now().toString().slice(-6);
-  
-  document.getElementById('confirm-name').textContent = orderData.customer_name;
-  document.getElementById('confirm-number').textContent = `#${orderNumber}`;
-  document.getElementById('confirm-total').textContent = `Rs.${orderData.order_total.toFixed(2)}`;
-  document.getElementById('confirm-email').textContent = orderData.customer_email;
+    function showConfirmation(orderData) {
+      const confirmationSection = document.getElementById('orderConfirmation');
+      const orderNumber = Date.now().toString().slice(-6);
+      
+      document.getElementById('confirm-name').textContent = orderData.customer_name;
+      document.getElementById('confirm-number').textContent = `#${orderNumber}`;
+      document.getElementById('confirm-total').textContent = `Rs.${orderData.order_total.toFixed(2)}`;
+      document.getElementById('confirm-email').textContent = orderData.customer_email;
+      document.getElementById('delivery-time').textContent = deliveryTime;
 
-  confirmationSection.style.display = 'flex';
-  setTimeout(() => {
-    confirmationSection.style.display = 'none';
-  }, 30000);
-}
+      confirmationSection.style.display = 'flex';
+      setTimeout(() => {
+        confirmationSection.style.display = 'none';
+      }, 30000);
+    }
 
-// Continue shopping button handler
-function continueShopping() {
-  document.getElementById('orderConfirmation').style.display = 'none';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+    // Continue shopping button handler
+    function continueShopping() {
+      document.getElementById('orderConfirmation').style.display = 'none';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
     // Open modal
     function openModal() {
       cartModal.style.display = 'flex';
     }
+    
     // Close modal
     function closeModal() {
       cartModal.style.display = 'none';
     }
+    
     // Form submission with EmailJS
     document.getElementById('order-form').addEventListener('submit', function(e) {
       e.preventDefault();
@@ -1011,11 +1112,17 @@ function continueShopping() {
         customer_email: document.getElementById('email').value,
         customer_phone: document.getElementById('phone').value,
         customer_address: document.getElementById('address').value,
+        customer_notes: document.getElementById('customer-notes').value,
         order_items: cart.map(item => `${item.name} (x${item.quantity}) - Rs.${item.price * item.quantity}`).join('\n'),
-        order_total: calculateTotal()
+        order_subtotal: calculateSubtotal(),
+        delivery_fee: deliveryFee,
+        order_total: calculateTotal(),
+        delivery_time: deliveryTime
       };
+      
       // Show loading state
       const submitBtn = this.querySelector('button[type="submit"]');
+      const submitText = submitBtn.textContent;
       submitBtn.disabled = true;
       submitBtn.textContent = 'Processing...';
       
@@ -1026,7 +1133,8 @@ function continueShopping() {
           return emailjs.send('service_wb7evwg', 'template_38h10bx', orderData);
         })
         .then(() => {
-          showConfirmation(orderData);  // Shows the new confirmation section
+          showConfirmation(orderData);
+          cart = [];
           updateCartPreview();
           closeModal();
           this.reset();
@@ -1037,18 +1145,25 @@ function continueShopping() {
         })
         .finally(() => {
           submitBtn.disabled = false;
-          submitBtn.textContent = 'Place Order';
+          submitBtn.textContent = submitText;
         });
     });
-    function calculateTotal() {
+    
+    function calculateSubtotal() {
       return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
     }
+    
+    function calculateTotal() {
+      return calculateSubtotal() + deliveryFee;
+    }
+    
     // Close modal when clicking outside
     window.addEventListener('click', function(event) {
       if (event.target === cartModal) {
         closeModal();
       }
     });
+    
     // Search functionality
     const searchForm = document.getElementById('search-form');
     const searchInput = document.getElementById('search-input');
@@ -1058,10 +1173,12 @@ function continueShopping() {
     noResults.className = 'no-results';
     noResults.textContent = 'No products found matching your search.';
     productList.appendChild(noResults);
+    
     searchForm.addEventListener('submit', function(e) {
       e.preventDefault();
       performSearch();
     });
+    
     searchInput.addEventListener('input', function() {
       if (this.value.trim() === '') {
         resetSearch();
@@ -1069,6 +1186,7 @@ function continueShopping() {
         performSearch();
       }
     });
+    
     function performSearch() {
       const searchTerm = searchInput.value.toLowerCase().trim();
       let hasResults = false;
@@ -1085,12 +1203,14 @@ function continueShopping() {
       
       noResults.classList.toggle('show', !hasResults);
     }
+    
     function resetSearch() {
       products.forEach(product => {
         product.style.display = 'flex';
       });
       noResults.classList.remove('show');
     }
+    
     // Dynamic banner margin adjustment
     document.addEventListener('DOMContentLoaded', function() {
       const header = document.querySelector('header');
