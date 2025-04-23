@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#000000">
  
   <!--  Open Graph Meta Tags Below -->
   <meta property="og:title" content="Aaila Pasa - Your Favorite Shop" />
@@ -1898,6 +1900,15 @@
       updateCartPreview();
     }
   });
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js')
+        .then(registration => console.log('✅ Service Worker registered'))
+        .catch(err => console.log('❌ Service Worker failed:', err));
+    });
+  }
+</script>
 </script>
 </body>
 </html>
