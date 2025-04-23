@@ -1,0 +1,21 @@
+{
+  "name": "Aaila Pasa",
+  "short_name": "AailaPasa",
+  "description": "A PWA version of Aaila Pasa",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "https://limewire.com/d/Vs1my#e3lCLuQpPO"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "https://limewire.com/d/7G9U4#Sdy1lhJ6WU"
+    }
+  ]
+}
