@@ -1541,6 +1541,14 @@
   
   // Run age verification check on page load
   window.onload = checkAgeVerification;
+ // Service Worker Registration
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js')
+        .then(registration => console.log('✅ Service Worker registered'))
+        .catch(err => console.log('❌ Service Worker failed:', err));
+    });
+  }
   
   // Cart functionality
   let cart = [];
@@ -1899,13 +1907,6 @@
       cart = JSON.parse(savedCart);
       updateCartPreview();
     }
-  });
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js')
-        .then(registration => console.log('✅ Service Worker registered'))
-        .catch(err => console.log('❌ Service Worker failed:', err));
     });
   }
 </script>
