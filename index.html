@@ -3,22 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#000000">
- 
-  <!--  Open Graph Meta Tags Below -->
-  <meta property="og:title" content="Aaila Pasa - Your Favorite Shop" />
-  <meta property="og:description" content="Shop unique and quality items with Aaila Pasa!" />
-  <meta property="og:image" content="https://i.ibb.co/S4MjPbVm/Chat-GPT-Image-Apr-23-2025-02-18-59-PM.png" />
-  <meta property="og:url" content="https://aailapasa.netlify.app/" />
-  <meta property="og:type" content="website" />
-  
-  <!-- (Optional) Twitter Card Tags -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Aaila Pasa - Your Favorite Shop" />
-  <meta name="twitter:description" content="Shop unique and quality items with Aaila Pasa!" />
-  <meta name="twitter:image" content="https://i.ibb.co/S4MjPbVm/Chat-GPT-Image-Apr-23-2025-02-18-59-PM.png" />
-
   <title>Aaila Pasa - Alcohol Delivery</title>
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
@@ -121,6 +105,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 15px 20px;
+      max-width: 1200px;
       margin: 0 auto;
     }
     
@@ -390,6 +375,7 @@
       padding: 60px 20px;
       text-align: center;
       background: white;
+      max-width: 1200px;
       margin: 0 auto;
     }
     
@@ -1342,8 +1328,8 @@
     <img src="https://dev-api.citi977.com.np/images/image-1679898129905.webp" alt="Old Durbar" />
     <img src="https://nepalice.com.np/wp-content/uploads/2023/02/cropped-favicon.png" alt="Nepal Ice" />
     <img src="https://i.ibb.co/39Q3n0jp/image-1679898083042.webp" alt="Tuborg" />
-    <img src="https://logowik.com/content/uploads/images/493_carlsberg.jpg" alt="carlsberg" />
-    <img src="https://i.ibb.co/rf14pvCh/301758317-470358218439839-5027548187924508471-n.png" alt="Mustang" />
+    <img src="https://i.ibb.co/V03LpVLy/1779456.webp" alt="Canvas Wines" />
+    <img src="https://i.ibb.co/0Y9X4QZ/vodka-brand.jpg" alt="Premium Vodka" />
   </div>
 </section>
 
@@ -1541,14 +1527,6 @@
   
   // Run age verification check on page load
   window.onload = checkAgeVerification;
- // Service Worker Registration
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js')
-        .then(registration => console.log('✅ Service Worker registered'))
-        .catch(err => console.log('❌ Service Worker failed:', err));
-    });
-  }
   
   // Cart functionality
   let cart = [];
@@ -1907,9 +1885,7 @@
       cart = JSON.parse(savedCart);
       updateCartPreview();
     }
-    });
-  }
-</script>
+  });
 </script>
 </body>
 </html>
