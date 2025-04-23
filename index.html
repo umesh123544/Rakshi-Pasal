@@ -95,13 +95,8 @@
       top: 0; left: 0;
       width: 100%;
       z-index: 1000;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 20px;
       background: #111;
       color: white;
-      flex-wrap: wrap;
       box-shadow: 0 2px 10px rgba(0,0,0,0.3);
     }
     
@@ -109,7 +104,9 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      width: 100%;
+      padding: 15px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
     
     .logo {
@@ -129,13 +126,6 @@
       font-size: 12px;
       margin: 0;
       color: #ccc;
-    }
-    
-    .header-logo img {
-      height: 110px; width: 110px;
-      object-fit: contain;
-      border-radius: 8px;
-      animation: zoomIn 1.2s ease-in-out;
     }
     
     nav ul {
@@ -173,53 +163,59 @@
       width: 100%;
     }
     
+    /* Hamburger Menu Styles */
     .hamburger {
       display: none;
-      flex-direction: column;
       cursor: pointer;
       padding: 10px;
+      z-index: 1001;
     }
-    
-    .hamburger div {
+  
+    .hamburger .bar {
       width: 25px;
       height: 3px;
       background-color: white;
-      margin: 4px 0;
+      margin: 5px 0;
       transition: all 0.3s ease;
     }
-    
-    .hamburger.active div:nth-child(1) {
+  
+    .hamburger.active .bar:nth-child(1) {
       transform: rotate(-45deg) translate(-5px, 6px);
     }
-    
-    .hamburger.active div:nth-child(2) {
+  
+    .hamburger.active .bar:nth-child(2) {
       opacity: 0;
     }
-    
-    .hamburger.active div:nth-child(3) {
+  
+    .hamburger.active .bar:nth-child(3) {
       transform: rotate(45deg) translate(-5px, -6px);
     }
     
+    /* Mobile Navigation */
     .mobile-nav {
       display: none;
-      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      left: 0;
       width: 100%;
       background-color: #111;
+      z-index: 1000;
+      flex-direction: column;
       overflow: hidden;
       max-height: 0;
       transition: max-height 0.3s ease-out;
     }
     
-    .mobile-nav.open { 
+    .mobile-nav.open {
       display: flex;
       max-height: 500px;
     }
     
     .mobile-nav a {
       padding: 15px 20px;
-      border-top: 1px solid #333;
       color: white;
       text-decoration: none;
+      border-top: 1px solid #333;
       transition: all 0.3s ease;
     }
     
@@ -229,18 +225,39 @@
       padding-left: 25px;
     }
     
+    .mobile-search {
+      padding: 15px 20px;
+      display: flex;
+      gap: 10px;
+    }
+    
+    .mobile-search input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 4px;
+      border: none;
+      background: #222;
+      color: white;
+    }
+    
+    .mobile-search button {
+      padding: 0 15px;
+      background: #ff6600;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
     .nav__right {
       display: flex;
       gap: 15px;
       align-items: center;
-      flex-wrap: wrap;
-      margin-top: 10px;
     }
     
     .search-bar {
       display: flex;
       gap: 5px;
-      margin-top: 10px;
       height: 32px;
       align-items: center;
     }
@@ -358,6 +375,8 @@
       padding: 60px 20px;
       text-align: center;
       background: white;
+      max-width: 1200px;
+      margin: 0 auto;
     }
     
     .section-title {
@@ -529,6 +548,8 @@
       text-align: center;
       padding: 60px 20px;
       background-color: #f9f9f9;
+      max-width: 1200px;
+      margin: 0 auto;
     }
     
     .logo-container {
@@ -1019,12 +1040,16 @@
         padding: 15px;
       }
       
-      nav ul { 
+      .hamburger { 
+        display: block; 
+      }
+      
+      nav.desktop-nav { 
         display: none; 
       }
       
-      .hamburger { 
-        display: flex; 
+      .nav__right {
+        display: none;
       }
       
       .banner {
@@ -1116,32 +1141,43 @@
       Aaila <span>Pasa</span>
       <p class="brand-subtitle">Ghar Ghar Mai Delivery</p>
     </div>
+    
     <div class="hamburger" onclick="toggleMobileMenu()">
-      <div></div><div></div><div></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+    
+    <nav class="desktop-nav">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    
+    <div class="nav__right">
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search products..." />
+        <button onclick="searchProducts()"><i class="fas fa-search"></i></button>
+      </div>
+      <div class="cart-icon" onclick="openModal()">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-count" id="cartCount">0</span>
+      </div>
     </div>
   </div>
-  <nav>
-    <ul class="desktop-nav">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="shop.html">Shop</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-    <div class="mobile-nav" id="mobileNav">
-      <a href="index.html">Home</a>
-      <a href="shop.html">Shop</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-    </div>
-  </nav>
-  <div class="nav__right">
-    <div class="search-bar">
-      <input type="text" id="searchInput" placeholder="Search products..." />
+  
+  <!-- Mobile Navigation -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <div class="mobile-search">
+      <input type="text" placeholder="Search products...">
       <button onclick="searchProducts()"><i class="fas fa-search"></i></button>
-    </div>
-    <div class="cart-icon" onclick="openModal()">
-      <i class="fas fa-shopping-cart"></i>
-      <span class="cart-count" id="cartCount">0</span>
     </div>
   </div>
 </header>
@@ -1188,7 +1224,7 @@
     </div>
     
     <div class="product" data-category="whiskey">
-      <img src="https://i.ibb.co/NdBR861Z/old-durbar-750ml-73537.jpg" alt="Khadka's Whisky" />
+      <img src="https://i.ibb.co/6sVt8QZ/khadka-whisky.jpg" alt="Khadka's Whisky" />
       <h3>Khadka's Whisky</h3>
       <p class="category">Premium Whiskey</p>
       <p class="price">Rs.<span>3,200</span></p>
@@ -1216,7 +1252,7 @@
     </div>
     
     <div class="product" data-category="wine">
-      <img src="https://i.ibb.co/NdBR861Z/old-durbar-750ml-73537.jpg" alt="Premium White Wine" />
+      <img src="https://i.ibb.co/0jXk5J4/white-wine.jpg" alt="Premium White Wine" />
       <h3>Premium White Wine</h3>
       <p class="category">White Wine</p>
       <p class="price">Rs.<span>2,500</span></p>
@@ -1244,7 +1280,7 @@
     
     <div class="product" data-category="beer">
       <div class="product-badge">New</div>
-      <img src="https://i.ibb.co/NdBR861Z/old-durbar-750ml-73537.jpg" alt="Tuborg Strong" />
+      <img src="https://i.ibb.co/0Y9X4QZ/tuborg.jpg" alt="Tuborg Strong" />
       <h3>Tuborg Strong</h3>
       <p class="category">Premium Beer</p>
       <p class="price">Rs.<span>2,800</span></p>
@@ -1258,7 +1294,7 @@
     
     <!-- Vodka Products -->
     <div class="product" data-category="vodka">
-      <img src="https://i.ibb.co/NdBR861Z/old-durbar-750ml-73537.jpg" alt="Premium Vodka" />
+      <img src="https://i.ibb.co/0Y9X4QZ/vodka.jpg" alt="Premium Vodka" />
       <h3>Premium Vodka</h3>
       <p class="category">Vodka</p>
       <p class="price">Rs.<span>3,500</span></p>
@@ -1271,7 +1307,7 @@
     </div>
     
     <div class="product" data-category="vodka">
-      <img src="https://i.ibb.co/NdBR861Z/old-durbar-750ml-73537.jpg" alt="Imported Vodka" />
+      <img src="https://i.ibb.co/0Y9X4QZ/imported-vodka.jpg" alt="Imported Vodka" />
       <h3>Imported Vodka</h3>
       <p class="category">Vodka</p>
       <p class="price">Rs.<span>4,200</span></p>
@@ -1506,13 +1542,29 @@
   const noResults = document.getElementById("noResults");
   const products = document.querySelectorAll('.product');
   
-  // Toggle mobile navigation
+  // Toggle mobile menu
   function toggleMobileMenu() {
     const mobileNav = document.getElementById("mobileNav");
     const hamburger = document.querySelector('.hamburger');
     mobileNav.classList.toggle("open");
     hamburger.classList.toggle("active");
+    
+    // Toggle body scroll
+    if (mobileNav.classList.contains('open')) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
   }
+  
+  // Close mobile menu when clicking on a link
+  document.querySelectorAll('.mobile-nav a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.getElementById('mobileNav').classList.remove('open');
+      document.querySelector('.hamburger').classList.remove('active');
+      document.body.style.overflow = 'auto';
+    });
+  });
   
   // Adjust product quantity
   function adjustQuantity(button, change) {
