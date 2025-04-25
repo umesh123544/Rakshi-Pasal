@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Keep all your existing head content from index.html -->
+  <title>Aaila Pasa - Shipping Policy</title>
+</head>
+<body>
+  <!-- Age Verification Modal (same as index.html) -->
+  <div class="age-verification" id="ageVerification">
+    <!-- ... -->
+  </div>
+
+  <!-- Header (same as index.html) -->
+  <header>
+    <!-- ... -->
+  </header>
+
+  <!-- Shipping Policy Content -->
+  <section class="policy-section">
+    <div class="policy-container">
+      <h1 class="section-title">Shipping Policy</h1>
+      
+      <div class="policy-content">
+        <div class="policy-card">
+          <h2><i class="fas fa-truck"></i> Delivery Areas</h2>
+          <p>We currently deliver to all areas within Kathmandu Valley, including:</p>
+          <ul>
+            <li>Kathmandu Metropolitan City</li>
+            <li>Lalitpur Metropolitan City</li>
+            <li>Bhaktapur Municipality</li>
+            <li>Kirtipur Municipality</li>
+            <li>Surrounding areas within Ring Road</li>
+          </ul>
+          <p>We're working to expand our delivery areas. Contact us to check if we deliver to your location.</p>
+        </div>
+
+        <div class="policy-card">
+          <h2><i class="fas fa-clock"></i> Delivery Times</h2>
+          <p>All orders are processed and delivered within the following timeframes:</p>
+          
+          <div class="delivery-options">
+            <div class="delivery-option">
+              <div class="option-header">
+                <h3>Standard Delivery</h3>
+                <span class="price">Rs.100</span>
+              </div>
+              <p>2-3 hours delivery window</p>
+              <p>Available daily from 10:00 AM to 8:00 PM</p>
+            </div>
+            
+            <div class="delivery-option">
+              <div class="option-header">
+                <h3>Express Delivery</h3>
+                <span class="price">Rs.200</span>
+              </div>
+              <p>1 hour delivery window</p>
+              <p>Available daily from 10:00 AM to 8:00 PM</p>
+            </div>
+          </div>
+          
+          <p class="note">Note: Delivery times may vary during holidays, festivals, or adverse weather conditions.</p>
+        </div>
+
+        <div class="policy-card">
+          <h2><i class="fas fa-box-open"></i> Order Processing</h2>
+          <p>Orders placed before 7:00 PM will be delivered the same day. Orders placed after 7:00 PM will be delivered the next day.</p>
+          <p>We process orders within 30 minutes of receiving them. You'll receive an SMS and email confirmation once your order is on its way.</p>
+        </div>
+
+        <div class="policy-card">
+          <h2><i class="fas fa-id-card"></i> Age Verification</h2>
+          <p>By law, we cannot deliver alcohol to anyone under 21 years of age. Our delivery personnel will verify your age with a valid government-issued ID upon delivery.</p>
+          <p>If you cannot provide valid ID, we will cancel your order and issue a refund minus any delivery fees.</p>
+        </div>
+
+        <div class="policy-card">
+          <h2><i class="fas fa-exclamation-triangle"></i> Failed Deliveries</h2>
+          <p>If we're unable to complete delivery due to:</p>
+          <ul>
+            <li>Incorrect address</li>
+            <li>Recipient unavailable</li>
+            <li>Refusal to show ID</li>
+            <li>Recipient appears intoxicated</li>
+          </ul>
+          <p>We will attempt to contact you to resolve the issue. If delivery cannot be completed, we will issue a refund minus any delivery fees.</p>
+        </div>
+
+        <div class="policy-card">
+          <h2><i class="fas fa-question-circle"></i> Need Help?</h2>
+          <p>For any questions about our shipping policy or to check delivery availability in your area, please contact us:</p>
+          <p><i class="fas fa-phone"></i> +977 9813197704</p>
+          <p><i class="fas fa-envelope"></i> aailapasa@gmail.com</p>
+          <p><i class="fas fa-clock"></i> 24/7 Customer Support</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer (same as index.html) -->
+  <footer>
+    <!-- ... -->
+  </footer>
+
+  <!-- Legal Notice (same as index.html) -->
+  <div class="legal-notice">
+    <!-- ... -->
+  </div>
+
+  <style>
+    /* Add this to your existing CSS */
+    .policy-section {
+      padding: 80px 20px;
+      background: white;
+      min-height: calc(100vh - 400px);
+    }
+    
+    .policy-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .policy-content {
+      margin-top: 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+    }
+    
+    .policy-card {
+      background: #f9f9f9;
+      border-radius: 10px;
+      padding: 25px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .policy-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    
+    .policy-card h2 {
+      color: #ff6600;
+      margin-top: 0;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .policy-card h2 i {
+      font-size: 1.2em;
+    }
+    
+    .policy-card h3 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+    
+    .policy-card p, .policy-card ul {
+      color: #555;
+      line-height: 1.6;
+    }
+    
+    .policy-card ul {
+      padding-left: 20px;
+    }
+    
+    .policy-card ul li {
+      margin-bottom: 8px;
+    }
+    
+    .delivery-options {
+      margin: 20px 0;
+    }
+    
+    .delivery-option {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      border: 1px solid #eee;
+    }
+    
+    .option-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    
+    .option-header .price {
+      color: #ff6600;
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+    
+    .note {
+      font-style: italic;
+      color: #777;
+      font-size: 0.9em;
+    }
+    
+    @media (max-width: 768px) {
+      .policy-content {
+        grid-template-columns: 1fr;
+      }
+      
+      .policy-section {
+        padding: 60px 15px;
+      }
+    }
+  </style>
+
+  <script>
+    // Include all your existing JavaScript from index.html
+    // Age verification, cart functionality, etc.
+  </script>
+</body>
+</html>
