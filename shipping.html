@@ -241,6 +241,7 @@
       justify-content: center;
       transition: all 0.3s ease;
       box-shadow: 0 4px 10px rgba(255, 102, 0, 0.3);
+      text-decoration: none;
     }
     
     .close-btn:hover {
@@ -599,18 +600,16 @@
     }
   </style>
 
-  <script>
-    // You can add your existing JavaScript here
-    // For the close button functionality
-    document.querySelector('.close-btn').addEventListener('click', function() {
-      // You can modify this to navigate to a specific page if needed
-      window.history.back();
-    });
-    
-    // Contact button functionality
-    document.querySelector('.contact-btn')?.addEventListener('click', function() {
-      // Replace with your actual contact page URL
-      window.location.href = "contact.html";
+<script>
+    // Optional: You can keep this JavaScript for additional functionality
+    // The close button now works via HTML link, but you can add this for animation
+    document.querySelector('.close-btn').addEventListener('click', function(e) {
+      e.preventDefault();
+      // Add any animation you want here before redirect
+      this.style.transform = 'rotate(180deg) scale(0.8)';
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 300);
     });
   </script>
 </body>
