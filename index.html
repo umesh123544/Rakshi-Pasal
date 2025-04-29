@@ -1501,9 +1501,9 @@
     
     <div class="footer-column">
       <h3>Customer Service</h3>
-      <a href="faqs.html"><i class="fas fa-question-circle"></i> FAQs</a>
+      <a href="#"><i class="fas fa-question-circle"></i> FAQs</a>
       <a href="shipping.html"><i class="fas fa-truck"></i> Shipping Policy</a>
-      <a href="return.html"><i class="fas fa-exchange-alt"></i> Return Policy</a>
+      <a href="#"><i class="fas fa-exchange-alt"></i> Return Policy</a>
       <a href="privacy.html"><i class="fas fa-lock"></i> Privacy Policy</a>
     </div>
     
@@ -1847,35 +1847,55 @@
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
     
-    // In a real application, you would send this to your backend
-    console.log('Order Data:', orderData);
+    // Generate order number
+    const orderNumber = 'AP-' + Date.now().toString().slice(-6);
     
-    // Simulate API call with timeout
-    setTimeout(() => {
-      // Show confirmation
-      showConfirmation(orderData);
-      
-      // Reset cart and close modal
-      cart = [];
-      localStorage.removeItem('aailaPasaCart');
-      updateCartPreview();
-      closeModal();
-      
-      // Reset form
-      this.reset();
-      
-      // Reset button
-      submitBtn.disabled = false;
-      submitBtn.textContent = submitText;
-      
-      // In a real application, you would:
-      // 1. Send order to your backend
-      // 2. Process payment
-      // 3. Send confirmation emails
-      // 4. Handle any errors
-      
-      // For demo purposes, we'll just show the confirmation
-    }, 1500);
+    // Send email via EmailJS
+    emailjs.send('service_wb7evwg', 'template_0593y8t', {
+        to_name: orderData.customer_name,
+        to_email: orderData.customer_email,
+        order_number: orderNumber,
+        order_items: orderData.order_items,
+        order_total: orderData.order_total,
+        delivery_address: orderData.customer_address,
+        delivery_time: orderData.delivery_time_preference || deliveryTime
+    })
+    .then(function(response) {
+        console.log('Email sent!', response.status, response.text);
+        
+        // Show confirmation
+        showConfirmation(orderData);
+        
+        // Reset cart and close modal
+        cart = [];
+        localStorage.removeItem('aailaPasaCart');
+        updateCartPreview();
+        closeModal();
+        
+        // Reset form
+        e.target.reset();
+    })
+    .catch(function(error) {
+        console.log('Email failed to send', error);
+        alert('There was an error sending your confirmation email. Your order is still being processed.');
+        
+        // Still show confirmation even if email fails
+        showConfirmation(orderData);
+        
+        // Reset cart and close modal
+        cart = [];
+        localStorage.removeItem('aailaPasaCart');
+        updateCartPreview();
+        closeModal();
+        
+        // Reset form
+        e.target.reset();
+    })
+    .finally(function() {
+        // Reset button
+        submitBtn.disabled = false;
+        submitBtn.textContent = submitText;
+    });
   });
   
   // Helper function to calculate subtotal
