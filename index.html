@@ -1851,15 +1851,20 @@
     const orderNumber = 'AP-' + Date.now().toString().slice(-6);
     
     // Send email via EmailJS
-    emailjs.send('service_wb7evwg', 'template_0593y8t', {
-        to_name: orderData.customer_name,
-        to_email: orderData.customer_email,
-        order_number: orderNumber,
-        order_items: orderData.order_items,
-        order_total: orderData.order_total,
-        delivery_address: orderData.customer_address,
-        delivery_time: orderData.delivery_time_preference || deliveryTime
-    })
+   emailjs.send('service_wb7evwg', 'template_0593y8t', {
+    customer_name: orderData.customer_name,
+    customer_email: orderData.customer_email,
+    customer_phone: orderData.customer_phone,
+    customer_address: orderData.customer_address,
+    order_items: cart.map(item => `${item.name} (x${item.quantity}) - Rs.${item.price * item.quantity}`).join('\n'),
+    order_subtotal: calculateSubtotal(),
+    delivery_fee: deliveryFee,
+    order_total: calculateTotal(),
+    delivery_time: orderData.delivery_time_preference || deliveryTime,
+    order_number: 'AP-' + Date.now().toString().slice(-6),
+    customer_notes: orderData.customer_notes,
+    order_date: new Date().toLocaleString()
+})
     .then(function(response) {
         console.log('Email sent!', response.status, response.text);
         
