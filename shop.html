@@ -1591,30 +1591,63 @@
     }
   });
   
-  // Handle form submission
-  document.getElementById('order-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    if (cart.length === 0) {
-      alert("Your cart is empty!");
-      return;
-    }
-    
-    // Get form values
-    const orderData = {
-      customer_name: document.getElementById('customer-name').value,
-      customer_email: document.getElementById('customer-email').value,
-      customer_phone: document.getElementById('customer-phone').value,
-      customer_address: document.getElementById('customer-address').value,
-      delivery_time_preference: document.getElementById('delivery-time').value,
-      customer_notes: document.getElementById('customer-notes').value,
-      order_items: cart.map(item => `${item.name} (x${item.quantity}) - Rs.${item.price * item.quantity}`).join('\n'),
-      order_subtotal: calculateSubtotal(),
-      delivery_fee: deliveryFee,
-      order_total: calculateTotal(),
-      delivery_time: deliveryTime,
-      order_date: new Date().toLocaleString()
-    };
+ // Handle form submission
+document.getElementById('order-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  if (cart.length === 0) {
+    alert("Your cart is empty!");
+    return;
+  }
+  
+  // Get form values
+  const orderData = {
+    customer_name: document.getElementById('customer-name').value,
+    customer_email: document.getElementById('customer-email').value,
+    customer_phone: document.getElementById('customer-phone').value,
+    customer_address: document.getElementById('customer-address').value,
+    delivery_time_preference: document.getElementById('delivery-time').value,
+    customer_notes: document.getElementById('customer-notes').value,
+    order_items: cart.map(item => `${item.name} (x${item.quantity}) - Rs.${item.price * item.quantity}`).join('\n'),
+    order_subtotal: calculateSubtotal(),
+    delivery_fee: deliveryFee,
+    order_total: calculateTotal(),
+    delivery_time: deliveryTime,
+    order_date: new Date().toLocaleString()
+  };
+  
+  // Show loading state
+  const submitBtn = this.querySelector('button[type="submit"]');
+  const submitText = submitBtn.textContent;
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+  
+  // Send email via EmailJS
+  emailjs.send('service_your_service_id', 'template_your_template_id', orderData)
+    .then(function(response) {
+      console.log('Email sent successfully!', response.status, response.text);
+      
+      // Show confirmation
+      showConfirmation(orderData);
+      
+      // Reset cart and close modal
+      cart = [];
+      localStorage.removeItem('aailaPasaCart');
+      updateCartPreview();
+      closeModal();
+      
+      // Reset form
+      e.target.reset();
+    }, function(error) {
+      console.log('Email failed to send...', error);
+      alert('There was an error sending your order. Please try again or contact us directly.');
+    })
+    .finally(function() {
+      // Reset button
+      submitBtn.disabled = false;
+      submitBtn.textContent = submitText;
+    });
+});
     
     // Show loading state
     const submitBtn = this.querySelector('button[type="submit"]');
