@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aaila Pasa - Frequently Asked Questions</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Age Verification Modal (placeholder) -->
+  <div class="age-verification" id="ageVerification">
+    <!-- ... -->
+  </div>
+
+  <!-- Header (placeholder) -->
+  <header>
+    <!-- ... -->
+  </header>
+
+  <!-- FAQ Content -->
+  <section class="policy-section">
+    <div class="policy-container">
+      <div class="policy-header">
+        <h1 class="section-title">FAQs</h1>
+        <a href="index.html" class="close-btn">
+          <i class="fas fa-times"></i>
+        </a>
+      </div>
+      
+      <div class="search-container">
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search questions...">
+        </div>
+      </div>
+      
+      <div class="faq-categories">
+        <button class="category-btn active" data-category="all">All Questions</button>
+        <button class="category-btn" data-category="delivery">Delivery</button>
+        <button class="category-btn" data-category="payments">Payments</button>
+        <button class="category-btn" data-category="products">Products</button>
+        <button class="category-btn" data-category="account">Account</button>
+      </div>
+      
+      <div class="faq-content">
+        <div class="faq-card" data-category="delivery">
+          <div class="faq-question">
+            <h3><i class="fas fa-truck"></i> What are your delivery hours?</h3>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>We deliver 24/7 throughout Kathmandu Valley. Our standard delivery time is 2-3 hours, with express delivery available within 1 hour for an additional Rs. 200.</p>
+          </div>
+        </div>
+        
+        <div class="faq-card" data-category="delivery">
+          <div class="faq-question">
+            <h3><i class="fas fa-map-marker-alt"></i> Do you deliver to my area?</h3>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>We currently deliver to all areas within Kathmandu Valley including Kathmandu, Lalitpur, Bhaktapur, and Kirtipur municipalities. If you're unsure about your location, please contact us at +977 9813197704 to confirm.</p>
+          </div>
+        </div>
+        
+        <div class="faq-card" data-category="payments">
+          <div class="faq-question">
+            <h3><i class="fas fa-money-bill-wave"></i> What payment methods do you accept?</h3>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>We accept:</p>
+            <ul>
+              <li>Cash on delivery</li>
+              <li>Credit/Debit cards</li>
+              <li>eSewa</li>
+              <li>Khalti</li>
+              <li>Bank transfers</li>
+            </ul>
+            <p>All online payments are processed through secure payment gateways.</p>
+          </div>
+        </div>
+        
+        <div class="faq-card" data-category="products">
+          <div class="faq-question">
+            <h3><i class="fas fa-wine-bottle"></i> Can I request a specific brand not listed?</h3>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Yes! While we maintain a comprehensive stock of popular brands, you can make special requests by calling us at +977 9813197704. We'll check availability and pricing for you.</p>
+          </div>
+        </div>
+        
+        <div class="faq-card" data-category="delivery">
+          <div class="faq-question">
+            <h3><i class="fas fa-id-card"></i> Why do I need to show ID for delivery?</h3>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>By law, we cannot deliver alcohol to anyone under 21 years of age. Our delivery personnel will verify your age with a valid government-issued ID upon delivery. This is required for every delivery, even if you've ordered before.</p>
+          </div>
+        </div>
+        
+        <div class="faq-card" data-category="account">
+          <div class="faq-question">
+            <h3><i class="fas fa-user"></i> Do I need an account to place an order?</h3>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>No, you can place orders as a guest. However, creating an account lets you:</p>
+            <ul>
+              <li>Track your order history</li>
+              <li>Save favorite products</li>
+              <li>Get exclusive offers</li>
+              <li>Faster checkout</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="faq-card" data-category="products">
+          <div class="faq-question">
+            <h3><i class="fas fa-temperature-low"></i> How are perishable items handled?</h3>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>All perishable items are stored in temperature-controlled environments and delivered in insulated packaging when necessary. If you have specific requirements, please mention them in the order notes.</p>
+          </div>
+        </div>
+        
+        <div class="faq-card" data-category="payments">
+          <div class="faq-question">
+            <h3><i class="fas fa-undo"></i> What is your return policy?</h3>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Due to the nature of our products, we can only accept returns for damaged or incorrect items. Please report any issues within 1 hour of delivery by calling +977 9813197704. See our full <a href="return-policy.html">Return Policy</a> for details.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="still-questions">
+        <div class="still-questions-card">
+          <h3><i class="fas fa-question-circle"></i> Still have questions?</h3>
+          <p>Our customer support team is available 24/7 to assist you.</p>
+          <div class="contact-options">
+            <a href="tel:+9779813197704" class="contact-option">
+              <i class="fas fa-phone"></i> Call Us
+            </a>
+            <a href="https://wa.me/9779813197704" class="contact-option whatsapp">
+              <i class="fab fa-whatsapp"></i> WhatsApp
+            </a>
+            <a href="mailto:support@aailapasa.com" class="contact-option">
+              <i class="fas fa-envelope"></i> Email
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer (placeholder) -->
+  <footer>
+    <!-- ... -->
+  </footer>
+
+  <style>
+    /* Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    body {
+      background-color: #f5f5f7;
+      color: #333;
+      line-height: 1.6;
+    }
+    
+    /* Policy Section */
+    .policy-section {
+      padding: 80px 20px;
+      min-height: calc(100vh - 160px);
+      position: relative;
+    }
+    
+    .policy-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      position: relative;
+    }
+    
+    .policy-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    
+    .section-title {
+      font-size: 2.5rem;
+      color: #ff6600;
+      font-weight: 700;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background: #ff6600;
+      border-radius: 2px;
+    }
+    
+    .close-btn {
+      background: #ff6600;
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(255, 102, 0, 0.3);
+      text-decoration: none;
+    }
+    
+    .close-btn:hover {
+      background: #e65c00;
+      transform: rotate(90deg);
+    }
+    
+    /* Search Box */
+    .search-container {
+      margin-bottom: 30px;
+    }
+    
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: white;
+      border-radius: 30px;
+      padding: 10px 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      border: 1px solid #eee;
+    }
+    
+    .search-box i {
+      color: #777;
+      margin-right: 10px;
+    }
+    
+    .search-box input {
+      border: none;
+      outline: none;
+      width: 100%;
+      font-size: 1rem;
+      background: transparent;
+    }
+    
+    /* Categories */
+    .faq-categories {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+    
+    .category-btn {
+      padding: 8px 20px;
+      border-radius: 30px;
+      border: 1px solid #ddd;
+      background: white;
+      color: #555;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+    }
+    
+    .category-btn:hover {
+      border-color: #ff6600;
+      color: #ff6600;
+    }
+    
+    .category-btn.active {
+      background: #ff6600;
+      color: white;
+      border-color: #ff6600;
+    }
+    
+    /* FAQ Cards */
+    .faq-content {
+      margin-bottom: 40px;
+    }
+    
+    .faq-card {
+      border-radius: 10px;
+      margin-bottom: 15px;
+      overflow: hidden;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+      border: 1px solid #eee;
+    }
+    
+    .faq-question {
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      background: white;
+    }
+    
+    .faq-question h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .faq-question i {
+      color: #ff6600;
+      transition: transform 0.3s ease;
+    }
+    
+    .faq-question i.fa-chevron-down {
+      color: #777;
+      font-size: 0.9rem;
+    }
+    
+    .faq-answer {
+      padding: 0 20px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      background: #fafafa;
+    }
+    
+    .faq-answer p, .faq-answer ul {
+      margin-bottom: 20px;
+    }
+    
+    .faq-answer ul {
+      padding-left: 20px;
+    }
+    
+    .faq-answer ul li {
+      margin-bottom: 8px;
+    }
+    
+    .faq-card.active .faq-answer {
+      max-height: 500px;
+      padding: 20px;
+    }
+    
+    .faq-card.active .faq-question i.fa-chevron-down {
+      transform: rotate(180deg);
+    }
+    
+    /* Still Questions */
+    .still-questions {
+      margin-top: 40px;
+    }
+    
+    .still-questions-card {
+      background: linear-gradient(135deg, #ff6600, #ff8c00);
+      color: white;
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+    }
+    
+    .still-questions-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .still-questions-card p {
+      margin-bottom: 25px;
+      opacity: 0.9;
+    }
+    
+    .contact-options {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    
+    .contact-option {
+      padding: 12px 25px;
+      border-radius: 30px;
+      background: white;
+      color: #ff6600;
+      text-decoration: none;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+    
+    .contact-option:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .contact-option.whatsapp {
+      background: #25D366;
+      color: white;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .policy-container {
+        padding: 30px 20px;
+      }
+      
+      .section-title {
+        font-size: 2rem;
+      }
+      
+      .faq-question h3 {
+        font-size: 1rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .policy-section {
+        padding: 60px 15px;
+      }
+      
+      .section-title {
+        font-size: 1.8rem;
+      }
+      
+      .contact-options {
+        flex-direction: column;
+      }
+      
+      .contact-option {
+        justify-content: center;
+      }
+    }
+  </style>
+
+  <script>
+    // Close button functionality
+    document.querySelector('.close-btn').addEventListener('click', function(e) {
+      e.preventDefault();
+      this.style.transform = 'rotate(180deg) scale(0.8)';
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 300);
+    });
+
+    // FAQ accordion functionality
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    faqQuestions.forEach(question => {
+      question.addEventListener('click', () => {
+        const faqCard = question.parentElement;
+        faqCard.classList.toggle('active');
+        
+        // Close other open FAQs
+        if (faqCard.classList.contains('active')) {
+          document.querySelectorAll('.faq-card').forEach(card => {
+            if (card !== faqCard && card.classList.contains('active')) {
+              card.classList.remove('active');
+            }
+          });
+        }
+      });
+    });
+
+    // Category filter functionality
+    const categoryBtns = document.querySelectorAll('.category-btn');
+    const faqCards = document.querySelectorAll('.faq-card');
+    
+    categoryBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Update active button
+        categoryBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        // Filter FAQs
+        const category = btn.dataset.category;
+        faqCards.forEach(card => {
+          if (category === 'all' || card.dataset.category === category) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+            card.classList.remove('active');
+          }
+        });
+      });
+    });
+
+    // Search functionality
+    const searchInput = document.querySelector('.search-box input');
+    searchInput.addEventListener('input', () => {
+      const searchTerm = searchInput.value.toLowerCase();
+      
+      faqCards.forEach(card => {
+        const question = card.querySelector('h3').textContent.toLowerCase();
+        const answer = card.querySelector('.faq-answer').textContent.toLowerCase();
+        
+        if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+          card.classList.remove('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
