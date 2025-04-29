@@ -1856,14 +1856,14 @@
     customer_email: orderData.customer_email,
     customer_phone: orderData.customer_phone,
     customer_address: orderData.customer_address,
-    order_items: cart.map(item => `${item.name} (x${item.quantity}) - Rs.${item.price * item.quantity}`).join('\n'),
-    order_subtotal: calculateSubtotal(),
-    delivery_fee: deliveryFee,
-    order_total: calculateTotal(),
-    delivery_time: orderData.delivery_time_preference || deliveryTime,
-    order_number: 'AP-' + Date.now().toString().slice(-6),
+    order_items: orderData.order_items,
+    order_subtotal: orderData.order_subtotal,
+    delivery_fee: orderData.delivery_fee,
+    order_total: orderData.order_total,
+    delivery_time: orderData.delivery_time_preference, // This was the key mismatch
+    order_number: orderNumber,
     customer_notes: orderData.customer_notes,
-    order_date: new Date().toLocaleString()
+    order_date: orderData.order_date
 })
     .then(function(response) {
         console.log('Email sent!', response.status, response.text);
