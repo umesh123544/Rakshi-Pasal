@@ -932,6 +932,196 @@
       color: #4CAF50;
       font-size: 1.2em;
     }
+/* General Styles */
+        :root {
+            --primary-color: #ff6b6b; /* Aaila Pasa brand color */
+            --secondary-color: #4ecdc4;
+            --dark-color: #292f36;
+            --light-color: #f7fff7;
+            --accent-color: #ff9f1c;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        
+        /* Ads Section */
+        .ads-section {
+            padding: 3rem 1rem;
+            background: linear-gradient(135deg, #f5f7fa 0%, #f8f9fa 100%);
+            text-align: center;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--dark-color);
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 4px;
+            background: var(--primary-color);
+            bottom: -10px;
+            left: 25%;
+            border-radius: 2px;
+        }
+        
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            line-height: 1.6;
+        }
+        
+        .ads-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .ad-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            width: 350px;
+            position: relative;
+        }
+        
+        .ad-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+        
+        .ad-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 2;
+        }
+        
+        .ad-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .ad-card:hover .ad-image {
+            transform: scale(1.05);
+        }
+        
+        .ad-content {
+            padding: 1.5rem;
+            text-align: left;
+        }
+        
+        .ad-title {
+            font-size: 1.3rem;
+            color: var(--dark-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .ad-description {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+        
+        .ad-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .old-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 1rem;
+            margin-left: 0.5rem;
+        }
+        
+        .shop-now-btn {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid var(--primary-color);
+        }
+        
+        .shop-now-btn:hover {
+            background: transparent;
+            color: var(--primary-color);
+        }
+        
+        .shop-now-btn i {
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+        }
+        
+        .shop-now-btn:hover i {
+            transform: translateX(5px);
+        }
+        
+        /* View All Button */
+        .view-all-container {
+            margin-top: 3rem;
+        }
+        
+        .view-all-btn {
+            display: inline-block;
+            background: var(--dark-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid var(--dark-color);
+            font-size: 1rem;
+        }
+        
+        .view-all-btn:hover {
+            background: transparent;
+            color: var(--dark-color);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .ad-card {
+                width: 100%;
+                max-width: 350px;
+            }
+        }
     
     /* Footer */
     footer {
@@ -1476,6 +1666,54 @@
     </div>
   </div>
 </section>
+  
+    <section class="ads-section">
+        <h2 class="section-title">Today's Special Offers</h2>
+        <p class="section-subtitle">Discover our exclusive collection with limited-time discounts. Shop now before these deals are gone!</p>
+        
+        <div class="ads-container">
+            <!-- Ad Card 1 -->
+            <div class="ad-card">
+                <span class="ad-badge">30% OFF</span>
+                <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Product 1" class="ad-image">
+                <div class="ad-content">
+                    <h3 class="ad-title">Premium Handmade Jewelry</h3>
+                    <p class="ad-description">Exquisite handmade pieces crafted with love and tradition. Perfect for any occasion.</p>
+                    <div class="ad-price">$49.99 <span class="old-price">$71.99</span></div>
+                    <a href="/shop" class="shop-now-btn">Shop Now <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Ad Card 2 -->
+            <div class="ad-card">
+                <span class="ad-badge">BESTSELLER</span>
+                <img src="https://images.unsplash.com/photo-1595341595379-cf4067d6d687?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Product 2" class="ad-image">
+                <div class="ad-content">
+                    <h3 class="ad-title">Traditional Handwoven Shawls</h3>
+                    <p class="ad-description">Warm and elegant shawls made with traditional weaving techniques.</p>
+                    <div class="ad-price">$39.99 <span class="old-price">$59.99</span></div>
+                    <a href="/shop" class="shop-now-btn">Shop Now <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- Ad Card 3 -->
+            <div class="ad-card">
+                <span class="ad-badge">NEW</span>
+                <img src="https://images.unsplash.com/photo-1561526116-e2460f4d40a8?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Product 3" class="ad-image">
+                <div class="ad-content">
+                    <h3 class="ad-title">Artisan Ceramic Tableware</h3>
+                    <p class="ad-description">Beautiful ceramic pieces that bring traditional art to your dining table.</p>
+                    <div class="ad-price">$29.99 <span class="old-price">$45.99</span></div>
+                    <a href="/shop" class="shop-now-btn">Shop Now <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="view-all-container">
+            <a href="/shop" class="view-all-btn">View All Products</a>
+        </div>
+    </section>
+
 
 <!-- Footer -->
 <footer>
