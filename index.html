@@ -932,196 +932,173 @@
       color: #4CAF50;
       font-size: 1.2em;
     }
-/* General Styles */
-        :root {
-            --primary-color: #ff6b6b; /* Aaila Pasa brand color */
-            --secondary-color: #4ecdc4;
-            --dark-color: #292f36;
-            --light-color: #f7fff7;
-            --accent-color: #ff9f1c;
-        }
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f9f9f9;
-        }
-        
-        /* Ads Section */
-        .ads-section {
-            padding: 3rem 1rem;
-            background: linear-gradient(135deg, #f5f7fa 0%, #f8f9fa 100%);
-            text-align: center;
-        }
-        
-        .section-title {
-            font-size: 2.5rem;
-            color: var(--dark-color);
-            margin-bottom: 1.5rem;
-            position: relative;
-            display: inline-block;
-        }
-        
-        .section-title:after {
-            content: '';
-            position: absolute;
-            width: 50%;
-            height: 4px;
-            background: var(--primary-color);
-            bottom: -10px;
-            left: 25%;
-            border-radius: 2px;
-        }
-        
-        .section-subtitle {
-            font-size: 1.1rem;
-            color: #666;
-            max-width: 700px;
-            margin: 0 auto 3rem;
-            line-height: 1.6;
-        }
-        
-        .ads-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .ad-card {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-            width: 350px;
-            position: relative;
-        }
-        
-        .ad-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
-        }
-        
-        .ad-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: var(--accent-color);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            z-index: 2;
-        }
-        
-        .ad-image {
-            height: 200px;
-            width: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-        
-        .ad-card:hover .ad-image {
-            transform: scale(1.05);
-        }
-        
-        .ad-content {
-            padding: 1.5rem;
-            text-align: left;
-        }
-        
-        .ad-title {
-            font-size: 1.3rem;
-            color: var(--dark-color);
-            margin-bottom: 0.5rem;
-        }
-        
-        .ad-description {
-            color: #666;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            margin-bottom: 1.5rem;
-        }
-        
-        .ad-price {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-        
-        .old-price {
-            text-decoration: line-through;
-            color: #999;
-            font-size: 1rem;
-            margin-left: 0.5rem;
-        }
-        
-        .shop-now-btn {
-            display: inline-block;
-            background: var(--primary-color);
-            color: white;
-            padding: 10px 25px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: 2px solid var(--primary-color);
-        }
-        
-        .shop-now-btn:hover {
-            background: transparent;
-            color: var(--primary-color);
-        }
-        
-        .shop-now-btn i {
-            margin-left: 5px;
-            transition: transform 0.3s ease;
-        }
-        
-        .shop-now-btn:hover i {
-            transform: translateX(5px);
-        }
-        
-        /* View All Button */
-        .view-all-container {
-            margin-top: 3rem;
-        }
-        
-        .view-all-btn {
-            display: inline-block;
-            background: var(--dark-color);
-            color: white;
-            padding: 12px 30px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: 2px solid var(--dark-color);
-            font-size: 1rem;
-        }
-        
-        .view-all-btn:hover {
-            background: transparent;
-            color: var(--dark-color);
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .section-title {
-                font-size: 2rem;
-            }
-            
-            .ad-card {
-                width: 100%;
-                max-width: 350px;
-            }
-        }
+
+    /* Special Offers Section */
+    .special-offers {
+      padding: 60px 20px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #f8f9fa 100%);
+      text-align: center;
+    }
+    
+    .offers-container {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .offer-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      width: 350px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .offer-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+    }
+    
+    .offer-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: #ff6600;
+      color: white;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      z-index: 2;
+    }
+    
+    .offer-image-container {
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+    }
+    
+    .offer-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    
+    .offer-card:hover .offer-image {
+      transform: scale(1.05);
+    }
+    
+    .offer-content {
+      padding: 20px;
+      text-align: left;
+    }
+    
+    .offer-title {
+      font-size: 1.3rem;
+      color: #292f36;
+      margin-bottom: 0.5rem;
+    }
+    
+    .offer-description {
+      color: #666;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+    }
+    
+    .offer-price {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #ff6600;
+      margin-bottom: 1rem;
+    }
+    
+    .old-price {
+      text-decoration: line-through;
+      color: #999;
+      font-size: 1rem;
+      margin-left: 0.5rem;
+    }
+    
+    .offer-actions {
+      display: flex;
+      gap: 15px;
+    }
+    
+    .add-to-cart-offer {
+      flex: 1;
+      background: #ff6600;
+      color: white;
+      padding: 10px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: 2px solid #ff6600;
+      text-align: center;
+      cursor: pointer;
+    }
+    
+    .add-to-cart-offer:hover {
+      background: transparent;
+      color: #ff6600;
+    }
+    
+    .view-details-offer {
+      flex: 1;
+      background: #292f36;
+      color: white;
+      padding: 10px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: 2px solid #292f36;
+      text-align: center;
+    }
+    
+    .view-details-offer:hover {
+      background: transparent;
+      color: #292f36;
+    }
+    
+    .view-all-offers {
+      margin-top: 40px;
+    }
+    
+    .view-all-btn {
+      display: inline-block;
+      background: #292f36;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: 2px solid #292f36;
+    }
+    
+    .view-all-btn:hover {
+      background: transparent;
+      color: #292f36;
+    }
+    
+    @media (max-width: 768px) {
+      .offer-card {
+        width: 100%;
+        max-width: 350px;
+      }
+      
+      .offer-actions {
+        flex-direction: column;
+      }
+    }
     
     /* Footer */
     footer {
@@ -1532,7 +1509,82 @@
       </div>
       <button onclick="addToCart(this)">Add to Cart</button>
     </div>
+  </div>
+</section>
+
+<!-- Special Offers Section -->
+<section class="special-offers">
+  <h2 class="section-title">Today's Special Offers</h2>
+  <p class="section-subtitle">Limited time discounts on our most popular products. Shop now before these deals expire!</p>
   
+  <div class="offers-container">
+    <!-- Offer 1 -->
+    <div class="offer-card">
+      <span class="offer-badge">10% OFF</span>
+      <div class="offer-image-container">
+        <img src="https://liquorworld.com.np/wp-content/uploads/2024/02/Mustang-Gold-750ML.jpg" alt="Mustang Whiskey" class="offer-image">
+      </div>
+      <div class="offer-content">
+        <h3 class="offer-title">Mustang Whiskey 750ML</h3>
+        <p class="offer-description">Blended and matured in 8 year old scotch which is matured and kept in casks for an exceptional and undeniable taste.</p>
+        <div class="offer-price">Rs 1100 <span class="old-price">Rs 1220</span></div>
+        <div class="offer-actions">
+          <button class="add-to-cart-offer" onclick="addOfferToCart('Mustang Whiskey 750ML', 1100, this)">
+            <i class="fas fa-shopping-cart"></i> Add to Cart
+          </button>
+          <a href="shop.html#mustang-whiskey" class="view-details-offer">
+            <i class="fas fa-info-circle"></i> Details
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Offer 2 -->
+    <div class="offer-card">
+      <span class="offer-badge">4% OFF</span>
+      <div class="offer-image-container">
+        <img src="https://onlineliquornepal.com/wp-content/uploads/2021/12/Shikhar-Ice-Rush.jpg" alt="Shikhar ICE Rush" class="offer-image">
+      </div>
+      <div class="offer-content">
+        <h3 class="offer-title">Shikhar ICE Rush</h3>
+        <p class="offer-description">Smoking causes lung cancer, heart disease, emphysema and may complicate pregnancy.</p>
+        <div class="offer-price">Rs 260 <span class="old-price">Rs 280</span></div>
+        <div class="offer-actions">
+          <button class="add-to-cart-offer" onclick="addOfferToCart('Shikhar ICE Rush', 260, this)">
+            <i class="fas fa-shopping-cart"></i> Add to Cart
+          </button>
+          <a href="shop.html#shikhar-ice" class="view-details-offer">
+            <i class="fas fa-info-circle"></i> Details
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Offer 3 -->
+    <div class="offer-card">
+      <span class="offer-badge">4% OFF</span>
+      <div class="offer-image-container">
+        <img src="https://liquorworld.com.np/wp-content/uploads/2023/07/Nepal-Ice-Xtra-Strong-Bottle-330ML.jpg" alt="Nepal ICE Small" class="offer-image">
+      </div>
+      <div class="offer-content">
+        <h3 class="offer-title">Nepal ICE Small 330ML</h3>
+        <p class="offer-description">The excellent taste of Nepal comes from the perfect blend of the finest malts and grains, best hops and pure yeast.</p>
+        <div class="offer-price">Rs 160 <span class="old-price">Rs 187</span></div>
+        <div class="offer-actions">
+          <button class="add-to-cart-offer" onclick="addOfferToCart('Nepal ICE Small 330ML', 160, this)">
+            <i class="fas fa-shopping-cart"></i> Add to Cart
+          </button>
+          <a href="shop.html#nepal-ice" class="view-details-offer">
+            <i class="fas fa-info-circle"></i> Details
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="view-all-offers">
+    <a href="shop.html" class="view-all-btn">View All Products</a>
+  </div>
 </section>
 
 <!-- Logos -->
@@ -1666,54 +1718,6 @@
     </div>
   </div>
 </section>
-  
-    <section class="ads-section">
-        <h2 class="section-title">Today's Special Offers</h2>
-        <p class="section-subtitle">Discover our exclusive collection with limited-time discounts. Shop now before these deals are gone!</p>
-        
-        <div class="ads-container">
-            <!-- Ad Card 1 -->
-            <div class="ad-card">
-                <span class="ad-badge">10% OFF</span>
-                <img src="https://liquorworld.com.np/wp-content/uploads/2024/02/Mustang-Gold-750ML.jpg" alt="Product 1" class="ad-image">
-                <div class="ad-content">
-                    <h3 class="ad-title">Mustang Whiskey 750ML</h3>
-                    <p class="ad-description">Blended and matured in 8 year old scotch which is matured and kept in casks for an exceptional and undeniable taste.</p>
-                    <div class="ad-price">Rs 1100 <span class="old-price">Rs 1220</span></div>
-                    <a href="/shop" class="shop-now-btn">Shop Now <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-            
-            <!-- Ad Card 2 -->
-            <div class="ad-card">
-                <span class="ad-badge">4% OFF</span>
-                <img src="https://onlineliquornepal.com/wp-content/uploads/2021/12/Shikhar-Ice-Rush.jpg" alt="" class="ad-image">
-                <div class="ad-content">
-                    <h3 class="ad-title">Shikhar ICE Rush</h3>
-                    <p class="ad-description">Smoking causes lung cancer, heart disease, emphysema and may complicate pregnancy.</p>
-                    <div class="ad-price">260 <span class="old-price">280</span></div>
-                    <a href="/shop" class="shop-now-btn">Shop Now <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-            
-            <!-- Ad Card 3 -->
-            <div class="ad-card">
-                <span class="ad-badge">4% OFF</span>
-                <img src="https://liquorworld.com.np/wp-content/uploads/2023/07/Nepal-Ice-Xtra-Strong-Bottle-330ML.jpg" alt="nepal ice" class="ad-image">
-                <div class="ad-content">
-                    <h3 class="ad-title">Nepal ICE Small 330ML</h3>
-                    <p class="ad-description">The excellent taste of Nepal comes from the perfect blend of the finest malts and grains, best hops and pure yeast.</p>
-                    <div class="ad-price">Rs 160 <span class="old-price">Rs 187</span></div>
-                    <a href="/shop" class="shop-now-btn">Shop Now <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-        </div>
-        
-        <div class="view-all-container">
-            <a href="/shop" class="view-all-btn">View All Products</a>
-        </div>
-    </section>
-
 
 <!-- Footer -->
 <footer>
@@ -1874,6 +1878,38 @@
     setTimeout(() => {
       button.textContent = 'Add to Cart';
       button.style.backgroundColor = '#ff6600';
+    }, 1000);
+  }
+  
+  // Add offer product to cart
+  function addOfferToCart(productName, price, button) {
+    // Check if product already exists in cart
+    const existingItemIndex = cart.findIndex(item => item.name === productName);
+    
+    if (existingItemIndex >= 0) {
+      // Update quantity if product already in cart
+      cart[existingItemIndex].quantity += 1;
+    } else {
+      // Add new item to cart
+      cart.push({
+        name: productName,
+        price: price,
+        quantity: 1,
+        category: 'special-offer'
+      });
+    }
+    
+    updateCartPreview();
+    openModal();
+    
+    // Show added to cart animation
+    button.innerHTML = '<i class="fas fa-check"></i> Added!';
+    button.style.backgroundColor = '#4CAF50';
+    button.style.borderColor = '#4CAF50';
+    setTimeout(() => {
+      button.innerHTML = '<i class="fas fa-shopping-cart"></i> Add to Cart';
+      button.style.backgroundColor = '';
+      button.style.borderColor = '';
     }, 1000);
   }
   
