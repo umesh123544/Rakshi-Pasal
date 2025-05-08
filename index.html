@@ -2062,62 +2062,6 @@
       alert("Your cart is empty!");
       return;
     }
-    
-// Quantity selector functionality
-        function updateQuantity(button, change) {
-            const container = button.closest('.quantity-selector');
-            const input = container.querySelector('.quantity-input');
-            let newValue = parseInt(input.value) + change;
-            
-            if (newValue < 1) newValue = 1;
-            input.value = newValue;
-        }
-        
-        // Add to cart functionality
-        function addToCart(productName, price, button) {
-            const container = button.closest('.ad-card');
-            const quantity = parseInt(container.querySelector('.quantity-input').value);
-            const totalPrice = (price * quantity).toFixed(2);
-            
-            // Here you would typically send this data to your backend
-            // For demonstration, we'll just show a notification
-            console.log(`Added to cart: ${quantity} x ${productName} ($${price} each) = $${totalPrice}`);
-            
-            // Show success notification
-            const notification = document.getElementById('notification');
-            notification.style.display = 'block';
-            
-            // Change button temporarily to show success
-            button.innerHTML = '<i class="fas fa-check"></i> Added!';
-            button.style.backgroundColor = '#4CAF50';
-            button.style.borderColor = '#4CAF50';
-            
-            setTimeout(() => {
-                button.innerHTML = '<i class="fas fa-shopping-cart"></i> Add to Cart';
-                button.style.backgroundColor = '';
-                button.style.borderColor = '';
-            }, 2000);
-            
-            setTimeout(() => {
-                notification.style.display = 'none';
-            }, 3000);
-            
-            // In a real implementation, you would:
-            // 1. Send AJAX request to your backend
-            // 2. Update cart counter in the header
-            // 3. Possibly redirect to cart page or keep user on current page
-        }
-        
-        // Prevent form submission when pressing enter in quantity input
-        document.addEventListener('DOMContentLoaded', function() {
-            const quantityInputs = document.querySelectorAll('.quantity-input');
-            quantityInputs.forEach(input => {
-                input.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter') {
-                        e.preventDefault();
-                    }
-                });
-            });
     // Get form values
     const orderData = {
       customer_name: document.getElementById('customer-name').value,
