@@ -4,6 +4,11 @@
   "description": "A PWA version of Aaila Pasa",
   "start_url": "/",
   "display": "standalone",
+  "start_url": "/?source=pwa",
+  "related_applications": [{
+  "platform": "webapp",
+  "url": "https://aailapasa.netlify.app/manifest.json"
+}]
   "background_color": "#ffffff",
   "theme_color": "#000000",
   "icons": [
