@@ -1,6 +1,6 @@
 {
   "name": "Aaila Pasa",
-  "short_name": "Aaila Pasa",
+  "short_name": "AailaPasa",
   "description": "A PWA version of Aaila Pasa",
   "start_url": "/",
   "display": "standalone",
