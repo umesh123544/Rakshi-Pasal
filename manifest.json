@@ -10,12 +10,15 @@
     {
       "src": "/icons/icon-192x192.png",
       "sizes": "192x192",
-      "type": "https://limewire.com/d/Vs1my#e3lCLuQpPO"
+      "type": "image/png"
     },
     {
       "src": "/icons/icon-512x512.png",
       "sizes": "512x512",
-      "type": "https://limewire.com/d/7G9U4#Sdy1lhJ6WU"
+      "type": "image/png"
     }
-  ]
+  ],
+  "scope": "/",
+  "orientation": "portrait-primary",
+  "prefer_related_applications": false
 }
