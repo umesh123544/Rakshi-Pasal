@@ -2229,7 +2229,34 @@
       updateCartPreview();
     }
   });
+  // PWA Installation Handling
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
   
+  // Show your install button (if hidden by default)
+  const installButton = document.getElementById('installButton');
+  if (installButton) installButton.style.display = 'block';
+});
+
+function showInstallPrompt() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted install');
+      } else {
+        console.log('User dismissed install');
+      }
+      deferredPrompt = null;
+    });
+  }
+}
+
+// Attach to your install button
+document.getElementById('installButton')?.addEventListener('click', showInstallPrompt);
   // Service Worker Registration
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
