@@ -360,7 +360,7 @@
     /* Banner with Animations */
     .banner {
       background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-      url(https://assets.cntraveller.in/photos/620a027ec78f51616154fb84/16:9/w_1024%2Cc_limit/2AMC54C.jpg) no-repeat center center/cover;
+      url(https://imageio.forbes.com/specials-images/imageserve/668e850f1682e604c2c37d57/Whiskey-with-ice-cubes-in-glass/1960x0.jpg?format=jpg&width=960) no-repeat center center/cover;
       height: 700px;
       display: flex;
       align-items: center;
@@ -441,6 +441,22 @@
       transition: all 0.3s ease;
       overflow: hidden;
       position: relative;
+      cursor: pointer;
+    }
+    
+    .promo-box::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+    }
+    
+    .promo-box:hover::after {
+      background: rgba(0,0,0,0.1);
     }
     
     .promo-box:hover {
@@ -476,6 +492,8 @@
       font-weight: 600;
       transition: all 0.3s ease;
       border: 2px solid #ff6600;
+      position: relative;
+      z-index: 3;
     }
     
     .promo-btn:hover {
@@ -1571,19 +1589,23 @@
 <section class="promo-boxes">
   <div class="promo-container">
     <!-- First Promo Box -->
-    <div class="promo-box" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://www.lavishsparkle.co.uk/cdn/shop/products/ScottishWhiskey.png?v=1667400628')">
+    <div class="promo-box" 
+         style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://www.lavishsparkle.co.uk/cdn/shop/products/ScottishWhiskey.png?v=1667400628')"
+         onclick="window.location.href='shop.html?category=whiskey'">
       <div class="promo-content">
         <h3>Whiskey Only</h3>
-        <p>Get 10% off for first customer </p>
+        <p>Get 10% off for first customer</p>
         <a href="shop.html?category=whiskey" class="promo-btn">Grab Now</a>
       </div>
     </div>
     
     <!-- Second Promo Box -->
-    <div class="promo-box" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://minuman.com/cdn/shop/articles/Everything-You-Need-to-Know-About-Beer-2_855eab84-2dcb-4377-9c3c-9eed807c9acb.jpg?v=1739868312')">
+    <div class="promo-box" 
+         style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://minuman.com/cdn/shop/articles/Everything-You-Need-to-Know-About-Beer-2_855eab84-2dcb-4377-9c3c-9eed807c9acb.jpg?v=1739868312')"
+         onclick="window.location.href='shop.html?category=beer'">
       <div class="promo-content">
         <h3>Beer Bonanza</h3>
-        <p>Buy 6 beers and get 1 free </p>
+        <p>Buy 6 beers and get 1 free</p>
         <a href="shop.html?category=beer" class="promo-btn">Cheers Now</a>
       </div>
     </div>
