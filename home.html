@@ -412,95 +412,83 @@
     }
     
     /* Promo Boxes Section */
-    .promo-boxes {
-      padding: 20px;
-      margin: 0 auto;
-      max-width: 1200px;
-    }
+   .promo-boxes {
+     padding: 20px;
+     margin: 0 auto;
+     max-width: 1200px;
+  }
+
+  .promo-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: -50px;
+    position: relative;
+    z-index: 10;
+  }
+
+ .promo-box {
+    height: 200px;
+    border-radius: 10px;
+    display: flex;
+    align-items: flex-end;
+    color: white;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+ }
+
+ .promo-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+ }
+
+ .promo-box::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.3));
+    transition: all 0.3s ease;
+ }
+
+ .promo-box:hover::after {
+    background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.4));
+}
+
+ .promo-box:hover {
+   transform: translateY(-5px);
+   box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+ .promo-content {
+   padding: 20px;
+   position: relative;
+   z-index: 2;
+   width: 100%;
+}
+
+.promo-box h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+}
+
+.promo-box p {
+  margin-bottom: 0;
+  font-size: 16px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+}
     
-    .promo-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-      margin-top: -50px;
-      position: relative;
-      z-index: 10;
-    }
-    
-    .promo-box {
-      background-size: cover;
-      background-position: center;
-      height: 200px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      text-align: center;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-      transition: all 0.3s ease;
-      overflow: hidden;
-      position: relative;
-      cursor: pointer;
-    }
-    
-    .promo-box::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0,0,0,0.3);
-      transition: all 0.3s ease;
-    }
-    
-    .promo-box:hover::after {
-      background: rgba(0,0,0,0.1);
-    }
-    
-    .promo-box:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-    }
-    
-    .promo-content {
-      padding: 20px;
-      position: relative;
-      z-index: 2;
-    }
-    
-    .promo-box h3 {
-      font-size: 24px;
-      margin-bottom: 10px;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-    }
-    
-    .promo-box p {
-      margin-bottom: 20px;
-      font-size: 16px;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-    }
-    
-    .promo-btn {
-      display: inline-block;
-      padding: 10px 25px;
-      background: #ff6600;
-      color: white;
-      border-radius: 30px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      border: 2px solid #ff6600;
-      position: relative;
-      z-index: 3;
-    }
-    
-    .promo-btn:hover {
-      background: transparent;
-      color: white;
-      border-color: white;
-    }
     
     /* Banner Animations */
     @keyframes slideInFromBottom {
@@ -1584,29 +1572,31 @@
   <p>रोजेको र खोजेको सबै रक्सी, एउटै ठाउंमा पाइने – तपाईंको मनपर्ने रक्सी छिटो र सजिलै delivery हुने एक मात्र ठाउँ Aaila पासा </p>
   <a href="shop.html" class="btn">Shop Now</a>
 </section>
-
-<!-- Promo Boxes Section -->
+    <!-- Promo Boxes Section -->
 <section class="promo-boxes">
   <div class="promo-container">
+    
     <!-- First Promo Box -->
     <div class="promo-box" 
-         style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.augustman.com/wp-content/uploads/sites/6/2023/09/25093546/scotch-under-2000-1.jpeg')"
          onclick="window.location.href='shop.html?category=whiskey'">
+      <img src="https://www.lavishsparkle.co.uk/cdn/shop/products/ScottishWhiskey.png?v=1667400628" 
+           alt="Whiskey Promotion" 
+           class="promo-image">
       <div class="promo-content">
         <h3>Whiskey Only</h3>
         <p>Get 10% off for first customer</p>
-        <a href="shop.html?category=whiskey" class="promo-btn">Grab Now</a>
       </div>
     </div>
     
     <!-- Second Promo Box -->
     <div class="promo-box" 
-         style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://indian-retailer.s3.ap-south-1.amazonaws.com/s3fs-public/2024-06/image%20%283%29_1.jpg')"
          onclick="window.location.href='shop.html?category=beer'">
+      <img src="https://minuman.com/cdn/shop/articles/Everything-You-Need-to-Know-About-Beer-2_855eab84-2dcb-4377-9c3c-9eed807c9acb.jpg?v=1739868312" 
+           alt="Beer Promotion" 
+           class="promo-image">
       <div class="promo-content">
         <h3>Beer Bonanza</h3>
         <p>Buy 6 beers and get 1 free</p>
-        <a href="shop.html?category=beer" class="promo-btn">Cheers Now</a>
       </div>
     </div>
   </div>
