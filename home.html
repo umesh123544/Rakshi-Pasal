@@ -4,37 +4,41 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Aaila Pasa - Alcohol Delivery</title>
-<link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/YBnWh99Q/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png">
-<link rel="icon" type="image/png" sizes="64x64" href="https://i.ibb.co/YBnWh99Q/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png">
-<link rel="icon" type="image/png" sizes="128x128" href="https://i.ibb.co/YBnWh99Q/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png">
-<link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/YBnWh99Q/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png">
+  
+  <!-- PWA Meta Tags -->
+  <meta name="theme-color" content="#000000">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Aaila Pasa">
+  
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/YBnWh99Q/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="https://i.ibb.co/YBnWh99Q/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png">
+  <link rel="icon" type="image/png" sizes="128x128" href="https://i.ibb.co/YBnWh99Q/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/YBnWh99Q/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png">
+  
+  <!-- Web App Manifest -->
+  <link rel="manifest" href="manifest.json">
+  
+  <!-- iOS Splash Screens -->
+  <link rel="apple-touch-startup-image" href="https://i.ibb.co/YBnWh99Q/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png">
+  
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <!-- EmailJS SDK -->
-  <!-- PWA Required Tags -->
-<meta name="theme-color" content="#000000">
-<link rel="manifest" href="/manifest.json">
-
-<!-- iOS Support (Optional) -->
-  <!-- Enhanced iOS PWA Support - Add these in head -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Aaila Pasa">
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   
-  <!-- Apple Touch Icons (recommended sizes) -->
-  <link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/YBnWh99Q/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png">
-  <link rel="apple-touch-icon" sizes="167x167" href="https://i.ibb.co/YBnWh99Q/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="https://i.ibb.co/YBnWh99Q/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="https://i.ibb.co/YBnWh99Q/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png">
-  
-  <!-- Splash Screens (optional but recommended) -->
-  <link rel="apple-touch-startup-image" href="/splash/iphone5.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)">
-  <link rel="apple-touch-startup-image" href="/splash/iphone6.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)">
-  <link rel="apple-touch-startup-image" href="/splash/iphoneplus.png" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3)">
-
   <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+    }
     
     /* Age Verification Modal */
     .age-verification {
@@ -1229,6 +1233,36 @@
       text-decoration: none;
     }
     
+    /* Install Button */
+    .install-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #ff6600;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: 2px solid #ff6600;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      z-index: 1000;
+      display: none;
+      cursor: pointer;
+    }
+    
+    .install-btn:hover {
+      background: white;
+      color: #ff6600;
+    }
+    
+    @media (max-width: 768px) {
+      .install-btn {
+        bottom: 70px;
+      }
+    }
+    
     /* Animations */
     @keyframes fadeIn { 
       from { opacity: 0; transform: translateY(20px); } 
@@ -1350,6 +1384,11 @@
     </div>
   </div>
 </div>
+
+<!-- Install Button -->
+<button id="installButton" class="install-btn">
+  <i class="fas fa-download"></i> Install App
+</button>
 
 <!-- Header -->
 <header>
@@ -2234,55 +2273,88 @@
       updateCartPreview();
     }
   });
-  // PWA Installation Handling
-let deferredPrompt;
 
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
+  // ===== PWA Functionality =====
   
-  // Show your install button (if hidden by default)
-  const installButton = document.getElementById('installButton');
-  if (installButton) installButton.style.display = 'block';
-});
-
-// Attach to your install button
-document.getElementById('installButton')?.addEventListener('click', showInstallPrompt);
   // Service Worker Registration
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then(reg => console.log('✅ Service Worker registered'))
-      .catch(err => console.log('❌ SW registration failed:', err));
-  });
-}
-  CLOSING SCRIPT TAG =====
-  // iOS Installation Handler
-  function showIOSInstallInstructions() {
-    // Check if iOS
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-    const isStandalone = window.navigator.standalone;
-    
-    // Only show if iOS and not already installed
-    if (isIOS && !isStandalone) {
-      const iosSection = document.getElementById('iosInstallSection');
-      if (iosSection) iosSection.style.display = 'block';
-      
-      // Optional: Hide Android install prompt if shown
-      const androidInstall = document.querySelector('.pwa-install-section');
-      if (androidInstall) androidInstall.style.display = 'none';
-    }
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js')
+        .then(registration => {
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        })
+        .catch(err => {
+          console.log('ServiceWorker registration failed: ', err);
+        });
+    });
   }
-
-  // Run on page load
-  window.addEventListener('load', showIOSInstallInstructions);
-
-  // Also run when the page becomes visible again
-  document.addEventListener('visibilitychange', function() {
-    if (document.visibilityState === 'visible') {
-      showIOSInstallInstructions();
+  
+  // Install Prompt Handling
+  let deferredPrompt;
+  const installButton = document.getElementById('installButton');
+  
+  window.addEventListener('beforeinstallprompt', (e) => {
+    // Prevent the mini-infobar from appearing on mobile
+    e.preventDefault();
+    // Stash the event so it can be triggered later
+    deferredPrompt = e;
+    // Show the install button
+    installButton.style.display = 'block';
+    
+    // Automatically show prompt after 10 seconds if not dismissed
+    setTimeout(() => {
+      if (deferredPrompt) {
+        showInstallPrompt();
+      }
+    }, 10000);
+  });
+  
+  // Show install prompt
+  function showInstallPrompt() {
+    if (!deferredPrompt) return;
+    
+    // Show the install prompt
+    deferredPrompt.prompt();
+    
+    // Wait for the user to respond to the prompt
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted the install prompt');
+      } else {
+        console.log('User dismissed the install prompt');
+      }
+      // Reset the deferred prompt variable
+      deferredPrompt = null;
+      // Hide the install button
+      installButton.style.display = 'none';
+    });
+  }
+  
+  // Handle install button click
+  installButton.addEventListener('click', showInstallPrompt);
+  
+  // Track how PWA was launched
+  window.addEventListener('DOMContentLoaded', () => {
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+      console.log('Launched as PWA');
+    } else {
+      console.log('Launched in browser tab');
     }
   });
+</script>
+
+<!-- Service Worker Script -->
+<script>
+  if ('serviceWorker' in navigator) {
+    // Register service worker
+    navigator.serviceWorker.register('sw.js')
+      .then(registration => {
+        console.log('Service Worker registered with scope:', registration.scope);
+      })
+      .catch(error => {
+        console.log('Service Worker registration failed:', error);
+      });
+  }
 </script>
 </body>
 </html>
