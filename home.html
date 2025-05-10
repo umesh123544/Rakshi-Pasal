@@ -38,6 +38,22 @@
       margin: 0;
       padding: 0;
       background-color: #f5f5f5;
+      overflow-x: hidden;
+    }
+    
+    /* Network Status Indicator */
+    #network-status {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #ff6600;
+      color: white;
+      text-align: center;
+      padding: 5px;
+      font-size: 14px;
+      z-index: 1100;
+      display: none;
     }
     
     /* Age Verification Modal */
@@ -584,6 +600,12 @@
       object-fit: contain;
       border-radius: 8px;
       margin-bottom: 15px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    
+    .product img:hover {
+      transform: scale(1.05);
     }
     
     .product h3 { 
@@ -1080,6 +1102,7 @@
       background: #f8f8f8;
       border-radius: 8px 8px 0 0;
       overflow: hidden;
+      cursor: pointer;
     }
 
     .offer-image {
@@ -1091,10 +1114,6 @@
 
     .offer-image-container:hover .offer-image {
       transform: scale(1.1);
-    }
-    
-    .offer-card:hover .offer-image {
-      transform: scale(1.05);
     }
     
     .offer-content {
@@ -1319,6 +1338,11 @@
       color: #ff6600;
     }
     
+    /* Add to cart animation */
+    .add-to-cart-animation {
+      animation: bounce 1s;
+    }
+    
     /* Animations */
     @keyframes fadeIn { 
       from { opacity: 0; transform: translateY(20px); } 
@@ -1333,6 +1357,33 @@
     @keyframes zoomIn { 
       from { opacity: 0; transform: scale(0.8); } 
       to { opacity: 1; transform: scale(1); } 
+    }
+    
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+      40% {transform: translateY(-20px);}
+      60% {transform: translateY(-10px);}
+    }
+    
+    /* Page transition */
+    .page-transition {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #ff6600;
+      z-index: 10000;
+      transform: translateY(100%);
+      animation: slideUp 0.3s ease-out forwards;
+    }
+    
+    @keyframes slideUp {
+      to { transform: translateY(0); }
+    }
+    
+    @keyframes slideDown {
+      to { transform: translateY(100%); }
     }
     
     /* Responsive Styles */
@@ -1441,6 +1492,9 @@
   </style>
 </head>
 <body>
+<!-- Network Status Indicator -->
+<div id="network-status"></div>
+
 <!-- Age Verification Modal -->
 <div class="age-verification" id="ageVerification">
   <div class="age-verification-content">
@@ -1671,14 +1725,14 @@
 <!-- Special Offers Section -->
 <section class="special-offers">
   <h2 class="section-title">Today's Special Offers</h2>
-<p class="section-subtitle">Limited time discounts on our most popular products. Shop now before these deals expire!</p>
+  <p class="section-subtitle">Limited time discounts on our most popular products. Shop now before these deals expire!</p>
 
   <div class="offers-container">
     <!-- Offer 1 -->
     <div class="offer-card">
       <span class="offer-badge">10% OFF</span>
       <div class="offer-image-container">
-        <img src="https://content.sharesansar.com/photos/FEB12/March%2030%2C%202022/Aug%202%202022/mustangsep25.png" alt="Mustang Whiskey" class="offer-image">
+        <img src="https://i.ibb.co/0jQY7zL/mustang-whiskey.png" alt="Mustang Whiskey" class="offer-image">
       </div>
       <div class="offer-content">
         <h3 class="offer-title">Mustang Whiskey 750ML</h3>
@@ -1688,7 +1742,7 @@
           <button class="add-to-cart-offer" onclick="addOfferToCart('Mustang Whiskey 750ML', 1100, this)">
             <i class="fas fa-shopping-cart"></i> Add to Cart
           </button>
-          <a href="return.html#mustang-whiskey" class="view-details-offer">
+          <a href="product-details.html?product=Mustang+Whiskey+750ML" class="view-details-offer">
             <i class="fas fa-info-circle"></i> Details
           </a>
         </div>
@@ -1699,7 +1753,7 @@
     <div class="offer-card">
       <span class="offer-badge">7% OFF</span>
       <div class="offer-image-container">
-        <img src="https://daruadda.com/wp-content/uploads/2022/11/Shikhar-Ice-Rush-20s.png" alt="Shikhar ICE Rush" class="offer-image">
+        <img src="https://i.ibb.co/9qX4Q8J/shikhar-ice-rush.png" alt="Shikhar ICE Rush" class="offer-image">
       </div>
       <div class="offer-content">
         <h3 class="offer-title">Shikhar ICE Rush</h3>
@@ -1709,7 +1763,7 @@
           <button class="add-to-cart-offer" onclick="addOfferToCart('Shikhar ICE Rush', 260, this)">
             <i class="fas fa-shopping-cart"></i> Add to Cart
           </button>
-          <a href="return.html#shikhar-ice" class="view-details-offer">
+          <a href="product-details.html?product=Shikhar+ICE+Rush" class="view-details-offer">
             <i class="fas fa-info-circle"></i> Details
           </a>
         </div>
@@ -1720,7 +1774,7 @@
     <div class="offer-card">
       <span class="offer-badge">11% OFF</span>
       <div class="offer-image-container">
-        <img src="https://cheers.com.np/uploads/products/1267181021513957909610689793823707439783.png" alt="Nepal ICE Small" class="offer-image">
+        <img src="https://i.ibb.co/4WJY3vT/nepal-ice-small.png" alt="Nepal ICE Small" class="offer-image">
       </div>
       <div class="offer-content">
         <h3 class="offer-title">Nepal ICE Small 330ML</h3>
@@ -1730,7 +1784,7 @@
           <button class="add-to-cart-offer" onclick="addOfferToCart('Nepal ICE Small 330ML', 160, this)">
             <i class="fas fa-shopping-cart"></i> Add to Cart
           </button>
-          <a href="return.html#nepal-ice" class="view-details-offer">
+          <a href="product-details.html?product=Nepal+ICE+Small+330ML" class="view-details-offer">
             <i class="fas fa-info-circle"></i> Details
           </a>
         </div>
@@ -1739,7 +1793,7 @@
   </div>
   
   <div class="view-all-offers">
-    <a href="return.htmk" class="view-all-btn">View All Products</a>
+    <a href="shop.html" class="view-all-btn">View All Products</a>
   </div>
 </section>
 
@@ -1948,7 +2002,33 @@
   }
   
   // Run age verification check on page load
-  window.onload = checkAgeVerification;
+  window.onload = function() {
+    checkAgeVerification();
+    updateNetworkStatus();
+    
+    // Load cart from localStorage if exists
+    const savedCart = localStorage.getItem('aailaPasaCart');
+    if (savedCart) {
+      cart = JSON.parse(savedCart);
+      updateCartPreview();
+    }
+    
+    // Set up image click handlers for products
+    document.querySelectorAll('.product img').forEach(img => {
+      img.addEventListener('click', function() {
+        const productName = this.closest('.product').querySelector('h3').textContent;
+        window.location.href = `product-details.html?product=${encodeURIComponent(productName)}`;
+      });
+    });
+    
+    // Set up image click handlers for offers
+    document.querySelectorAll('.offer-image').forEach(img => {
+      img.addEventListener('click', function() {
+        const productName = this.closest('.offer-card').querySelector('.offer-title').textContent;
+        window.location.href = `product-details.html?product=${encodeURIComponent(productName)}`;
+      });
+    });
+  };
   
   // Cart functionality
   let cart = [];
@@ -1963,6 +2043,20 @@
   const productList = document.getElementById("productList");
   const noResults = document.getElementById("noResults");
   const products = document.querySelectorAll('.product');
+  
+  // Network status detection
+  function updateNetworkStatus() {
+    const statusElement = document.getElementById('network-status');
+    if (navigator.onLine) {
+      statusElement.textContent = 'Online';
+      statusElement.style.color = '#4CAF50';
+      statusElement.style.display = 'none';
+    } else {
+      statusElement.textContent = 'Offline - Some features may not work';
+      statusElement.style.color = '#ff6600';
+      statusElement.style.display = 'block';
+    }
+  }
   
   // Toggle mobile menu
   function toggleMobileMenu() {
@@ -1999,6 +2093,9 @@
   
   // Add product to cart
   function addToCart(button) {
+    // Vibrate for 50ms if supported
+    if (navigator.vibrate) navigator.vibrate(50);
+    
     const product = button.closest(".product");
     const productName = product.querySelector("h3").textContent;
     const productCategory = product.getAttribute('data-category');
@@ -2029,16 +2126,21 @@
     openModal();
     
     // Show added to cart animation
+    button.classList.add('add-to-cart-animation');
     button.textContent = 'Added!';
     button.style.backgroundColor = '#4CAF50';
     setTimeout(() => {
       button.textContent = 'Add to Cart';
       button.style.backgroundColor = '#ff6600';
+      button.classList.remove('add-to-cart-animation');
     }, 1000);
   }
   
   // Add offer product to cart
   function addOfferToCart(productName, price, button) {
+    // Vibrate for 50ms if supported
+    if (navigator.vibrate) navigator.vibrate(50);
+    
     // Check if product already exists in cart
     const existingItemIndex = cart.findIndex(item => item.name === productName);
     
@@ -2059,6 +2161,7 @@
     openModal();
     
     // Show added to cart animation
+    button.classList.add('add-to-cart-animation');
     button.innerHTML = '<i class="fas fa-check"></i> Added!';
     button.style.backgroundColor = '#4CAF50';
     button.style.borderColor = '#4CAF50';
@@ -2066,6 +2169,7 @@
       button.innerHTML = '<i class="fas fa-shopping-cart"></i> Add to Cart';
       button.style.backgroundColor = '';
       button.style.borderColor = '';
+      button.classList.remove('add-to-cart-animation');
     }, 1000);
   }
   
@@ -2095,6 +2199,11 @@
     
     // Save cart to localStorage
     localStorage.setItem('aailaPasaCart', JSON.stringify(cart));
+    
+    // Update app badge if supported
+    if ('setAppBadge' in navigator) {
+      navigator.setAppBadge(cart.reduce((sum, item) => sum + item.quantity, 0));
+    }
   }
   
   // Remove item from cart
@@ -2161,13 +2270,6 @@
   function openModal() {
     cartModal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
-    
-    // Load cart from localStorage if exists
-    const savedCart = localStorage.getItem('aailaPasaCart');
-    if (savedCart) {
-      cart = JSON.parse(savedCart);
-      updateCartPreview();
-    }
   }
   
   // Close modal
@@ -2254,6 +2356,7 @@
       alert("Your cart is empty!");
       return;
     }
+    
     // Get form values
     const orderData = {
       customer_name: document.getElementById('customer-name').value,
@@ -2280,55 +2383,55 @@
     const orderNumber = 'AP-' + Date.now().toString().slice(-6);
     
     // Send email via EmailJS
-   emailjs.send('service_wb7evwg', 'template_0593y8t', {
-    customer_name: orderData.customer_name,
-    customer_email: orderData.customer_email,
-    customer_phone: orderData.customer_phone,
-    customer_address: orderData.customer_address,
-    order_items: orderData.order_items,
-    order_subtotal: orderData.order_subtotal,
-    delivery_fee: orderData.delivery_fee,
-    order_total: orderData.order_total,
-    delivery_time: orderData.delivery_time_preference, // This was the key mismatch
-    order_number: orderNumber,
-    customer_notes: orderData.customer_notes,
-    order_date: orderData.order_date
-})
+    emailjs.send('service_wb7evwg', 'template_0593y8t', {
+      customer_name: orderData.customer_name,
+      customer_email: orderData.customer_email,
+      customer_phone: orderData.customer_phone,
+      customer_address: orderData.customer_address,
+      order_items: orderData.order_items,
+      order_subtotal: orderData.order_subtotal,
+      delivery_fee: orderData.delivery_fee,
+      order_total: orderData.order_total,
+      delivery_time: orderData.delivery_time_preference,
+      order_number: orderNumber,
+      customer_notes: orderData.customer_notes,
+      order_date: orderData.order_date
+    })
     .then(function(response) {
-        console.log('Email sent!', response.status, response.text);
-        
-        // Show confirmation
-        showConfirmation(orderData);
-        
-        // Reset cart and close modal
-        cart = [];
-        localStorage.removeItem('aailaPasaCart');
-        updateCartPreview();
-        closeModal();
-        
-        // Reset form
-        e.target.reset();
+      console.log('Email sent!', response.status, response.text);
+      
+      // Show confirmation
+      showConfirmation(orderData);
+      
+      // Reset cart and close modal
+      cart = [];
+      localStorage.removeItem('aailaPasaCart');
+      updateCartPreview();
+      closeModal();
+      
+      // Reset form
+      e.target.reset();
     })
     .catch(function(error) {
-        console.log('Email failed to send', error);
-        alert('There was an error sending your confirmation email. Your order is still being processed.');
-        
-        // Still show confirmation even if email fails
-        showConfirmation(orderData);
-        
-        // Reset cart and close modal
-        cart = [];
-        localStorage.removeItem('aailaPasaCart');
-        updateCartPreview();
-        closeModal();
-        
-        // Reset form
-        e.target.reset();
+      console.log('Email failed to send', error);
+      alert('There was an error sending your confirmation email. Your order is still being processed.');
+      
+      // Still show confirmation even if email fails
+      showConfirmation(orderData);
+      
+      // Reset cart and close modal
+      cart = [];
+      localStorage.removeItem('aailaPasaCart');
+      updateCartPreview();
+      closeModal();
+      
+      // Reset form
+      e.target.reset();
     })
     .finally(function() {
-        // Reset button
-        submitBtn.disabled = false;
-        submitBtn.textContent = submitText;
+      // Reset button
+      submitBtn.disabled = false;
+      submitBtn.textContent = submitText;
     });
   });
   
@@ -2356,15 +2459,6 @@
     }
   });
   
-  // Load cart from localStorage on page load
-  document.addEventListener('DOMContentLoaded', function() {
-    const savedCart = localStorage.getItem('aailaPasaCart');
-    if (savedCart) {
-      cart = JSON.parse(savedCart);
-      updateCartPreview();
-    }
-  });
-
   // ===== PWA Functionality =====
   
   // Service Worker Registration
@@ -2432,6 +2526,40 @@
       console.log('Launched in browser tab');
     }
   });
+  
+  // Track PWA installation
+  window.addEventListener('appinstalled', () => {
+    // Hide the install button if installed
+    installButton.style.display = 'none';
+    // Track installation
+    console.log('PWA was installed');
+  });
+  
+  // Pull to refresh functionality
+  let touchstartY = 0;
+  document.addEventListener('touchstart', e => {
+    touchstartY = e.touches[0].clientY;
+  }, {passive: true});
+  
+  document.addEventListener('touchmove', e => {
+    const touchY = e.touches[0].clientY;
+    const touchDiff = touchY - touchstartY;
+    if (window.scrollY === 0 && touchDiff > 50) {
+      window.location.reload();
+    }
+  }, {passive: true});
+  
+  // Share functionality
+  function shareProduct(product) {
+    if (navigator.share) {
+      navigator.share({
+        title: product.name,
+        text: `Check out ${product.name} on Aaila Pasa`,
+        url: window.location.href,
+      })
+      .catch(error => console.log('Error sharing:', error));
+    }
+  }
 </script>
 
 <!-- Service Worker Script -->
