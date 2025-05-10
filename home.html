@@ -24,10 +24,10 @@
   <meta name="apple-mobile-web-app-title" content="Aaila Pasa">
   
   <!-- Apple Touch Icons (recommended sizes) -->
-  <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-180x180.png">
-  <link rel="apple-touch-icon" sizes="167x167" href="/icons/icon-167x167.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-152x152.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="/icons/icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/YBnWh99Q/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="https://i.ibb.co/YBnWh99Q/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="https://i.ibb.co/YBnWh99Q/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="https://i.ibb.co/YBnWh99Q/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png">
   
   <!-- Splash Screens (optional but recommended) -->
   <link rel="apple-touch-startup-image" href="/splash/iphone5.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)">
@@ -2261,7 +2261,33 @@ if ('serviceWorker' in navigator) {
       .catch(err => console.log('❌ SW registration failed:', err));
   });
 }
-  
+  CLOSING SCRIPT TAG =====
+  // iOS Installation Handler
+  function showIOSInstallInstructions() {
+    // Check if iOS
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    const isStandalone = window.navigator.standalone;
+    
+    // Only show if iOS and not already installed
+    if (isIOS && !isStandalone) {
+      const iosSection = document.getElementById('iosInstallSection');
+      if (iosSection) iosSection.style.display = 'block';
+      
+      // Optional: Hide Android install prompt if shown
+      const androidInstall = document.querySelector('.pwa-install-section');
+      if (androidInstall) androidInstall.style.display = 'none';
+    }
+  }
+
+  // Run on page load
+  window.addEventListener('load', showIOSInstallInstructions);
+
+  // Also run when the page becomes visible again
+  document.addEventListener('visibilitychange', function() {
+    if (document.visibilityState === 'visible') {
+      showIOSInstallInstructions();
+    }
+  });
 </script>
 </body>
 </html>
