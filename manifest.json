@@ -1,14 +1,12 @@
 {
   "name": "Aaila Pasa",
   "short_name": "AailaPasa",
-  "description": "A PWA version of Aaila Pasa",
-  "start_url": "/?source=pwa",
+  "description": "Alcohol delivery service",
+  "start_url": "/home.html",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#000000",
+  "background_color": "#ff6600",
+  "theme_color": "#ff6600",
   "orientation": "portrait-primary",
-  "scope": "/",
-  "prefer_related_applications": false,
   "icons": [
     {
       "src": "/icons/icon-192x192.png",
@@ -22,23 +20,20 @@
       "type": "image/png",
       "purpose": "any maskable"
     },
+    // iOS specific (must be non-maskable)
     {
-      "src": "/icons/icon-180x180.png",
+      "src": "/icons/ios-icon-180x180.png",
       "sizes": "180x180",
       "type": "image/png",
-      "purpose": "any maskable"
-    },
+      "purpose": "monochrome"
+    }
+  ],
+  "screenshots": [
     {
-      "src": "/icons/icon-167x167.png",
-      "sizes": "167x167",
+      "src": "/screenshots/android-1.png",
+      "sizes": "1080x1920",
       "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/icons/icon-152x152.png",
-      "sizes": "152x152",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "form_factor": "narrow"
     }
   ]
 }
