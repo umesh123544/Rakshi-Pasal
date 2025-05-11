@@ -1093,7 +1093,14 @@
       .checkout-form button {
         width: 100%;
       }
-    }
+/* Remove dark overlays */
+.promo-box::after {
+  display: none !important; /* Ensures it overrides any existing styles */
+}
+
+.banner {
+  background: url(https://imageio.forbes.com/specials-images/imageserve/668e850f1682e604c2c37d57/Whiskey-with-ice-cubes-in-glass/1960x0.jpg?format=jpg&width=960) no-repeat center center/cover !important;
+}
   </style>
 </head>
 <body>
@@ -1159,8 +1166,8 @@
 
 <!-- Banner -->
 <section class="banner">
-  <h1>Our Premium Collection</h1>
-  <p>Discover exquisite spirits curated for the most discerning tastes. Each bottle tells a story of craftsmanship and tradition.</p>
+  <h1></h1>
+  <p></p>
   <a href="contact.html" class="btn">Contact Us</a>
 </section>
 
