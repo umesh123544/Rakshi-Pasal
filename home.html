@@ -389,27 +389,41 @@
       animation: slideInFromBottom 1s ease-out 0.8s both;
     }
     
-    .banner .btn {
-      background: #ff6600;
-      color: white;
-      padding: 12px 30px;
-      font-size: 16px;
-      font-weight: 600;
-      text-decoration: none;
-      margin-top: 20px;
-      border-radius: 6px;
-      transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      animation: fadeInScale 1s ease-out 1.1s both;
-    }
-    
-    .banner .btn:hover {
-      background: #e65c00;
-      transform: translateY(-3px);
-      box-shadow: 0 6px 10px rgba(0,0,0,0.2);
-    }
+   .banner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding-bottom: 80px; /* Creates space for the button */
+    text-align: left; /* Aligns text to the left */
+  }
+
+.banner .btn {
+  background: #ff6600;
+  color: white;
+  padding: 12px 30px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  animation: fadeInScale 1s ease-out 1.1s both;
+  
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  margin: 0; 
+  
+  &:hover {
+    background: #e65c00;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 10px rgba(0,0,0,0.2);
+  }
+}
     
     /* Promo Boxes Section */
    .promo-boxes {
