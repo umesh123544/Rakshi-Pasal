@@ -4,10 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Shop | Aaila Pasa</title>
-<link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/YBnWh99Q/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png">
-<link rel="icon" type="image/png" sizes="64x64" href="https://i.ibb.co/YBnWh99Q/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png">
-<link rel="icon" type="image/png" sizes="128x128" href="https://i.ibb.co/YBnWh99Q/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png">
-<link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/YBnWh99Q/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/YBnWh99Q/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="https://i.ibb.co/YBnWh99Q/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png">
+  <link rel="icon" type="image/png" sizes="128x128" href="https://i.ibb.co/YBnWh99Q/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/YBnWh99Q/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png">
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -324,64 +324,101 @@
       font-weight: bold;
     }
     
-    /* Banner Styles */
+    /* New Banner Styles */
     .banner {
-      background: url('https://images.lifestyleasia.com/wp-content/uploads/sites/7/2024/12/05231523/Flavoured-whiskey-low-abv-1-1600x900.jpg') no-repeat center center/cover;
-      height: 500px;
+      position: relative;
+      background: linear-gradient(rgba(0, 0, 0, 0.5), 
+                  url('https://images.unsplash.com/photo-1551029506-0807df4e2031?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+      height: 70vh;
+      min-height: 500px;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
       color: white;
-      flex-direction: column;
-      padding: 20px;
-      margin-top: 60px;
+      margin-top: 80px;
       animation: fadeIn 1.5s ease;
     }
     
-    .banner h1 { 
-      font-size: 42px; 
-      margin: 0; 
-      font-weight: bold;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    .banner-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.4));
+    }
+    
+    .banner-content {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      padding: 0 20px;
+    }
+    
+    .banner h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      margin: 0;
+      font-weight: 700;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+      line-height: 1.2;
+      margin-bottom: 20px;
+      animation: fadeInDown 1s ease;
     }
     
     .banner p {
-      font-size: 18px;
-      margin: 15px 0 25px;
+      font-size: clamp(1rem, 2vw, 1.5rem);
+      margin: 0 auto 30px;
       max-width: 700px;
       line-height: 1.6;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+      animation: fadeInUp 1s ease 0.3s both;
     }
     
-    .banner .btn {
-      background: #ff6600;
-      color: white;
-      padding: 12px 30px;
-      font-size: 16px;
+    .banner-cta {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeIn 1s ease 0.6s both;
+    }
+    
+    .btn {
+      padding: 14px 35px;
+      font-size: 1rem;
       font-weight: 600;
       text-decoration: none;
-      margin-top: 120px;
       border-radius: 6px;
-      transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+      transition: all 0.3s ease;
       text-transform: uppercase;
       letter-spacing: 1px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      margin-left: -650px; 
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      display: inline-block;
     }
     
-    /* Mobile adjustments */
-     @media (max-width: 768px) {
-    .banner .btn {
-     margin-left: 0; 
-     display: none; 
-     width: fit-content; 
-   }
- }
-   
-    .banner .btn:hover {
+    .btn-primary {
+      background: #ff6600;
+      color: white;
+      border: 2px solid #ff6600;
+    }
+    
+    .btn-primary:hover {
       background: #e65c00;
+      border-color: #e65c00;
       transform: translateY(-3px);
-      box-shadow: 0 6px 10px rgba(0,0,0,0.2);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+    
+    .btn-secondary {
+      background: transparent;
+      color: white;
+      border: 2px solid white;
+    }
+    
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.1);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
     }
     
     /* Products Section */
@@ -440,7 +477,6 @@
       flex-wrap: wrap;
       margin-top: 30px;
       padding-bottom: 30px;
-      
     }
     
     .product {
@@ -1007,6 +1043,11 @@
       to { opacity: 1; transform: translateY(0); } 
     }
     
+    @keyframes fadeInUp { 
+      from { opacity: 0; transform: translateY(30px); } 
+      to { opacity: 1; transform: translateY(0); } 
+    }
+    
     @keyframes zoomIn { 
       from { opacity: 0; transform: scale(0.8); } 
       to { opacity: 1; transform: scale(1); } 
@@ -1037,12 +1078,25 @@
       }
       
       .banner {
-        margin-top: 120px;
-        height: 400px;
+        height: 60vh;
+        min-height: 400px;
+        margin-top: 70px;
       }
       
-      .banner h1 {
-        font-size: 32px;
+      .banner-content {
+        padding: 0 15px;
+      }
+      
+      .banner-cta {
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+      }
+      
+      .btn {
+        padding: 12px 25px;
+        width: 100%;
+        max-width: 250px;
       }
       
       .product {
@@ -1083,16 +1137,8 @@
     
     @media (max-width: 480px) {
       .banner {
-        height: 500px;
-        margin-top: 100px;
-      }
-      
-      .banner h1 {
-        font-size: 28px;
-      }
-      
-      .banner p {
-        font-size: 16px;
+        height: 70vh;
+        min-height: 450px;
       }
       
       .form-actions {
@@ -1102,14 +1148,7 @@
       .checkout-form button {
         width: 100%;
       }
-/* Remove dark overlays */
-.promo-box::after {
-  display: none !important; /* Ensures it overrides any existing styles */
-}
-
-.banner {
-  background: url(https://imageio.forbes.com/specials-images/imageserve/668e850f1682e604c2c37d57/Whiskey-with-ice-cubes-in-glass/1960x0.jpg?format=jpg&width=960) no-repeat center center/cover !important;
-}
+    }
   </style>
 </head>
 <body>
@@ -1175,9 +1214,15 @@
 
 <!-- Banner -->
 <section class="banner">
-  <h1></h1>
-  <p></p>
-  <a href="contact.html" class="btn">Contact Us</a>
+  <div class="banner-overlay"></div>
+  <div class="banner-content">
+    <h1>Premium Spirits Delivered to Your Doorstep</h1>
+    <p>Kathmandu's fastest alcohol delivery service with 1-hour delivery in Ring Road area</p>
+    <div class="banner-cta">
+      <a href="#productList" class="btn btn-primary">Shop Now</a>
+      <a href="contact.html" class="btn btn-secondary">Contact Us</a>
+    </div>
+  </div>
 </section>
 
 <!-- Products -->
