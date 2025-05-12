@@ -357,21 +357,20 @@
       font-weight: bold;
     }
     
-    /* Banner with Animations */
+    /* Banner with Animations - UPDATED */
     .banner {
-      background: url('https://i.ibb.co/cSYsvX9d/Screenshot-2025-05-11-202342.png') no-repeat center center/cover;
-      min-height: 60vh;
+      background: url('https://i.ibb.co/cSYsvX9/Screenshot-2025-05-11-202342.png') no-repeat center center/cover;
+      height: 60vh;
+      min-height: 400px;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
       color: white;
-      flex-direction: column;
-      padding: 20px;
-      margin-top: 80px;
       position: relative;
-      animation: fadeIn 1.5s ease;
-      margin-bottom: 30px; /* Added to prevent overlap */
+      margin-top: 80px;
+      width: 100%;
+      overflow: hidden;
     }
 
     .banner-content {
@@ -426,7 +425,7 @@
       padding: 20px;
       margin: 0 auto;
       max-width: 1200px;
-      margin-top: 20px; /* Added to prevent overlap */
+      margin-top: 20px;
     }
 
     .promo-container {
@@ -1412,8 +1411,9 @@
       }
       
       .banner {
-        margin-top: 120px;
-        height: 400px;
+        height: 50vh;
+        min-height: 300px;
+        margin-top: 60px;
       }
       
       .banner h1 {
@@ -1466,8 +1466,9 @@
     
     @media (max-width: 480px) {
       .banner {
-        height: 450px;
-        margin-top: 100px;
+        height: 45vh;
+        min-height: 250px;
+        margin-top: 60px;
       }
       
       .banner h1 {
@@ -1557,11 +1558,11 @@
   </div>
 </header>
 
-<!-- Banner -->
+<!-- Banner - Updated with proper content -->
 <section class="banner">
   <div class="banner-content">
-    <h1></h1>
-    <p></p>
+    <h1>Premium Alcohol Delivered to Your Doorstep</h1>
+    <p>Get your favorite drinks delivered fast in Kathmandu. Order now and enjoy our wide selection of whiskeys, wines, beers and more!</p>
     <a href="shop.html" class="btn">Shop Now</a>
   </div>
 </section>
@@ -1573,8 +1574,8 @@
     <div class="promo-box" onclick="window.location.href='shop.html?category=whiskey'">
       <img src="https://www.lavishsparkle.co.uk/cdn/shop/products/ScottishWhiskey.png?v=1667400628" alt="Whiskey Promotion" class="promo-image">
       <div class="promo-content">
-        <h3></h3>
-        <p></p>
+        <h3>Premium Whiskey Collection</h3>
+        <p>Discover our exclusive selection of fine whiskeys</p>
       </div>
     </div>
     
@@ -1582,8 +1583,8 @@
     <div class="promo-box" onclick="window.location.href='shop.html?category=beer'">
       <img src="https://minuman.com/cdn/shop/articles/Everything-You-Need-to-Know-About-Beer-2_855eab84-2dcb-4377-9c3c-9eed807c9acb.jpg?v=1739868312" alt="Beer Promotion" class="promo-image">
       <div class="promo-content">
-        <h3></h3>
-        <p></p>
+        <h3>Craft Beers & Ales</h3>
+        <p>Explore our refreshing beer selection</p>
       </div>
     </div>
   </div>
