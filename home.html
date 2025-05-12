@@ -357,20 +357,27 @@
       font-weight: bold;
     }
     
-    /* Banner with Animations - UPDATED */
+  /* ===== Updated Banner Styles ===== */
     .banner {
-      background: url('https://i.ibb.co/cSYsvX9/Screenshot-2025-05-11-202342.png') no-repeat center center/cover;
-      height: 60vh;
-      min-height: 400px;
+      /* Mobile-first background (9:16 ratio) */
+      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                  url('https://i.ibb.co/4WXY2Lp/alcohol-mobile-banner.webp') no-repeat center center/cover;
+      height: 70vh;
+      min-height: 500px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: white;
       position: relative;
       margin-top: 80px;
-      width: 100%;
-      overflow: hidden;
+    }
+
+    /* Desktop background (3:1 ratio) */
+    @media (min-width: 768px) {
+      .banner {
+        background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
+                    url('https://i.ibb.co/8XqJ3Py/alcohol-desktop-banner.webp') no-repeat center center/cover;
+        height: 60vh;
+        min-height: 400px;
+      }
     }
 
     .banner-content {
@@ -1558,7 +1565,7 @@
   </div>
 </header>
 
-<!-- Banner - Updated with proper content -->
+<!-- Banner with Responsive Images -->
 <section class="banner">
   <div class="banner-content">
     <h1>Premium Alcohol Delivered to Your Doorstep</h1>
@@ -1566,7 +1573,7 @@
     <a href="shop.html" class="btn">Shop Now</a>
   </div>
 </section>
-
+  
 <!-- Promo Boxes Section -->
 <section class="promo-boxes">
   <div class="promo-container">
