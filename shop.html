@@ -326,8 +326,7 @@
     
     /* Banner Styles */
     .banner {
-      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-      url('https://images.lifestyleasia.com/wp-content/uploads/sites/7/2024/12/05231523/Flavoured-whiskey-low-abv-1-1600x900.jpg') no-repeat center center/cover;
+      background: url('https://images.lifestyleasia.com/wp-content/uploads/sites/7/2024/12/05231523/Flavoured-whiskey-low-abv-1-1600x900.jpg') no-repeat center center/cover;
       height: 700px;
       display: flex;
       align-items: center;
@@ -361,14 +360,24 @@
       font-size: 16px;
       font-weight: 600;
       text-decoration: none;
-      margin-top: 20px;
+      margin-top: 120px;
       border-radius: 6px;
       transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
       text-transform: uppercase;
       letter-spacing: 1px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      margin-left: -650px; 
     }
     
+    /* Mobile adjustments */
+     @media (max-width: 768px) {
+    .banner .btn {
+     margin-left: 0; 
+     display: none; 
+     width: fit-content; 
+   }
+ }
+   
     .banner .btn:hover {
       background: #e65c00;
       transform: translateY(-3px);
