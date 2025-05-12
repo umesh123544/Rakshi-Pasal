@@ -357,12 +357,12 @@
       font-weight: bold;
     }
     
-  /* ===== Updated Banner Styles ===== */
+    /* ===== Optimized Banner Styles ===== */
     .banner {
       /* Mobile-first background (9:16 ratio) */
       background: url('https://i.ibb.co/wFHKcZdH/Add-a-heading.png') no-repeat center center/cover;
-      height: 70vh;
-      min-height: 400px;
+      height: 60vh;
+      min-height: 300px;
       display: flex;
       align-items: center;
       position: relative;
@@ -373,7 +373,7 @@
     @media (min-width: 768px) {
       .banner {
         background: url('https://i.ibb.co/tpCTFQsB/1200-x-500-px-800-x-400-px.png') no-repeat center center/cover;
-        height: 60vh;
+        height: 70vh;
         min-height: 500px;
       }
     }
@@ -385,6 +385,7 @@
       max-width: 1200px;
       margin: 0 auto;
       padding: 20px;
+      text-align: center;
     }
 
     .banner h1 { 
@@ -393,6 +394,7 @@
       font-weight: bold;
       text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
       animation: slideInFromBottom 1s ease-out 0.5s both;
+      color: white;
     }
 
     .banner p {
@@ -401,6 +403,8 @@
       max-width: 700px;
       line-height: 1.6;
       animation: slideInFromBottom 1s ease-out 0.8s both;
+      color: white;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
     }
 
     .banner .btn {
@@ -1566,8 +1570,8 @@
 <!-- Banner with Responsive Images -->
 <section class="banner">
   <div class="banner-content">
-    <h1></h1>
-    <p></p>
+    <h1>Premium Alcohol Delivered to Your Doorstep</h1>
+    <p>Fast, reliable delivery of your favorite drinks. Order now and get delivery within 2 hours!</p>
     <a href="shop.html" class="btn">Shop Now</a>
   </div>
 </section>
@@ -1579,8 +1583,8 @@
     <div class="promo-box" onclick="window.location.href='shop.html?category=whiskey'">
       <img src="https://i.ibb.co/cKqrj9wf/Add-a-heading-1.jpg" alt="Whiskey Promotion" class="promo-image">
       <div class="promo-content">
-        <h3></h3>
-        <p></p>
+        <h3>Premium Whiskey Collection</h3>
+        <p>Shop our exclusive selection of fine whiskeys</p>
       </div>
     </div>
     
@@ -1588,8 +1592,8 @@
     <div class="promo-box" onclick="window.location.href='shop.html?category=beer'">
       <img src="https://i.ibb.co/wFHKcZdH/Add-a-heading.png" alt="Beer Promotion" class="promo-image">
       <div class="promo-content">
-        <h3></h3>
-        <p></p>
+        <h3>Cold Beer Specials</h3>
+        <p>Enjoy our ice-cold beer selection</p>
       </div>
     </div>
   </div>
