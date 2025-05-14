@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=MedievalSharp&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@500&family=Lobster&display=swap" rel="stylesheet>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@500&family=Lobster&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #6d28d9;
@@ -175,6 +175,7 @@
       justify-content: center;
       text-align: center;
       color: white;
+      margin-top: 70px; /* To account for fixed header */
     }
 
     .video-container {
@@ -193,7 +194,7 @@
       top: 50%;
       left: 50%;
       width: 100vw;
-      min-height: 100vh;
+      height: 100vh;
       transform: translate(-50%, -50%);
       object-fit: cover;
       z-index: 0;
@@ -229,6 +230,13 @@
       text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
     }
 
+    /* Main Content */
+    main {
+      position: relative;
+      z-index: 10;
+      background: var(--light);
+    }
+
     /* CTA Button */
     .cta-button {
       background-color: var(--secondary);
@@ -254,6 +262,8 @@
       padding: 5rem 5%;
       max-width: var(--max-width);
       margin: 0 auto;
+      background: white;
+      position: relative;
     }
 
     .section-title {
@@ -518,102 +528,105 @@
     </div>
   </section>
 
-  <!-- Services Section -->
-  <section id="services">
-    <div class="section-title">
-      <h2>Our Services</h2>
-      <p>Personalized astrology services tailored to your life path</p>
-    </div>
-    <div class="service-grid">
-      <div class="service">
-        <h3>Birth Chart Reading</h3>
-        <p>Detailed analysis of your natal chart by certified astrologers.</p>
+  <!-- Main Content -->
+  <main>
+    <!-- Services Section -->
+    <section id="services">
+      <div class="section-title">
+        <h2>Our Services</h2>
+        <p>Personalized astrology services tailored to your life path</p>
       </div>
-      <div class="service">
-        <h3>Horoscope Matching</h3>
-        <p>Compatibility analysis for marriage or business partnership.</p>
-      </div>
-      <div class="service">
-        <h3>Remedial Guidance</h3>
-        <p>Solutions through mantras, gemstones, and rituals for dosha balancing.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Astrologers Section -->
-  <section id="team">
-    <div class="section-title">
-      <h2>Meet Our Astrologers</h2>
-      <p>Decades of experience in Vedic wisdom</p>
-    </div>
-    <div class="astrologer-grid">
-      <div class="astrologer">
-        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Astrologer">
-        <h3>Pandit Raj Sharma</h3>
-        <p>15+ years experience in Vedic rituals & karma alignment</p>
-      </div>
-      <div class="astrologer">
-        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Astrologer">
-        <h3>Dr. Neeta Joshi</h3>
-        <p>Ph.D. in Jyotisha Shastra, remedial solutions expert</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ Section -->
-  <section id="faq">
-    <div class="section-title">
-      <h2>Frequently Asked Questions</h2>
-      <p>Answers to common queries about our services</p>
-    </div>
-    <div class="faq-grid">
-      <div class="faq">
-        <h4>How accurate is Vedic astrology?</h4>
-        <p>Our predictions are based on ancient principles refined through centuries of practice.</p>
-      </div>
-      <div class="faq">
-        <h4>Is my information safe?</h4>
-        <p>All client data is encrypted and 100% confidential.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Newsletter Section -->
-  <section class="newsletter">
-    <h2>Receive Cosmic Insights</h2>
-    <p>Subscribe to our weekly astrology updates</p>
-    <form>
-      <input type="email" placeholder="Enter your email" required />
-      <button type="submit">Subscribe</button>
-    </form>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <div class="footer-content">
-      <div class="footer-section">
-        <h4>About Us</h4>
-        <p>Preserving Vedic wisdom through authentic astrological guidance since 2010.</p>
-      </div>
-      <div class="footer-section">
-        <h4>Contact</h4>
-        <p>Email: contact@jotishi.com</p>
-        <p>Phone: +977-9813197704</p>
-        <p>Kathmandu, Nepal</p>
-      </div>
-      <div class="footer-section">
-        <h4>Follow Us</h4>
-        <div class="social-links">
-          <a href="#"><i class="fab fa-facebook"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
-          <a href="#"><i class="fab fa-whatsapp"></i></a>
+      <div class="service-grid">
+        <div class="service">
+          <h3>Birth Chart Reading</h3>
+          <p>Detailed analysis of your natal chart by certified astrologers.</p>
+        </div>
+        <div class="service">
+          <h3>Horoscope Matching</h3>
+          <p>Compatibility analysis for marriage or business partnership.</p>
+        </div>
+        <div class="service">
+          <h3>Remedial Guidance</h3>
+          <p>Solutions through mantras, gemstones, and rituals for dosha balancing.</p>
         </div>
       </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© <span id="year"></span> Jotishi Astrology. All rights reserved.</p>
-    </div>
-  </footer>
+    </section>
+
+    <!-- Astrologers Section -->
+    <section id="team">
+      <div class="section-title">
+        <h2>Meet Our Astrologers</h2>
+        <p>Decades of experience in Vedic wisdom</p>
+      </div>
+      <div class="astrologer-grid">
+        <div class="astrologer">
+          <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Astrologer">
+          <h3>Pandit Raj Sharma</h3>
+          <p>15+ years experience in Vedic rituals & karma alignment</p>
+        </div>
+        <div class="astrologer">
+          <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Astrologer">
+          <h3>Dr. Neeta Joshi</h3>
+          <p>Ph.D. in Jyotisha Shastra, remedial solutions expert</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq">
+      <div class="section-title">
+        <h2>Frequently Asked Questions</h2>
+        <p>Answers to common queries about our services</p>
+      </div>
+      <div class="faq-grid">
+        <div class="faq">
+          <h4>How accurate is Vedic astrology?</h4>
+          <p>Our predictions are based on ancient principles refined through centuries of practice.</p>
+        </div>
+        <div class="faq">
+          <h4>Is my information safe?</h4>
+          <p>All client data is encrypted and 100% confidential.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+      <h2>Receive Cosmic Insights</h2>
+      <p>Subscribe to our weekly astrology updates</p>
+      <form>
+        <input type="email" placeholder="Enter your email" required />
+        <button type="submit">Subscribe</button>
+      </form>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>About Us</h4>
+          <p>Preserving Vedic wisdom through authentic astrological guidance since 2010.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Contact</h4>
+          <p>Email: contact@jotishi.com</p>
+          <p>Phone: +977-9813197704</p>
+          <p>Kathmandu, Nepal</p>
+        </div>
+        <div class="footer-section">
+          <h4>Follow Us</h4>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© <span id="year"></span> Jotishi Astrology. All rights reserved.</p>
+      </div>
+    </footer>
+  </main>
 
   <!-- YouTube Integration Script -->
   <script>
