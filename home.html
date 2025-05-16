@@ -456,35 +456,61 @@
       box-shadow: 0 6px 10px rgba(0,0,0,0.2);
     }
 
-    /* Promo Boxes Section */
+    /* ===== Modern Promo Boxes Section ===== */
     .promo-boxes {
-      padding: 20px;
+      padding: 60px 20px;
       margin: 0 auto;
       max-width: 1200px;
-      margin-top: 20px;
+    }
+
+    .promo-section-title {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 40px;
+      position: relative;
+      color: #222;
+    }
+
+    .promo-section-title::after {
+      content: "";
+      position: absolute;
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(to right, #ff6600, #ff9933);
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 2px;
     }
 
     .promo-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-      margin-top: 20px;
-      position: relative;
-      z-index: 10;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+      margin-top: 30px;
     }
 
     .promo-box {
-      height: 200px;
-      border-radius: 10px;
+      height: 280px;
+      border-radius: 20px;
       display: flex;
       align-items: flex-end;
       color: white;
-      text-align: center;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-      transition: all 0.3s ease;
+      text-align: left;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+      transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
       overflow: hidden;
       position: relative;
       cursor: pointer;
+      isolation: isolate;
+    }
+
+    .promo-box::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 50%);
+      z-index: 1;
     }
 
     .promo-image {
@@ -494,30 +520,89 @@
       position: absolute;
       top: 0;
       left: 0;
+      transition: transform 0.5s ease;
     }
 
     .promo-box:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    }
+
+    .promo-box:hover .promo-image {
+      transform: scale(1.05);
     }
 
     .promo-content {
-      padding: 20px;
+      padding: 30px;
       position: relative;
       z-index: 2;
       width: 100%;
+      transform: translateY(20px);
+      transition: transform 0.5s ease;
+    }
+
+    .promo-box:hover .promo-content {
+      transform: translateY(0);
     }
 
     .promo-box h3 {
-      font-size: 24px;
+      font-size: 1.8rem;
       margin-bottom: 10px;
       text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+      font-weight: 700;
     }
 
     .promo-box p {
       margin-bottom: 0;
-      font-size: 16px;
+      font-size: 1rem;
       text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+      opacity: 0.9;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    .promo-btn {
+      display: inline-block;
+      padding: 10px 25px;
+      background: #ff6600;
+      color: white;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: 2px solid #ff6600;
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
+
+    .promo-btn:hover {
+      background: transparent;
+      color: #ff6600;
+    }
+
+    /* First Promo Box - Whiskey */
+    .promo-box:nth-child(1) {
+      background: linear-gradient(45deg, #1a1a1a, #333);
+    }
+
+    /* Second Promo Box - Beer */
+    .promo-box:nth-child(2) {
+      background: linear-gradient(45deg, #0a3d62, #1e88e5);
+    }
+
+    /* Promo Badge */
+    .promo-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: #ff6600;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      z-index: 2;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
     
     /* Banner Animations */
@@ -1169,8 +1254,7 @@
       line-height: 1.5;
       margin-bottom: 1.5rem;
     }
-    
-    .offer-price {
+        .offer-price {
       font-size: 1.5rem;
       font-weight: bold;
       color: #ff6600;
@@ -1427,6 +1511,18 @@
       .product {
         width: calc(50% - 30px);
       }
+      
+      .promo-box {
+        height: 240px;
+      }
+      
+      .promo-content {
+        padding: 20px;
+      }
+      
+      .promo-box h3 {
+        font-size: 1.5rem;
+      }
     }
     
     @media (max-width: 768px) {
@@ -1457,11 +1553,11 @@
       }
       
       .promo-container {
-        margin-top: 20px;
+        grid-template-columns: 1fr;
       }
       
       .promo-box {
-        height: 180px;
+        height: 220px;
       }
       
       .product {
@@ -1521,6 +1617,15 @@
       
       .checkout-form button {
         width: 100%;
+      }
+      
+      .promo-box h3 {
+        font-size: 1.3rem;
+      }
+      
+      .promo-btn {
+        padding: 8px 15px;
+        font-size: 0.8rem;
       }
     }
   </style>
@@ -1606,22 +1711,28 @@
   
 <!-- Promo Boxes Section -->
 <section class="promo-boxes">
+  <h2 class="promo-section-title">Today's Specials</h2>
+  
   <div class="promo-container">
     <!-- First Promo Box -->
     <div class="promo-box" onclick="window.location.href='shop.html?category=whiskey'">
+      <span class="promo-badge">Limited Time</span>
       <img src="https://i.postimg.cc/jjq6Q7xc/Add-a-heading-1.png" alt="Whiskey Promotion" class="promo-image">
       <div class="promo-content">
-        <h3></h3>
-        <p></p>
+        <h3>Premium Whiskey Collection</h3>
+        <p>Discover our exclusive range of aged whiskeys with rich flavors and smooth finishes.</p>
+        <a href="shop.html?category=whiskey" class="promo-btn">Shop Now</a>
       </div>
     </div>
     
     <!-- Second Promo Box -->
     <div class="promo-box" onclick="window.location.href='shop.html?category=beer'">
+      <span class="promo-badge">New Arrivals</span>
       <img src="https://i.ibb.co/NnHCwgRq/Add-a-heading.jpg" alt="Beer Promotion" class="promo-image">
       <div class="promo-content">
-        <h3></h3>
-        <p></p>
+        <h3>Craft Beer Selection</h3>
+        <p>Explore our handpicked selection of local and international craft beers.</p>
+        <a href="shop.html?category=beer" class="promo-btn">Shop Now</a>
       </div>
     </div>
   </div>
