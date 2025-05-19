@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 # import dj_database_url
 import datetime
 from pathlib import Path
+from decouple import config
 # from decouple import config,Csv
 
 
@@ -31,7 +32,7 @@ SECRET_KEY = "ksadjfhkasjdfksdjafhkjsdf"
 DEBUG = True
 # DEBUG = config("DEBUG", cast=bool)
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost',]
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', config('HOST')]
 # ALLOWED_HOSTS = config("API_HOST" , cast = Csv())
 
 
@@ -67,14 +68,14 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 CORS_ORIGIN_ALLOW_ALL = False
-# CORS_ORIGIN_WHITELIST = (
-#     'http://localhost:5500', "http://127.0.0.1:5500", config("FRONTEND_URL2"),
-#     config("FRONTEND_URL1")
-# )
 CORS_ORIGIN_WHITELIST = (
-    'http://localhost:5500', "http://127.0.0.1:5500"
+    'http://localhost:5500', "http://127.0.0.1:5500", config("FRONTEND_URL2"),
+    config("FRONTEND_URL1")
 )
-# CORS_ORIGIN_WHITELIST = (config("FRONTEND_URL2"), config("FRONTEND_URL1"), config("FRONTEND_URL3"), config("FRONTEND_URL4")
+# CORS_ORIGIN_WHITELIST = (
+#     'http://localhost:5500', "http://127.0.0.1:5500"
+# )
+# # CORS_ORIGIN_WHITELIST = (config("FRONTEND_URL2"), config("FRONTEND_URL1"), config("FRONTEND_URL3"), config("FRONTEND_URL4")
 #                          )
 
 ROOT_URLCONF = 'ecommerce.urls'
