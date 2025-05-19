@@ -67,10 +67,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = (
-    'http://localhost:5500', "http://127.0.0.1:5500", config("FRONTEND_URL2"),
-    config("FRONTEND_URL1")
+    'http://localhost:5500', "http://127.0.0.1:5500", config("FRONTEND_URL1"),
+    "https://rakshi-pasal.onrender.com"
 )
 # CORS_ORIGIN_WHITELIST = (
 #     'http://localhost:5500', "http://127.0.0.1:5500"
