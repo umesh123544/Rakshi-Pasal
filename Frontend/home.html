@@ -2653,6 +2653,7 @@
   }
 </script>
 
+
 <!-- Service Worker Script -->
 <script>
   if ('serviceWorker' in navigator) {
@@ -2665,6 +2666,121 @@
         console.log('Service Worker registration failed:', error);
       });
   }
+  // Update your existing JavaScript to use these API endpoints
+
+// Fetch products
+async function fetchProducts(category = 'all') {
+    try {
+        let url = '/api/products/';
+        if (category !== 'all') {
+            url = `/api/products/by_category/${category}/`;
+        }
+        
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Failed to fetch products');
+        
+        const products = await response.json();
+        // Update your product list with the fetched data
+        updateProductList(products);
+    } catch (error) {
+        console.error('Error fetching products:', error);
+    }
+}
+
+// Submit order
+async function submitOrder(orderData) {
+    try {
+        const response = await fetch('/api/orders/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken'),
+            },
+            body: JSON.stringify(orderData),
+        });
+        
+        if (!response.ok) throw new Error('Failed to submit order');
+        
+        const order = await response.json();
+        return order;
+    } catch (error) {
+        console.error('Error submitting order:', error);
+        throw error;
+    }
+}
+
+// Helper function to get CSRF token
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+// Update your existing form submission handler to use the API
+document.getElementById('order-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+    }
+    
+    // Prepare order data
+    const orderData = {
+        customer_name: document.getElementById('customer-name').value,
+        customer_email: document.getElementById('customer-email').value,
+        customer_phone: document.getElementById('customer-phone').value,
+        customer_address: document.getElementById('customer-address').value,
+        delivery_option: document.querySelector('input[name="delivery"]:checked').value,
+        delivery_time: document.getElementById('delivery-time').value,
+        special_instructions: document.getElementById('customer-notes').value,
+        items: cart.map(item => ({
+            product_name: item.name,
+            product_price: item.price,
+            quantity: item.quantity,
+            total_price: item.price * item.quantity
+        }))
+    };
+    
+    // Show loading state
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const submitText = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+    
+    try {
+        // Submit order to backend
+        const order = await submitOrder(orderData);
+        
+        // Show confirmation
+        showConfirmation(order);
+        
+        // Reset cart and close modal
+        cart = [];
+        localStorage.removeItem('aailaPasaCart');
+        updateCartPreview();
+        closeModal();
+        
+        // Reset form
+        e.target.reset();
+    } catch (error) {
+        alert('There was an error processing your order. Please try again.');
+        console.error('Order submission error:', error);
+    } finally {
+        // Reset button
+        submitBtn.disabled = false;
+        submitBtn.textContent = submitText;
+    }
+});
 </script>
 </body>
 </html>
