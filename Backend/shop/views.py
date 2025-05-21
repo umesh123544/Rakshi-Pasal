@@ -112,5 +112,5 @@ def contact_view(request):
             fail_silently=False,
         )
         
-        return JsonResponse({'status': 'success'})
-    return JsonResponse({'status': 'error'}, status=400)
+        return Response({'status': 'success'})
+    return Response({'status': 'error'}, status=400)
