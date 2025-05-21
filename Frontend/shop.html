@@ -2406,9 +2406,12 @@ function getCookie(name) {
     return cookieValue;
 }
 
-function updateProductList(data){
-  let component = ` <div class="product" data-category="${data.category}">
-      <div class="product-badge">Best Seller</div>
+function updateProductList(data) {
+  let bestSellerBadge = data.is_best_seller ? `<div class="product-badge">Best Seller</div>` : "";
+
+  let component = `
+    <div class="product" data-category="${data.category}">
+      ${bestSellerBadge}
       <img src="${data.image_url}" alt="${data.name}" />
       <h3>${data.name}</h3>
       <p class="category">${data.category}</p>
@@ -2419,8 +2422,9 @@ function updateProductList(data){
         <button class="quantity-btn plus" onclick="adjustQuantity(this, 1)">+</button>
       </div>
       <button onclick="addToCart(this)">Add to Cart</button>
-    </div>`
-    document.getElementById("productList").innerHTML += component
+    </div>`;
+
+  document.getElementById("productList").innerHTML += component;
 }
 </script>
 </body>
