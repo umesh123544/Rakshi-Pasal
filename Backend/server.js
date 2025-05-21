@@ -23,6 +23,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api', require('./routes/api'));
+app.use('/api/admin', require('./routes/admin'));
 
 // Error handling
 app.use((err, req, res, next) => {
