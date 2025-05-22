@@ -206,3 +206,35 @@ app.put('/api/orders/:id/status', authenticate, async (req, res) => {
 // Start Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+
+// Import routes
+const authRoutes = require('./routes/auth');
+
+// Connect to DB
+const connectDB = require('./config/db');
+connectDB();
+
+// Initialize app
+const app = express();
+
+// Middleware
+app.use(express.json());
+app.use(cookieParser());
+app.use(cors({
+  origin: 'http://localhost:3000', // Your frontend URL
+  credentials: true
+}));
+
+// Routes
+app.use('/api/auth', authRoutes);
+
+// Error handling
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+
+// Start server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
