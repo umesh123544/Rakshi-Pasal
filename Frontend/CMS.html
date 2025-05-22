@@ -1673,6 +1673,123 @@
   window.onload = function() {
     showDashboard();
   };
+// Update this in your CMS frontend code
+const API_BASE_URL = 'https://your-api-domain.com/api';
+
+// Auth functions
+async function login(username, password) {
+  const response = await fetch(`${API_BASE_URL}/auth/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, password })
+  });
+  
+  if (!response.ok) throw new Error('Login failed');
+  const data = await response.json();
+  localStorage.setItem('authToken', data.token);
+  return data;
+}
+
+function logout() {
+  localStorage.removeItem('authToken');
+  window.location.href = '/admin/login.html';
+}
+
+function getAuthHeader() {
+  const token = localStorage.getItem('authToken');
+  return { 'Authorization': `Bearer ${token}` };
+}
+
+// Product functions
+async function fetchProducts() {
+  const response = await fetch(`${API_BASE_URL}/products`, {
+    headers: getAuthHeader()
+  });
+  
+  if (!response.ok) throw new Error('Failed to fetch products');
+  return await response.json();
+}
+
+async function saveProduct(productData, imageFile) {
+  const formData = new FormData();
+  for (const key in productData) {
+    formData.append(key, productData[key]);
+  }
+  if (imageFile) {
+    formData.append('image', imageFile);
+  }
+
+  const url = productData.id 
+    ? `${API_BASE_URL}/products/${productData.id}`
+    : `${API_BASE_URL}/products`;
+
+  const response = await fetch(url, {
+    method: productData.id ? 'PUT' : 'POST',
+    headers: getAuthHeader(),
+    body: formData
+  });
+
+  if (!response.ok) throw new Error('Failed to save product');
+  return await response.json();
+}
+
+async function deleteProduct(productId) {
+  const response = await fetch(`${API_BASE_URL}/products/${productId}`, {
+    method: 'DELETE',
+    headers: getAuthHeader()
+  });
+  
+  if (!response.ok) throw new Error('Failed to delete product');
+  return await response.json();
+}
+
+// Order functions
+async function fetchOrders() {
+  const response = await fetch(`${API_BASE_URL}/orders`, {
+    headers: getAuthHeader()
+  });
+  
+  if (!response.ok) throw new Error('Failed to fetch orders');
+  return await response.json();
+}
+
+async function updateOrderStatus(orderId, status) {
+  const response = await fetch(`${API_BASE_URL}/orders/${orderId}/status`, {
+    method: 'PUT',
+    headers: {
+      ...getAuthHeader(),
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ status })
+  });
+  
+  if (!response.ok) throw new Error('Failed to update order status');
+  return await response.json();
+}
+
+// Initialize the CMS
+document.addEventListener('DOMContentLoaded', async () => {
+  // Check auth status
+  if (!localStorage.getItem('authToken') {
+    window.location.href = '/admin/login.html';
+    return;
+  }
+
+  try {
+    // Load data based on current page
+    if (document.getElementById('productsContent')) {
+      const products = await fetchProducts();
+      renderProducts(products);
+    } else if (document.getElementById('ordersContent')) {
+      const orders = await fetchOrders();
+      renderOrders(orders);
+    }
+  } catch (err) {
+    console.error(err);
+    alert(err.message);
+    logout();
+  }
+});
 </script>
 </body>
 </html>
