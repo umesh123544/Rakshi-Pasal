@@ -1449,347 +1449,571 @@
 </div>
 
 <script>
-  // Navigation functions
-  function showDashboard() {
-    hideAllSections();
-    document.getElementById('dashboardContent').style.display = 'block';
-    updateActiveMenu('dashboard');
+ // config.js
+const config = {
+  API_BASE_URL: 'http://your-backend-url/api', // Update with your actual backend URL
+  TOKEN_KEY: 'aailaPasaAdminToken'
+};
+
+// auth.js
+class AuthService {
+  static getToken() {
+    return localStorage.getItem(config.TOKEN_KEY);
   }
-  
-  function showOrders() {
-    hideAllSections();
-    document.getElementById('ordersContent').style.display = 'block';
-    updateActiveMenu('orders');
+
+  static setToken(token) {
+    localStorage.setItem(config.TOKEN_KEY, token);
   }
-  
-  function showProducts() {
-    hideAllSections();
-    document.getElementById('productsContent').style.display = 'block';
-    updateActiveMenu('products');
+
+  static removeToken() {
+    localStorage.removeItem(config.TOKEN_KEY);
   }
-  
-  function showAddProduct() {
-    hideAllSections();
-    document.getElementById('productFormTitle').textContent = 'Add New Product';
-    document.getElementById('productFormContent').style.display = 'block';
-    // Reset form
-    document.getElementById('productForm').reset();
-    document.getElementById('productImagePreview').src = 'https://via.placeholder.com/100';
+
+  static isAuthenticated() {
+    return !!this.getToken();
   }
-  
-  function editProduct(id) {
-    hideAllSections();
-    document.getElementById('productFormTitle').textContent = 'Edit Product';
-    document.getElementById('productFormContent').style.display = 'block';
-    
-    // In a real app, you would fetch product data by ID and populate the form
-    // For demo purposes, we'll just populate with sample data
-    if (id === 1) {
-      document.getElementById('productName').value = 'Old Durbar Whiskey';
-      document.getElementById('productCategory').value = 'whiskey';
-      document.getElementById('productPrice').value = '2950';
-      document.getElementById('productStock').value = '42';
-      document.getElementById('productDescription').value = 'Premium whiskey with rich flavor';
-      document.getElementById('productImagePreview').src = 'https://i.ibb.co/NdBR861Z/old-durbar-750ml-73537.jpg';
-      document.getElementById('productStatus').value = 'active';
-    } else if (id === 2) {
-      document.getElementById('productName').value = 'Canvas Sweet Red Wine';
-      document.getElementById('productCategory').value = 'wine';
-      document.getElementById('productPrice').value = '895';
-      document.getElementById('productStock').value = '18';
-      document.getElementById('productDescription').value = 'Sweet red wine with fruity notes';
-      document.getElementById('productImagePreview').src = 'https://i.ibb.co/fGnwYyV2/9d6a25ad33d78e416a97696d4a8e1587.jpg';
-      document.getElementById('productStatus').value = 'active';
-    }
+
+  static getAuthHeaders() {
+    return {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.getToken()}`
+    };
   }
-  
-  function showCategories() {
-    hideAllSections();
-    document.getElementById('categoriesContent').style.display = 'block';
-    updateActiveMenu('categories');
-  }
-  
-  function showAddCategory() {
-    hideAllSections();
-    document.getElementById('categoryFormTitle').textContent = 'Add New Category';
-    document.getElementById('categoryFormContent').style.display = 'block';
-    // Reset form
-    document.getElementById('categoryForm').reset();
-  }
-  
-  function editCategory(id) {
-    hideAllSections();
-    document.getElementById('categoryFormTitle').textContent = 'Edit Category';
-    document.getElementById('categoryFormContent').style.display = 'block';
-    
-    // In a real app, you would fetch category data by ID and populate the form
-    // For demo purposes, we'll just populate with sample data
-    if (id === 1) {
-      document.getElementById('categoryName').value = 'Whiskey';
-      document.getElementById('categorySlug').value = 'whiskey';
-      document.getElementById('categoryDescription').value = 'Premium whiskey products';
-      document.getElementById('categoryStatus').value = 'active';
-    } else if (id === 2) {
-      document.getElementById('categoryName').value = 'Wine';
-      document.getElementById('categorySlug').value = 'wine';
-      document.getElementById('categoryDescription').value = 'Red and white wines';
-      document.getElementById('categoryStatus').value = 'active';
-    }
-  }
-  
-  function showCustomers() {
-    hideAllSections();
-    document.getElementById('customersContent').style.display = 'block';
-    updateActiveMenu('customers');
-  }
-  
-  function showReports() {
-    hideAllSections();
-    document.getElementById('reportsContent').style.display = 'block';
-    updateActiveMenu('reports');
-  }
-  
-  function showSettings() {
-    hideAllSections();
-    document.getElementById('settingsContent').style.display = 'block';
-    updateActiveMenu('settings');
-  }
-  
-  function hideAllSections() {
-    const sections = [
-      'dashboardContent', 'ordersContent', 'productsContent', 'productFormContent',
-      'categoriesContent', 'categoryFormContent', 'customersContent', 
-      'reportsContent', 'settingsContent'
-    ];
-    
-    sections.forEach(section => {
-      document.getElementById(section).style.display = 'none';
-    });
-  }
-  
-  function updateActiveMenu(current) {
-    const menuItems = document.querySelectorAll('.admin-menu li a');
-    menuItems.forEach(item => {
-      item.classList.remove('active');
-    });
-    
-    // Find the menu item that matches the current section and make it active
-    menuItems.forEach(item => {
-      if (item.querySelector('span') && item.querySelector('span').textContent.toLowerCase() === current) {
-        item.classList.add('active');
+
+  static async login(username, password) {
+    try {
+      const response = await fetch(`${config.API_BASE_URL}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+
+      if (!response.ok) {
+        throw new Error('Login failed');
       }
+
+      const data = await response.json();
+      this.setToken(data.token);
+      return data;
+    } catch (error) {
+      console.error('Login error:', error);
+      throw error;
+    }
+  }
+
+  static logout() {
+    this.removeToken();
+    window.location.href = 'login.html';
+  }
+}
+
+// api.js
+class ApiService {
+  static async fetchProducts() {
+    const response = await fetch(`${config.API_BASE_URL}/products`, {
+      headers: AuthService.getAuthHeaders()
     });
+    return this.handleResponse(response);
   }
-  
-  // Product form submission
-  document.getElementById('productForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    // In a real app, you would save the product data to your backend
-    alert('Product saved successfully!');
-    showProducts();
-  });
-  
-  // Category form submission
-  document.getElementById('categoryForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    // In a real app, you would save the category data to your backend
-    alert('Category saved successfully!');
-    showCategories();
-  });
-  
-  // Settings form submission
-  document.getElementById('settingsForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    // In a real app, you would save the settings to your backend
-    alert('Settings saved successfully!');
-  });
-  
-  // Image preview function
-  function previewImage(input, previewId = 'productImagePreview') {
-    const preview = document.getElementById(previewId);
-    const file = input.files[0];
-    const reader = new FileReader();
-    
-    reader.onload = function(e) {
-      preview.src = e.target.result;
+
+  static async fetchProductById(id) {
+    const response = await fetch(`${config.API_BASE_URL}/products/${id}`, {
+      headers: AuthService.getAuthHeaders()
+    });
+    return this.handleResponse(response);
+  }
+
+  static async saveProduct(productData) {
+    const method = productData._id ? 'PUT' : 'POST';
+    const url = productData._id 
+      ? `${config.API_BASE_URL}/products/${productData._id}`
+      : `${config.API_BASE_URL}/products`;
+
+    const response = await fetch(url, {
+      method,
+      headers: AuthService.getAuthHeaders(),
+      body: JSON.stringify(productData)
+    });
+    return this.handleResponse(response);
+  }
+
+  static async deleteProduct(id) {
+    const response = await fetch(`${config.API_BASE_URL}/products/${id}`, {
+      method: 'DELETE',
+      headers: AuthService.getAuthHeaders()
+    });
+    return this.handleResponse(response);
+  }
+
+  static async fetchOrders() {
+    const response = await fetch(`${config.API_BASE_URL}/orders`, {
+      headers: AuthService.getAuthHeaders()
+    });
+    return this.handleResponse(response);
+  }
+
+  static async updateOrderStatus(id, status) {
+    const response = await fetch(`${config.API_BASE_URL}/orders/${id}/status`, {
+      method: 'PUT',
+      headers: AuthService.getAuthHeaders(),
+      body: JSON.stringify({ status })
+    });
+    return this.handleResponse(response);
+  }
+
+  static async fetchCategories() {
+    const response = await fetch(`${config.API_BASE_URL}/categories`, {
+      headers: AuthService.getAuthHeaders()
+    });
+    return this.handleResponse(response);
+  }
+
+  static async saveCategory(categoryData) {
+    const method = categoryData._id ? 'PUT' : 'POST';
+    const url = categoryData._id 
+      ? `${config.API_BASE_URL}/categories/${categoryData._id}`
+      : `${config.API_BASE_URL}/categories`;
+
+    const response = await fetch(url, {
+      method,
+      headers: AuthService.getAuthHeaders(),
+      body: JSON.stringify(categoryData)
+    });
+    return this.handleResponse(response);
+  }
+
+  static async deleteCategory(id) {
+    const response = await fetch(`${config.API_BASE_URL}/categories/${id}`, {
+      method: 'DELETE',
+      headers: AuthService.getAuthHeaders()
+    });
+    return this.handleResponse(response);
+  }
+
+  static async handleResponse(response) {
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || 'Request failed');
     }
-    
-    if (file) {
-      reader.readAsDataURL(file);
-    }
+    return response.json();
   }
-  
-  // Order functions
-  function viewOrder(orderId) {
-    alert(`Viewing order ${orderId}`);
-    // In a real app, you would show a detailed view of the order
+}
+
+// ui.js
+class UI {
+  static init() {
+    this.checkAuth();
+    this.bindEvents();
+    this.loadCurrentPage();
   }
-  
-  function printOrder(orderId) {
-    alert(`Printing order ${orderId}`);
-    // In a real app, you would open a print dialog with order details
-  }
-  
-  function updateOrderStatus(orderId, status) {
-    alert(`Order ${orderId} status updated to ${status}`);
-    // In a real app, you would update the order status in your backend
-  }
-  
-  // Customer functions
-  function viewCustomer(customerId) {
-    alert(`Viewing customer ${customerId}`);
-    // In a real app, you would show customer details and order history
-  }
-  
-  // Product functions
-  function deleteProduct(productId) {
-    if (confirm('Are you sure you want to delete this product?')) {
-      alert(`Product ${productId} deleted`);
-      // In a real app, you would delete the product from your backend
-    }
-  }
-  
-  // Category functions
-  function deleteCategory(categoryId) {
-    if (confirm('Are you sure you want to delete this category?')) {
-      alert(`Category ${categoryId} deleted`);
-      // In a real app, you would delete the category from your backend
-    }
-  }
-  
-  // Logout function
-  function logout() {
-    if (confirm('Are you sure you want to logout?')) {
-      // In a real app, you would clear the session and redirect to login
-      alert('Logged out successfully');
+
+  static checkAuth() {
+    if (!AuthService.isAuthenticated() && !window.location.pathname.endsWith('login.html')) {
       window.location.href = 'login.html';
     }
   }
-  
-  // Initialize the dashboard on page load
-  window.onload = function() {
-    showDashboard();
-  };
-// Update this in your CMS frontend code
-const API_BASE_URL = 'https://your-api-domain.com/api';
 
-// Auth functions
-async function login(username, password) {
-  const response = await fetch(`${API_BASE_URL}/auth/login`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username, password })
-  });
-  
-  if (!response.ok) throw new Error('Login failed');
-  const data = await response.json();
-  localStorage.setItem('authToken', data.token);
-  return data;
-}
+  static bindEvents() {
+    // Navigation
+    document.querySelectorAll('[data-nav]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.showSection(link.dataset.nav);
+      });
+    });
 
-function logout() {
-  localStorage.removeItem('authToken');
-  window.location.href = '/admin/login.html';
-}
-
-function getAuthHeader() {
-  const token = localStorage.getItem('authToken');
-  return { 'Authorization': `Bearer ${token}` };
-}
-
-// Product functions
-async function fetchProducts() {
-  const response = await fetch(`${API_BASE_URL}/products`, {
-    headers: getAuthHeader()
-  });
-  
-  if (!response.ok) throw new Error('Failed to fetch products');
-  return await response.json();
-}
-
-async function saveProduct(productData, imageFile) {
-  const formData = new FormData();
-  for (const key in productData) {
-    formData.append(key, productData[key]);
-  }
-  if (imageFile) {
-    formData.append('image', imageFile);
-  }
-
-  const url = productData.id 
-    ? `${API_BASE_URL}/products/${productData.id}`
-    : `${API_BASE_URL}/products`;
-
-  const response = await fetch(url, {
-    method: productData.id ? 'PUT' : 'POST',
-    headers: getAuthHeader(),
-    body: formData
-  });
-
-  if (!response.ok) throw new Error('Failed to save product');
-  return await response.json();
-}
-
-async function deleteProduct(productId) {
-  const response = await fetch(`${API_BASE_URL}/products/${productId}`, {
-    method: 'DELETE',
-    headers: getAuthHeader()
-  });
-  
-  if (!response.ok) throw new Error('Failed to delete product');
-  return await response.json();
-}
-
-// Order functions
-async function fetchOrders() {
-  const response = await fetch(`${API_BASE_URL}/orders`, {
-    headers: getAuthHeader()
-  });
-  
-  if (!response.ok) throw new Error('Failed to fetch orders');
-  return await response.json();
-}
-
-async function updateOrderStatus(orderId, status) {
-  const response = await fetch(`${API_BASE_URL}/orders/${orderId}/status`, {
-    method: 'PUT',
-    headers: {
-      ...getAuthHeader(),
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ status })
-  });
-  
-  if (!response.ok) throw new Error('Failed to update order status');
-  return await response.json();
-}
-
-// Initialize the CMS
-document.addEventListener('DOMContentLoaded', async () => {
-  // Check auth status
-  if (!localStorage.getItem('authToken') {
-    window.location.href = '/admin/login.html';
-    return;
-  }
-
-  try {
-    // Load data based on current page
-    if (document.getElementById('productsContent')) {
-      const products = await fetchProducts();
-      renderProducts(products);
-    } else if (document.getElementById('ordersContent')) {
-      const orders = await fetchOrders();
-      renderOrders(orders);
+    // Product form
+    if (document.getElementById('productForm')) {
+      document.getElementById('productForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        await this.handleProductFormSubmit();
+      });
     }
-  } catch (err) {
-    console.error(err);
-    alert(err.message);
-    logout();
+
+    // Category form
+    if (document.getElementById('categoryForm')) {
+      document.getElementById('categoryForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        await this.handleCategoryFormSubmit();
+      });
+    }
+
+    // Settings form
+    if (document.getElementById('settingsForm')) {
+      document.getElementById('settingsForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        await this.handleSettingsFormSubmit();
+      });
+    }
+
+    // Logout
+    if (document.getElementById('logoutBtn')) {
+      document.getElementById('logoutBtn').addEventListener('click', () => {
+        if (confirm('Are you sure you want to logout?')) {
+          AuthService.logout();
+        }
+      });
+    }
   }
+
+  static async loadCurrentPage() {
+    try {
+      const path = window.location.pathname;
+      
+      if (path.endsWith('cms.html')) {
+        await this.loadDashboard();
+      } else if (path.endsWith('products.html')) {
+        await this.loadProducts();
+      } else if (path.endsWith('orders.html')) {
+        await this.loadOrders();
+      } else if (path.endsWith('categories.html')) {
+        await this.loadCategories();
+      }
+    } catch (error) {
+      this.showError(error);
+    }
+  }
+
+  static async loadDashboard() {
+    const [products, orders] = await Promise.all([
+      ApiService.fetchProducts(),
+      ApiService.fetchOrders()
+    ]);
+
+    this.renderDashboardStats(products, orders);
+    this.renderRecentOrders(orders);
+    this.renderTopProducts(products);
+  }
+
+  static async loadProducts() {
+    const products = await ApiService.fetchProducts();
+    this.renderProducts(products);
+  }
+
+  static async loadOrders() {
+    const orders = await ApiService.fetchOrders();
+    this.renderOrders(orders);
+  }
+
+  static async loadCategories() {
+    const categories = await ApiService.fetchCategories();
+    this.renderCategories(categories);
+  }
+
+  static renderDashboardStats(products, orders) {
+    const today = new Date().toISOString().split('T')[0];
+    const todayOrders = orders.filter(order => order.date.includes(today));
+    const pendingOrders = orders.filter(order => order.status === 'pending');
+    const completedOrders = orders.filter(order => order.status === 'completed');
+
+    document.getElementById('todayRevenue').textContent = 
+      todayOrders.reduce((sum, order) => sum + order.totalAmount, 0);
+    document.getElementById('newOrders').textContent = todayOrders.length;
+    document.getElementById('pendingOrders').textContent = pendingOrders.length;
+    document.getElementById('totalProducts').textContent = products.length;
+  }
+
+  static renderRecentOrders(orders) {
+    const tbody = document.querySelector('#recentOrders tbody');
+    tbody.innerHTML = '';
+
+    orders.slice(0, 5).forEach(order => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${order.orderId}</td>
+        <td>${order.customer.name}</td>
+        <td>${order.date.split('T')[0]}</td>
+        <td>₹${order.totalAmount}</td>
+        <td><span class="status-badge status-${order.status}">${this.formatStatus(order.status)}</span></td>
+        <td>
+          <button class="btn btn-primary" onclick="UI.viewOrder('${order._id}')">
+            <i class="fas fa-eye"></i>
+          </button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  static renderTopProducts(products) {
+    const tbody = document.querySelector('#topProducts tbody');
+    tbody.innerHTML = '';
+
+    products.sort((a, b) => b.sold - a.sold).slice(0, 5).forEach(product => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${product.name}</td>
+        <td>${this.formatCategory(product.category)}</td>
+        <td>₹${product.price}</td>
+        <td>${product.sold || 0}</td>
+        <td>₹${(product.price * (product.sold || 0)).toFixed(2)}</td>
+        <td>
+          <button class="btn btn-primary" onclick="UI.editProduct('${product._id}')">
+            <i class="fas fa-edit"></i>
+          </button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  static renderProducts(products) {
+    const tbody = document.querySelector('#productsTable tbody');
+    tbody.innerHTML = '';
+
+    products.forEach(product => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><img src="${product.imageUrl || 'https://via.placeholder.com/100'}" class="product-image-preview"></td>
+        <td>${product.name}</td>
+        <td>${this.formatCategory(product.category)}</td>
+        <td>₹${product.price}</td>
+        <td>${product.stock}</td>
+        <td><span class="status-badge ${product.status === 'active' ? 'status-completed' : 'status-cancelled'}">
+          ${product.status === 'active' ? 'Active' : 'Inactive'}
+        </span></td>
+        <td>
+          <button class="btn btn-primary" onclick="UI.editProduct('${product._id}')">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button class="btn btn-secondary" onclick="UI.deleteProductPrompt('${product._id}')">
+            <i class="fas fa-trash"></i>
+          </button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  static renderOrders(orders) {
+    const tbody = document.querySelector('#ordersTable tbody');
+    tbody.innerHTML = '';
+
+    orders.forEach(order => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${order.orderId}</td>
+        <td>${order.customer.name}</td>
+        <td>${order.date.split('T')[0]}</td>
+        <td>${order.items.length}</td>
+        <td>₹${order.totalAmount}</td>
+        <td>
+          <select class="form-control" onchange="UI.updateOrderStatus('${order._id}', this.value)">
+            <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>Pending</option>
+            <option value="processing" ${order.status === 'processing' ? 'selected' : ''}>Processing</option>
+            <option value="completed" ${order.status === 'completed' ? 'selected' : ''}>Completed</option>
+            <option value="cancelled" ${order.status === 'cancelled' ? 'selected' : ''}>Cancelled</option>
+          </select>
+        </td>
+        <td>
+          <button class="btn btn-primary" onclick="UI.viewOrder('${order._id}')">
+            <i class="fas fa-eye"></i>
+          </button>
+          <button class="btn btn-secondary" onclick="UI.printOrder('${order._id}')">
+            <i class="fas fa-print"></i>
+          </button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  static renderCategories(categories) {
+    const tbody = document.querySelector('#categoriesTable tbody');
+    tbody.innerHTML = '';
+
+    categories.forEach(category => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${category.name}</td>
+        <td>${category.slug}</td>
+        <td>${category.productCount || 0}</td>
+        <td><span class="status-badge ${category.status === 'active' ? 'status-completed' : 'status-cancelled'}">
+          ${category.status === 'active' ? 'Active' : 'Inactive'}
+        </span></td>
+        <td>
+          <button class="btn btn-primary" onclick="UI.editCategory('${category._id}')">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button class="btn btn-secondary" onclick="UI.deleteCategoryPrompt('${category._id}')">
+            <i class="fas fa-trash"></i>
+          </button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  static async handleProductFormSubmit() {
+    try {
+      const formData = {
+        name: document.getElementById('productName').value,
+        category: document.getElementById('productCategory').value,
+        price: parseFloat(document.getElementById('productPrice').value),
+        stock: parseInt(document.getElementById('productStock').value),
+        description: document.getElementById('productDescription').value,
+        status: document.getElementById('productStatus').value
+      };
+
+      const productId = document.getElementById('productId')?.value;
+      if (productId) formData._id = productId;
+
+      await ApiService.saveProduct(formData);
+      this.showSuccess('Product saved successfully');
+      this.showSection('products');
+      await this.loadProducts();
+    } catch (error) {
+      this.showError(error);
+    }
+  }
+
+  static async handleCategoryFormSubmit() {
+    try {
+      const formData = {
+        name: document.getElementById('categoryName').value,
+        slug: document.getElementById('categorySlug').value,
+        description: document.getElementById('categoryDescription').value,
+        status: document.getElementById('categoryStatus').value
+      };
+
+      const categoryId = document.getElementById('categoryId')?.value;
+      if (categoryId) formData._id = categoryId;
+
+      await ApiService.saveCategory(formData);
+      this.showSuccess('Category saved successfully');
+      this.showSection('categories');
+      await this.loadCategories();
+    } catch (error) {
+      this.showError(error);
+    }
+  }
+
+  static async handleSettingsFormSubmit() {
+    try {
+      // Implement settings save logic
+      this.showSuccess('Settings saved successfully');
+    } catch (error) {
+      this.showError(error);
+    }
+  }
+
+  static async editProduct(id) {
+    try {
+      const product = await ApiService.fetchProductById(id);
+      this.showSection('productForm');
+      
+      document.getElementById('productFormTitle').textContent = 'Edit Product';
+      document.getElementById('productName').value = product.name;
+      document.getElementById('productCategory').value = product.category;
+      document.getElementById('productPrice').value = product.price;
+      document.getElementById('productStock').value = product.stock;
+      document.getElementById('productDescription').value = product.description;
+      document.getElementById('productStatus').value = product.status;
+      
+      if (product.imageUrl) {
+        document.getElementById('productImagePreview').src = product.imageUrl;
+      }
+
+      if (!document.getElementById('productId')) {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.id = 'productId';
+        document.getElementById('productForm').appendChild(input);
+      }
+      document.getElementById('productId').value = product._id;
+    } catch (error) {
+      this.showError(error);
+    }
+  }
+
+  static async deleteProductPrompt(id) {
+    if (confirm('Are you sure you want to delete this product?')) {
+      try {
+        await ApiService.deleteProduct(id);
+        this.showSuccess('Product deleted successfully');
+        await this.loadProducts();
+      } catch (error) {
+        this.showError(error);
+      }
+    }
+  }
+
+  static async updateOrderStatus(id, status) {
+    try {
+      await ApiService.updateOrderStatus(id, status);
+      this.showSuccess('Order status updated successfully');
+    } catch (error) {
+      this.showError(error);
+    }
+  }
+
+  static showSection(sectionId) {
+    document.querySelectorAll('.content-section').forEach(section => {
+      section.style.display = 'none';
+    });
+    document.getElementById(sectionId).style.display = 'block';
+    this.updateActiveNav(sectionId);
+  }
+
+  static updateActiveNav(sectionId) {
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.classList.remove('active');
+    });
+    document.querySelector(`[data-nav="${sectionId}"]`).classList.add('active');
+  }
+
+  static formatStatus(status) {
+    const statusMap = {
+      pending: 'Pending',
+      processing: 'Processing',
+      completed: 'Completed',
+      cancelled: 'Cancelled'
+    };
+    return statusMap[status] || status;
+  }
+
+  static formatCategory(category) {
+    return category.charAt(0).toUpperCase() + category.slice(1);
+  }
+
+  static showSuccess(message) {
+    // Implement toast or alert for success messages
+    alert(message);
+  }
+
+  static showError(error) {
+    // Implement toast or alert for error messages
+    console.error(error);
+    alert(error.message || 'An error occurred');
+  }
+
+  // Placeholder methods for unimplemented features
+  static viewOrder(id) {
+    alert(`View order ${id}`);
+    // Implement order detail view
+  }
+
+  static printOrder(id) {
+    alert(`Print order ${id}`);
+    // Implement print functionality
+  }
+
+  static editCategory(id) {
+    alert(`Edit category ${id}`);
+    // Implement category edit
+  }
+
+  static deleteCategoryPrompt(id) {
+    alert(`Delete category ${id}`);
+    // Implement category delete
+  }
+}
+
+// Initialize the CMS when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  UI.init();
 });
+  
 </script>
 </body>
 </html>
