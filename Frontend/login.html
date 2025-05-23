@@ -6,8 +6,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="theme-color" content="#ff6600">
-  <title>Admin Login</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>Aaila Pasa Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet>
   <style>
     * {
       box-sizing: border-box;
@@ -24,6 +24,7 @@
       font-family: 'Poppins', sans-serif;
       background-color: #ff6600;
       height: 100vh;
+      width: 100vw;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -34,20 +35,20 @@
     .auth-container {
       width: 100%;
       max-width: 400px;
-      margin: 20px;
+      padding: 20px;
     }
 
-    .login-box, .signup-box {
+    .login-box, .signup-box, .forgot-box {
       background: white;
       padding: 40px;
       border-radius: 16px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-      animation: fadeIn 0.5s ease;
+      animation: fadeIn 0.3s ease;
       text-align: center;
     }
 
-    .signup-box {
-      display: none; /* Hidden by default */
+    .signup-box, .forgot-box {
+      display: none;
     }
 
     @keyframes fadeIn {
@@ -134,19 +135,14 @@
     .auth-link:hover {
       text-decoration: underline;
     }
-
-    .back-to-login {
-      text-align: center;
-      margin-top: 15px;
-    }
   </style>
 </head>
 <body>
   <div class="auth-container">
-    <!-- Login Form (Visible by default) -->
+    <!-- Login Form -->
     <div class="login-box" id="loginBox">
       <div class="logo">
-        <img src="https://i.ibb.co/4wqGSsw3/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png" alt="Aaila Pasa Logo">
+        <img src="https://i.ibb.co/4wqGSsw3/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png" alt="Logo">
       </div>
       <form id="loginForm">
         <div class="form-group">
@@ -157,28 +153,24 @@
           <label class="form-label">Password</label>
           <input type="password" class="form-control" id="password" required>
         </div>
-        <div id="loginErrorMessage" class="error-message"></div>
+        <div id="loginError" class="error-message"></div>
         <button type="submit" class="auth-btn">Login</button>
         <div class="auth-links">
-          <a class="auth-link" id="forgotPassword">Forgot Password?</a>
-          <a class="auth-link" id="showSignup">Sign Up</a>
+          <a class="auth-link" id="showForgot">Forgot Password?</a>
+          <a class="auth-link" id="showSignup">Create Account</a>
         </div>
       </form>
     </div>
 
-    <!-- Signup Form (Hidden by default) -->
+    <!-- Signup Form -->
     <div class="signup-box" id="signupBox">
       <div class="logo">
-        <img src="https://i.ibb.co/4wqGSsw3/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png" alt="Aaila Pasa Logo">
+        <img src="https://i.ibb.co/4wqGSsw3/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png" alt="Logo">
       </div>
       <form id="signupForm">
         <div class="form-group">
           <label class="form-label">Full Name</label>
           <input type="text" class="form-control" id="fullName" required>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Username</label>
-          <input type="text" class="form-control" id="newUsername" required>
         </div>
         <div class="form-group">
           <label class="form-label">Email</label>
@@ -188,65 +180,87 @@
           <label class="form-label">Password</label>
           <input type="password" class="form-control" id="newPassword" required>
         </div>
-        <div class="form-group">
-          <label class="form-label">Confirm Password</label>
-          <input type="password" class="form-control" id="confirmPassword" required>
-        </div>
-        <div id="signupErrorMessage" class="error-message"></div>
+        <div id="signupError" class="error-message"></div>
         <button type="submit" class="auth-btn">Sign Up</button>
-        <div class="back-to-login">
-          <a class="auth-link" id="showLogin">Back to Login</a>
+        <div class="auth-links">
+          <a class="auth-link" id="showLoginFromSignup">Back to Login</a>
+        </div>
+      </form>
+    </div>
+
+    <!-- Forgot Password Form -->
+    <div class="forgot-box" id="forgotBox">
+      <div class="logo">
+        <img src="https://i.ibb.co/4wqGSsw3/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png" alt="Logo">
+      </div>
+      <form id="forgotForm">
+        <div class="form-group">
+          <label class="form-label">Registered Email</label>
+          <input type="email" class="form-control" id="forgotEmail" required>
+        </div>
+        <div id="forgotError" class="error-message"></div>
+        <button type="submit" class="auth-btn">Reset Password</button>
+        <div class="auth-links">
+          <a class="auth-link" id="showLoginFromForgot">Back to Login</a>
         </div>
       </form>
     </div>
   </div>
 
   <script>
-    // Toggle between login and signup forms
-    document.getElementById('showSignup').addEventListener('click', function() {
-      document.getElementById('loginBox').style.display = 'none';
-      document.getElementById('signupBox').style.display = 'block';
-    });
+    // Fullscreen handling
+    function launchFullscreen() {
+      if(document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen();
+      }
+    }
 
-    document.getElementById('showLogin').addEventListener('click', function() {
-      document.getElementById('signupBox').style.display = 'none';
-      document.getElementById('loginBox').style.display = 'block';
-    });
+    // Form toggling
+    const forms = {
+      login: document.getElementById('loginBox'),
+      signup: document.getElementById('signupBox'),
+      forgot: document.getElementById('forgotBox')
+    };
 
-    // Forgot password functionality
-    document.getElementById('forgotPassword').addEventListener('click', function() {
-      alert('Password reset link will be sent to your registered email.');
-    });
+    function showForm(formName) {
+      Object.values(forms).forEach(form => form.style.display = 'none');
+      forms[formName].style.display = 'block';
+    }
 
-    // Login functionality
+    // Event listeners
+    document.getElementById('showSignup').addEventListener('click', () => showForm('signup'));
+    document.getElementById('showForgot').addEventListener('click', () => showForm('forgot'));
+    document.getElementById('showLoginFromSignup').addEventListener('click', () => showForm('login'));
+    document.getElementById('showLoginFromForgot').addEventListener('click', () => showForm('login'));
+
+    // Form submissions
     document.getElementById('loginForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
-      const errorElement = document.getElementById('loginErrorMessage');
-      errorElement.textContent = '';
-      if(username && password) {
-        alert('Login successful! (Simulated)');
-      } else {
-        errorElement.textContent = 'Please enter both username and password';
-      }
+      document.getElementById('loginError').textContent = username && password 
+        ? '' 
+        : 'Please fill all fields';
     });
 
-    // Signup functionality
     document.getElementById('signupForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const password = document.getElementById('newPassword').value;
-      const confirmPassword = document.getElementById('confirmPassword').value;
-      const errorElement = document.getElementById('signupErrorMessage');
-      errorElement.textContent = '';
-      if(password !== confirmPassword) {
-        errorElement.textContent = 'Passwords do not match';
-        return;
-      }
-      alert('Account created successfully! (Simulated)');
-      document.getElementById('signupBox').style.display = 'none';
-      document.getElementById('loginBox').style.display = 'block';
+      document.getElementById('signupError').textContent = password.length >= 8 
+        ? '' 
+        : 'Password must be 8+ characters';
     });
+
+    document.getElementById('forgotForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('forgotEmail').value;
+      document.getElementById('forgotError').textContent = email.includes('@') 
+        ? 'Reset link sent! (Simulated)' 
+        : 'Invalid email format';
+    });
+
+    // Initialize fullscreen on first click
+    document.addEventListener('click', launchFullscreen, {once: true});
   </script>
 </body>
 </html>
