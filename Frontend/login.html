@@ -48,7 +48,7 @@
       transition: all 0.3s ease;
     }
 
-    .signup-box {
+    .signup-box, .forgot-box {
       background: white;
       padding: 40px;
       border-radius: 16px;
@@ -65,7 +65,7 @@
       margin-top: 20px;
     }
 
-    .signup-box.active {
+    .signup-box.active, .forgot-box.active {
       opacity: 1;
       transform: translateY(0);
       pointer-events: all;
@@ -215,6 +215,24 @@
         </div>
       </form>
     </div>
+
+    <!-- Forgot Password Form (Hidden below login form) -->
+    <div class="forgot-box" id="forgotBox">
+      <div class="logo">
+        <img src="https://i.ibb.co/4wqGSsw3/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png" alt="Aaila Pasa Logo">
+      </div>
+      <form id="forgotForm">
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" class="form-control" id="forgotEmail" required>
+        </div>
+        <div id="forgotErrorMessage" class="error-message"></div>
+        <button type="submit" class="auth-btn">Reset Password</button>
+        <div class="back-to-login">
+          <a class="auth-link" id="hideForgot">Back to Login</a>
+        </div>
+      </form>
+    </div>
   </div>
 
   <script>
@@ -234,17 +252,37 @@
       launchFullScreen();
     });
 
-    // Show/hide signup form
-    document.getElementById('showSignup').addEventListener('click', function() {
-      document.getElementById('signupBox').classList.add('active');
-      // Scroll to show the signup form
-      document.getElementById('signupBox').scrollIntoView({ behavior: 'smooth' });
-    });
-
-    document.getElementById('hideSignup').addEventListener('click', function() {
+    // Show/hide forms
+    function showForm(formId) {
+      // Hide all forms first
       document.getElementById('signupBox').classList.remove('active');
-      // Scroll back to top
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      document.getElementById('forgotBox').classList.remove('active');
+      
+      // Show the requested form
+      if (formId) {
+        document.getElementById(formId).classList.add('active');
+        document.getElementById(formId).scrollIntoView({ behavior: 'smooth' });
+      } else {
+        // If no formId provided, scroll back to top (login form)
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    // Event listeners for form navigation
+    document.getElementById('showSignup').addEventListener('click', function() {
+      showForm('signupBox');
+    });
+    
+    document.getElementById('showForgot').addEventListener('click', function() {
+      showForm('forgotBox');
+    });
+    
+    document.getElementById('hideSignup').addEventListener('click', function() {
+      showForm();
+    });
+    
+    document.getElementById('hideForgot').addEventListener('click', function() {
+      showForm();
     });
 
     // Login functionality
@@ -275,8 +313,22 @@
         return;
       }
       alert('Account created successfully! (Simulated)');
-      document.getElementById('signupBox').classList.remove('active');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      showForm();
+    });
+
+    // Forgot password functionality
+    document.getElementById('forgotForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('forgotEmail').value;
+      const errorElement = document.getElementById('forgotErrorMessage');
+      errorElement.textContent = '';
+      
+      if(email) {
+        alert('Password reset link sent to your email! (Simulated)');
+        showForm();
+      } else {
+        errorElement.textContent = 'Please enter your email address';
+      }
     });
   </script>
 </body>
