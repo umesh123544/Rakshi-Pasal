@@ -8,7 +8,6 @@
   <meta name="theme-color" content="#ff6600">
   <title>Aaila Pasa - Admin</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="manifest" href="/manifest.json">
   <style>
     * {
       box-sizing: border-box;
@@ -32,15 +31,27 @@
       touch-action: manipulation;
     }
 
-    .login-container {
+    .auth-container {
+      width: 100%;
+      max-width: 400px;
+      margin: 20px;
+      position: relative;
+    }
+
+    .login-box, .signup-box {
       background: white;
       padding: 40px;
       border-radius: 16px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-      width: 100%;
-      max-width: 400px;
-      margin: 20px;
       animation: fadeIn 0.5s ease;
+    }
+
+    .signup-box {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
     }
 
     @keyframes fadeIn {
@@ -48,12 +59,12 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .login-logo {
+    .logo {
       text-align: center;
       margin-bottom: 30px;
     }
 
-    .login-logo img {
+    .logo img {
       width: 80px;
       height: 80px;
       border-radius: 50%;
@@ -61,12 +72,12 @@
       margin-bottom: 15px;
     }
 
-    .login-logo h1 {
+    .logo h1 {
       font-size: 24px;
       color: #333;
     }
 
-    .login-logo h1 span {
+    .logo h1 span {
       color: #ff6600;
     }
 
@@ -95,7 +106,7 @@
       box-shadow: 0 0 0 2px rgba(255,102,0,0.2);
     }
 
-    .login-btn {
+    .auth-btn {
       width: 100%;
       padding: 12px;
       background: #ff6600;
@@ -107,7 +118,7 @@
       transition: all 0.3s ease;
     }
 
-    .login-btn:hover {
+    .auth-btn:hover {
       background: #e65c00;
     }
 
@@ -118,64 +129,121 @@
       min-height: 20px;
     }
 
-    /* App-specific styles */
-    .app-header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      height: 50px;
-      background: #ff6600;
+    .auth-links {
       display: flex;
-      align-items: center;
-      padding: 0 15px;
-      color: white;
-      z-index: 1000;
+      justify-content: space-between;
+      margin-top: 20px;
     }
 
-    .app-title {
+    .auth-link {
+      color: #ff6600;
+      text-decoration: none;
       font-weight: 600;
-      margin-left: 10px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .auth-link:hover {
+      text-decoration: underline;
+    }
+
+    .back-to-login {
+      text-align: center;
+      margin-top: 15px;
     }
   </style>
 </head>
 <body>
-  <div class="app-header">
-    <img src="https://i.ibb.co/4wqGSsw3/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png" width="30" height="30" style="border-radius:50%">
-    <span class="app-title">Aaila Pasa</span>
-  </div>
-
-  <div class="login-container">
-    <div class="login-logo">
-      <img src="https://i.ibb.co/4wqGSsw3/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png" alt="Aaila Pasa Logo">
-      <h1>Admin <span>Login</span></h1>
+  <div class="auth-container">
+    <!-- Login Form -->
+    <div class="login-box" id="loginBox">
+      <div class="logo">
+        <img src="https://i.ibb.co/4wqGSsw3/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png" alt="Aaila Pasa Logo">
+        <h1>Admin <span>Login</span></h1>
+      </div>
+      
+      <form id="loginForm">
+        <div class="form-group">
+          <label class="form-label">Username</label>
+          <input type="text" class="form-control" id="username" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" required>
+        </div>
+        
+        <div id="loginErrorMessage" class="error-message"></div>
+        
+        <button type="submit" class="auth-btn">Login</button>
+        
+        <div class="auth-links">
+          <a class="auth-link" id="forgotPassword">Forgot Password?</a>
+          <a class="auth-link" id="showSignup">Sign Up</a>
+        </div>
+      </form>
     </div>
-    
-    <form id="loginForm">
-      <div class="form-group">
-        <label class="form-label">Username</label>
-        <input type="text" class="form-control" id="username" required>
+
+    <!-- Signup Form -->
+    <div class="signup-box" id="signupBox">
+      <div class="logo">
+        <img src="https://i.ibb.co/4wqGSsw3/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png" alt="Aaila Pasa Logo">
+        <h1>Create <span>Account</span></h1>
       </div>
       
-      <div class="form-group">
-        <label class="form-label">Password</label>
-        <input type="password" class="form-control" id="password" required>
-      </div>
-      
-      <div id="errorMessage" class="error-message"></div>
-      
-      <button type="submit" class="login-btn">Login</button>
-    </form>
+      <form id="signupForm">
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input type="text" class="form-control" id="fullName" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Username</label>
+          <input type="text" class="form-control" id="newUsername" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-control" id="newPassword" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Confirm Password</label>
+          <input type="password" class="form-control" id="confirmPassword" required>
+        </div>
+        
+        <div id="signupErrorMessage" class="error-message"></div>
+        
+        <button type="submit" class="auth-btn">Sign Up</button>
+        
+        <div class="back-to-login">
+          <a class="auth-link" id="showLogin">Back to Login</a>
+        </div>
+      </form>
+    </div>
   </div>
 
   <script>
-    // Prevent browser navigation
-    history.pushState(null, null, document.URL);
-    window.addEventListener('popstate', function() {
-      history.pushState(null, null, document.URL);
+    // Toggle between login and signup forms
+    document.getElementById('showSignup').addEventListener('click', function() {
+      document.getElementById('loginBox').style.display = 'none';
+      document.getElementById('signupBox').style.display = 'block';
     });
 
-    // Disable context menu
-    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.getElementById('showLogin').addEventListener('click', function() {
+      document.getElementById('signupBox').style.display = 'none';
+      document.getElementById('loginBox').style.display = 'block';
+    });
+
+    // Forgot password functionality
+    document.getElementById('forgotPassword').addEventListener('click', function() {
+      alert('Password reset link will be sent to your registered email.');
+    });
 
     // Login functionality
     document.getElementById('loginForm').addEventListener('submit', async function(e) {
@@ -183,40 +251,39 @@
       
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
-      const errorElement = document.getElementById('errorMessage');
+      const errorElement = document.getElementById('loginErrorMessage');
       
       errorElement.textContent = '';
       
-      try {
-        const response = await fetch('https://your-app-name.onrender.com/api/auth/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ username, password })
-        });
-        
-        const data = await response.json();
-        
-        if (!response.ok) {
-          throw new Error(data.error || 'Login failed');
-        }
-        
-        localStorage.setItem('authToken', data.token);
-        window.location.href = 'cms.html';
-      } catch (error) {
-        errorElement.textContent = error.message;
+      // Simulate login (replace with actual API call)
+      if(username && password) {
+        // Successful login would redirect here
+        // window.location.href = 'cms.html';
+        alert('Login successful! (Simulated)');
+      } else {
+        errorElement.textContent = 'Please enter both username and password';
       }
     });
 
-    // PWA installation prompt
-    window.addEventListener('beforeinstallprompt', (e) => {
+    // Signup functionality
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      setTimeout(() => {
-        if(confirm('Install Aaila Pasa Admin for better experience?')) {
-          e.prompt();
-        }
-      }, 3000);
+      
+      const password = document.getElementById('newPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      const errorElement = document.getElementById('signupErrorMessage');
+      
+      errorElement.textContent = '';
+      
+      if(password !== confirmPassword) {
+        errorElement.textContent = 'Passwords do not match';
+        return;
+      }
+      
+      // Simulate signup (replace with actual API call)
+      alert('Account created successfully! (Simulated)');
+      document.getElementById('signupBox').style.display = 'none';
+      document.getElementById('loginBox').style.display = 'block';
     });
   </script>
 </body>
