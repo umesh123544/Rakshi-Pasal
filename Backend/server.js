@@ -18,21 +18,18 @@ app.use(cookieParser());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Database Connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/aailapasa', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log('Connected to MongoDB'))
-.catch(err => console.error('MongoDB connection error:', err));
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/aailapasa')
+  .then(() => console.log('Connected to MongoDB'))
+  .catch(err => console.error('MongoDB connection error:', err));
 
-// Import Routes
+// Route Imports
 const authRoutes = require('./routes/auth');
 const productRoutes = require('./routes/product');
 const orderRoutes = require('./routes/order');
 const userRoutes = require('./routes/user');
 const contactRoutes = require('./routes/contact');
 
-// Use Routes
+// Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
