@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="theme-color" content="#ff6600">
-  <title>Aaila Pasa - Admin</title>
+  <title>Admin Login</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     * {
@@ -44,6 +44,7 @@
       border-radius: 16px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.2);
       animation: fadeIn 0.5s ease;
+      text-align: center;
     }
 
     .signup-box {
@@ -72,17 +73,9 @@
       margin-bottom: 15px;
     }
 
-    .logo h1 {
-      font-size: 24px;
-      color: #333;
-    }
-
-    .logo h1 span {
-      color: #ff6600;
-    }
-
     .form-group {
       margin-bottom: 20px;
+      text-align: left;
     }
 
     .form-label {
@@ -159,7 +152,6 @@
     <div class="login-box" id="loginBox">
       <div class="logo">
         <img src="https://i.ibb.co/4wqGSsw3/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png" alt="Aaila Pasa Logo">
-        <h1>Admin <span>Login</span></h1>
       </div>
       
       <form id="loginForm">
@@ -188,7 +180,6 @@
     <div class="signup-box" id="signupBox">
       <div class="logo">
         <img src="https://i.ibb.co/4wqGSsw3/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png" alt="Aaila Pasa Logo">
-        <h1>Create <span>Account</span></h1>
       </div>
       
       <form id="signupForm">
@@ -255,10 +246,7 @@
       
       errorElement.textContent = '';
       
-      // Simulate login (replace with actual API call)
       if(username && password) {
-        // Successful login would redirect here
-        // window.location.href = 'cms.html';
         alert('Login successful! (Simulated)');
       } else {
         errorElement.textContent = 'Please enter both username and password';
@@ -280,7 +268,6 @@
         return;
       }
       
-      // Simulate signup (replace with actual API call)
       alert('Account created successfully! (Simulated)');
       document.getElementById('signupBox').style.display = 'none';
       document.getElementById('loginBox').style.display = 'block';
