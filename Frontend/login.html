@@ -155,6 +155,24 @@
       text-align: center;
       margin-top: 15px;
     }
+
+    .fullscreen-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(0,0,0,0.5);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   </style>
 </head>
 <body>
@@ -235,22 +253,27 @@
     </div>
   </div>
 
+  <button class="fullscreen-btn" id="fullscreenBtn">⛶</button>
+
   <script>
-    // Automatically attempt fullscreen
-    function launchFullScreen() {
-      if (document.documentElement.requestFullscreen) {
-        document.documentElement.requestFullscreen();
-      } else if (document.documentElement.webkitRequestFullscreen) {
-        document.documentElement.webkitRequestFullscreen();
-      } else if (document.documentElement.msRequestFullscreen) {
-        document.documentElement.msRequestFullscreen();
+    // Fullscreen functionality
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+          console.error(`Error attempting to enable fullscreen: ${err.message}`);
+        });
+        fullscreenBtn.textContent = '⛶';
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+          fullscreenBtn.textContent = '⛶';
+        }
       }
     }
 
-    // Try to go fullscreen on load
-    window.addEventListener('load', function() {
-      launchFullScreen();
-    });
+    fullscreenBtn.addEventListener('click', toggleFullScreen);
 
     // Show/hide forms
     function showForm(formId) {
@@ -329,6 +352,24 @@
       } else {
         errorElement.textContent = 'Please enter your email address';
       }
+    });
+
+    // PWA installation prompt
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      const installBtn = document.createElement('button');
+      installBtn.textContent = 'Install App';
+      installBtn.style.position = 'fixed';
+      installBtn.style.bottom = '80px';
+      installBtn.style.right = '20px';
+      installBtn.style.zIndex = '1000';
+      installBtn.classList.add('auth-btn');
+      document.body.appendChild(installBtn);
+      
+      installBtn.addEventListener('click', () => {
+        e.prompt();
+        installBtn.style.display = 'none';
+      });
     });
   </script>
 </body>
