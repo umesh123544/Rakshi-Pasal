@@ -220,7 +220,8 @@
   <script>
     // === COMPLETE JAVASCRIPT ===
     
-    // DOM Elements
+    // DOM 
+    const domain = "https://rakshi-pasal-1.onrender.com"
     const forms = {
       login: document.getElementById('loginBox'),
       signup: document.getElementById('signupBox'),
@@ -312,7 +313,7 @@
       setLoading(buttons.login, true);
       
       try {
-        const data = await makeRequest('/login', 'POST', { username, password });
+        const data = await makeRequest(`${domain}/login`, 'POST', { username, password });
         
         if (data.success) {
           window.location.href = '/dashboard.html';
@@ -354,7 +355,7 @@
       setLoading(buttons.signup, true);
       
       try {
-        const data = await makeRequest('/signup', 'POST', { fullName, email, password });
+        const data = await makeRequest(`${domain}/signup`, 'POST', { fullName, email, password });
         
         if (data.success) {
           alert('Account created successfully! Please login.');
@@ -387,7 +388,7 @@
       setLoading(buttons.forgot, true);
       
       try {
-        const data = await makeRequest('/forgot-password', 'POST', { email });
+        const data = await makeRequest(`${domain}/forgot-password`, 'POST', { email });
         
         if (data.success) {
           successElement.textContent = data.message;
