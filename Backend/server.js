@@ -3,15 +3,48 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
 const app = express();
-
+const mongoose = require('mongoose')
+const User = require('./models/User')
 // In-memory database (replace with real DB in production)
 const usersDB = [];
+const dotenv = require('dotenv');
+
+// Load env vars
+dotenv.config();
+
+// Connect to DB
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(async () => {
+  // Run this once
+// await User.collection.dropIndex('email_1');
+console.log('MongoDB Connected')})
+.catch(err => console.error(err));
+
+// Initialize app
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+// Routes
+app.use('/api', require('./routes/api'));
+
+// Error handling
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+const PORT = process.env.PORT || 3000;
+// Start server
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 // Middleware
 app.use(cors({
   origin: [
     'http://localhost:3000',
-    'https://rakshi-pasal-1.onrender.com'
+    'https://aailapasa.netlify.app'
   ],  methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type']
 }));
@@ -190,7 +223,6 @@ app.post('/forgot-password', (req, res) => {
 });
 
 // Start server
-const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
   console.log('Available endpoints:');

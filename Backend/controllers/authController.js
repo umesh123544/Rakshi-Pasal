@@ -6,13 +6,14 @@ const { validationResult } = require('express-validator');
 // Register a new user
 exports.register = async (req, res) => {
   try {
+    await User.deleteMany({ email: null });
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
 
     const { username, email, first_name, last_name, password } = req.body;
-
+    console.log(req.body)
     // Check if user exists
     let user = await User.findOne({ email });
     if (user) {
@@ -41,7 +42,7 @@ exports.register = async (req, res) => {
     jwt.sign(
       payload,
       process.env.JWT_SECRET,
-      { expiresIn: '7d' },
+      { expiresIn: 300 },
       (err, token) => {
         if (err) throw err;
         res.json({ token });
