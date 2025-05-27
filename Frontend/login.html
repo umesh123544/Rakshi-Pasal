@@ -9,7 +9,6 @@
   <meta name="theme-color" content="#ff6600">
   <title>Aaila Pasa Admin</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="manifest" href="manifest.json">
   <style>
     * {
       box-sizing: border-box;
@@ -220,7 +219,6 @@
       }
     }
 
-    // Auto-attempt fullscreen on any user interaction
     document.addEventListener('click', toggleFullscreen, { once: true });
     document.addEventListener('touchstart', toggleFullscreen, { once: true });
 
@@ -237,101 +235,88 @@
       toggleFullscreen();
     }
 
-    // Event listeners
+    // Form switching
     document.getElementById('showSignup').addEventListener('click', () => showForm('signup'));
     document.getElementById('showForgot').addEventListener('click', () => showForm('forgot'));
     document.getElementById('showLoginFromSignup').addEventListener('click', () => showForm('login'));
     document.getElementById('showLoginFromForgot').addEventListener('click', () => showForm('login'));
 
-    // Form validations
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
+    // Login handler
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
       e.preventDefault();
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-      document.getElementById('loginError').textContent = 
-        username && password ? '' : 'Please fill all fields';
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      document.getElementById('loginError').textContent = '';
+
+      try {
+        const response = await fetch('/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.message || 'Login failed');
+        
+        window.location.href = '/dashboard.html';
+      } catch (error) {
+        document.getElementById('loginError').textContent = error.message;
+      }
     });
 
-    document.getElementById('signupForm').addEventListener('submit', function(e) {
+    // Signup handler
+    document.getElementById('signupForm').addEventListener('submit', async function(e) {
       e.preventDefault();
-      const password = document.getElementById('newPassword').value;
-      document.getElementById('signupError').textContent = 
-        password.length >= 8 ? '' : 'Password must be 8+ characters';
+      const fullName = document.getElementById('fullName').value.trim();
+      const email = document.getElementById('email').value.trim().toLowerCase();
+      const password = document.getElementById('newPassword').value.trim();
+      document.getElementById('signupError').textContent = '';
+
+      try {
+        if (!fullName) throw new Error('Full name is required');
+        if (!email.includes('@')) throw new Error('Invalid email format');
+        if (password.length < 8) throw new Error('Password must be at least 8 characters');
+
+        const response = await fetch('/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fullName, email, password })
+        });
+
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.message || 'Signup failed');
+        
+        alert('Account created successfully!');
+        showForm('login');
+      } catch (error) {
+        document.getElementById('signupError').textContent = error.message;
+      }
     });
 
-    document.getElementById('forgotForm').addEventListener('submit', function(e) {
+    // Forgot password handler
+    document.getElementById('forgotForm').addEventListener('submit', async function(e) {
       e.preventDefault();
-      const email = document.getElementById('forgotEmail').value;
-      document.getElementById('forgotError').textContent = 
-        email.includes('@') ? 'Reset link sent!' : 'Invalid email format';
-    });(†
-// Update login form handler
-document.getElementById('loginForm').addEventListener('submit', async function(e) {
-  e.preventDefault();
-  const username = document.getElementById('username').value;
-  const password = document.getElementById('password').value;
-  
-  try {
-    const response = await fetch('/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password })
+      const email = document.getElementById('forgotEmail').value.trim().toLowerCase();
+      document.getElementById('forgotError').textContent = '';
+
+      try {
+        if (!email.includes('@')) throw new Error('Invalid email format');
+
+        const response = await fetch('/forgot-password', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.message || 'Request failed');
+        
+        document.getElementById('forgotError').textContent = data.message;
+        setTimeout(() => showForm('login'), 3000);
+      } catch (error) {
+        document.getElementById('forgotError').textContent = error.message;
+      }
     });
-    
-    const data = await response.json();
-    if (!data.success) throw new Error(data.message);
-    
-    // Redirect to dashboard on successful login
-    window.location.href = '/dashboard.html';
-  } catch (error) {
-    document.getElementById('loginError').textContent = error.message;
-  }
-});
-
-// Update signup form handler
-document.getElementById('signupForm').addEventListener('submit', async function(e) {
-  e.preventDefault();
-  const fullName = document.getElementById('fullName').value;
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('newPassword').value;
-
-  try {
-    const response = await fetch('/signup', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ fullName, email, password })
-    });
-    
-    const data = await response.json();
-    if (!data.success) throw new Error(data.message);
-    
-    alert('Account created successfully!');
-    showForm('login');
-  } catch (error) {
-    document.getElementById('signupError').textContent = error.message;
-  }
-});
-
-// Update forgot password handler
-document.getElementById('forgotForm').addEventListener('submit', async function(e) {
-  e.preventDefault();
-  const email = document.getElementById('forgotEmail').value;
-
-  try {
-    const response = await fetch('/forgot-password', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email })
-    });
-    
-    const data = await response.json();
-    if (!data.success) throw new Error(data.message);
-    
-    document.getElementById('forgotError').textContent = data.message;
-  } catch (error) {
-    document.getElementById('forgotError').textContent = error.message;
-  }
-});
   </script>
 </body>
 </html>
