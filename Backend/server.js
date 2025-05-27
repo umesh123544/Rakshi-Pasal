@@ -4,56 +4,196 @@ const cors = require('cors');
 const bcrypt = require('bcryptjs');
 const app = express();
 
-// Temporary database (replace with real database in production)
-let users = [];
+// In-memory database (replace with real DB in production)
+const usersDB = [];
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000',
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type']
+}));
 app.use(bodyParser.json());
-app.use(express.static('public')); // Serve your HTML files
+app.use(express.static('public'));
 
-// Routes
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'OK', timestamp: new Date() });
+});
+
+// Login endpoint
 app.post('/login', async (req, res) => {
-  const { username, password } = req.body;
-  const user = users.find(u => u.username === username);
-  
-  if (!user) return res.status(401).json({ success: false, message: 'User not found' });
-  
-  const validPassword = await bcrypt.compare(password, user.password);
-  if (!validPassword) return res.status(401).json({ success: false, message: 'Invalid password' });
-  
-  res.json({ success: true, message: 'Login successful' });
-});
+  console.log('Login attempt:', req.body);
+  try {
+    const { username, password } = req.body;
+    
+    // Validation
+    if (!username?.trim() || !password?.trim()) {
+      return res.status(400).json({
+        success: false,
+        message: 'Username and password are required',
+        timestamp: new Date()
+      });
+    }
 
-app.post('/signup', async (req, res) => {
-  const { fullName, email, password } = req.body;
-  
-  if (users.some(u => u.email === email)) {
-    return res.status(400).json({ success: false, message: 'Email already exists' });
+    // Find user
+    const user = usersDB.find(u => u.username === username.trim());
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid credentials',
+        timestamp: new Date()
+      });
+    }
+
+    // Verify password
+    const passwordValid = await bcrypt.compare(password, user.password);
+    if (!passwordValid) {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid credentials',
+        timestamp: new Date()
+      });
+    }
+
+    // Successful login
+    res.json({
+      success: true,
+      message: 'Login successful',
+      user: {
+        id: user.id,
+        username: user.username,
+        email: user.email
+      },
+      timestamp: new Date()
+    });
+
+  } catch (error) {
+    console.error('Login error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Internal server error',
+      timestamp: new Date()
+    });
   }
-  
-  const hashedPassword = await bcrypt.hash(password, 10);
-  const newUser = {
-    id: Date.now(),
-    fullName,
-    email,
-    username: email, // Using email as username for simplicity
-    password: hashedPassword
-  };
-  
-  users.push(newUser);
-  res.json({ success: true, message: 'Account created successfully' });
 });
 
+// Signup endpoint
+app.post('/signup', async (req, res) => {
+  console.log('Signup attempt:', req.body);
+  try {
+    const { fullName, email, password } = req.body;
+    
+    // Validation
+    if (!fullName?.trim() || !email?.trim() || !password?.trim()) {
+      return res.status(400).json({
+        success: false,
+        message: 'All fields are required',
+        timestamp: new Date()
+      });
+    }
+
+    if (password.trim().length < 8) {
+      return res.status(400).json({
+        success: false,
+        message: 'Password must be at least 8 characters',
+        timestamp: new Date()
+      });
+    }
+
+    // Check if user exists
+    if (usersDB.some(u => u.email === email.trim())) {
+      return res.status(409).json({
+        success: false,
+        message: 'Email already registered',
+        timestamp: new Date()
+      });
+    }
+
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = {
+      id: Date.now().toString(),
+      fullName: fullName.trim(),
+      email: email.trim().toLowerCase(),
+      username: email.trim().toLowerCase(),
+      password: hashedPassword,
+      createdAt: new Date()
+    };
+
+    // Save user
+    usersDB.push(newUser);
+    console.log('New user created:', newUser);
+
+    // Response
+    res.status(201).json({
+      success: true,
+      message: 'Account created successfully',
+      user: {
+        id: newUser.id,
+        username: newUser.username,
+        email: newUser.email
+      },
+      timestamp: new Date()
+    });
+
+  } catch (error) {
+    console.error('Signup error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Internal server error',
+      timestamp: new Date()
+    });
+  }
+});
+
+// Forgot password endpoint
 app.post('/forgot-password', (req, res) => {
-  const { email } = req.body;
-  const user = users.find(u => u.email === email);
-  
-  if (!user) return res.status(404).json({ success: false, message: 'Email not found' });
-  
-  // In real app: Send password reset email here
-  res.json({ success: true, message: 'Reset link sent to your email' });
+  console.log('Password reset request:', req.body);
+  try {
+    const { email } = req.body;
+    
+    if (!email?.trim() || !email.includes('@')) {
+      return res.status(400).json({
+        success: false,
+        message: 'Valid email is required',
+        timestamp: new Date()
+      });
+    }
+
+    const userExists = usersDB.some(u => u.email === email.trim().toLowerCase());
+    if (!userExists) {
+      return res.status(404).json({
+        success: false,
+        message: 'Email not found',
+        timestamp: new Date()
+      });
+    }
+
+    // In production: Send actual reset email here
+    res.json({
+      success: true,
+      message: 'Password reset link sent to your email',
+      timestamp: new Date()
+    });
+
+  } catch (error) {
+    console.error('Password reset error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Internal server error',
+      timestamp: new Date()
+    });
+  }
 });
 
+// Start server
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+  console.log('Available endpoints:');
+  console.log(`- POST /login`);
+  console.log(`- POST /signup`);
+  console.log(`- POST /forgot-password`);
+  console.log(`- GET /health`);
+});
