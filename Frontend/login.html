@@ -218,10 +218,12 @@
   </div>
 
   <script>
-    // === COMPLETE JAVASCRIPT ===
+    // === JAVASCRIPT ===
     
+    // Config
+const domain = import.meta.env.VITE_API_URL || "https://rakshi-pasal-1.onrender.com";
+
     // DOM 
-    const domain = "https://rakshi-pasal-1.onrender.com"
     const forms = {
       login: document.getElementById('loginBox'),
       signup: document.getElementById('signupBox'),
