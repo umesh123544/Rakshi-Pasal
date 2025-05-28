@@ -2,71 +2,38 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
-const app = express();
-const mongoose = require('mongoose')
-const User = require('./models/User')
-// In-memory database (replace with real DB in production)
-const usersDB = [];
+const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const User = require('./models/User');
 
 // Load env vars
 dotenv.config();
 
-// Connect to DB
-mongoose.connect(process.env.MONGODB_URI,)
-
-.then(async () => {
-  // Run this once
-// await User.collection.dropIndex('email_1');
-console.log('MongoDB Connected')})
-.catch(err => console.error(err));
-
 // Initialize app
+const app = express();
 
-// Middleware
-app.use(cors());
-app.use(express.json());
-// Routes
-app.use('/api', require('./routes/api'));
+// Connect to DB
+mongoose.connect(process.env.MONGODB_URI)
+  .then(async () => {
+    console.log('MongoDB Connected');
+  })
+  .catch(err => console.error('MongoDB connection error:', err));
 
-// Error handling
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
-});
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
-// Create server instance for proper shutdown handling
-const server = app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server running on port ${PORT}`);
-});
-
-// Handle graceful shutdown
-process.on('SIGTERM', () => {
-  console.log('SIGTERM received. Shutting down gracefully...');
-  server.close(() => {
-    console.log('Server closed.');
-    process.exit(0);
-  });
-});
-
-// Handle uncaught exceptions
-process.on('uncaughtException', (err) => {
-  console.error('Uncaught Exception:', err);
-  server.close(() => process.exit(1));
-});
 // Middleware
 app.use(cors({
   origin: [
     'http://localhost:3000',
     'https://aailapasa.netlify.app'
-  ],  methods: ['GET', 'POST'],
+  ],
+  methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type']
 }));
 app.use(bodyParser.json());
+app.use(express.json());
 app.use(express.static('public'));
+
+// Routes
+app.use('/api', require('./routes/api'));
 
 // Health check endpoint
 app.get('/health', (req, res) => {
@@ -88,8 +55,8 @@ app.post('/login', async (req, res) => {
       });
     }
 
-    // Find user
-    const user = usersDB.find(u => u.username === username.trim());
+    // Find user in MongoDB
+    const user = await User.findOne({ username: username.trim() });
     if (!user) {
       return res.status(401).json({
         success: false,
@@ -113,7 +80,7 @@ app.post('/login', async (req, res) => {
       success: true,
       message: 'Login successful',
       user: {
-        id: user.id,
+        id: user._id,
         username: user.username,
         email: user.email
       },
@@ -153,8 +120,9 @@ app.post('/signup', async (req, res) => {
       });
     }
 
-    // Check if user exists
-    if (usersDB.some(u => u.email === email.trim())) {
+    // Check if user exists in MongoDB
+    const existingUser = await User.findOne({ email: email.trim().toLowerCase() });
+    if (existingUser) {
       return res.status(409).json({
         success: false,
         message: 'Email already registered',
@@ -164,17 +132,15 @@ app.post('/signup', async (req, res) => {
 
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = {
-      id: Date.now().toString(),
+    const newUser = new User({
       fullName: fullName.trim(),
       email: email.trim().toLowerCase(),
       username: email.trim().toLowerCase(),
-      password: hashedPassword,
-      createdAt: new Date()
-    };
+      password: hashedPassword
+    });
 
-    // Save user
-    usersDB.push(newUser);
+    // Save user to MongoDB
+    await newUser.save();
     console.log('New user created:', newUser);
 
     // Response
@@ -182,7 +148,7 @@ app.post('/signup', async (req, res) => {
       success: true,
       message: 'Account created successfully',
       user: {
-        id: newUser.id,
+        id: newUser._id,
         username: newUser.username,
         email: newUser.email
       },
@@ -200,7 +166,7 @@ app.post('/signup', async (req, res) => {
 });
 
 // Forgot password endpoint
-app.post('/forgot-password', (req, res) => {
+app.post('/forgot-password', async (req, res) => {
   console.log('Password reset request:', req.body);
   try {
     const { email } = req.body;
@@ -213,7 +179,7 @@ app.post('/forgot-password', (req, res) => {
       });
     }
 
-    const userExists = usersDB.some(u => u.email === email.trim().toLowerCase());
+    const userExists = await User.findOne({ email: email.trim().toLowerCase() });
     if (!userExists) {
       return res.status(404).json({
         success: false,
@@ -239,12 +205,34 @@ app.post('/forgot-password', (req, res) => {
   }
 });
 
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+
 // Start server
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+const PORT = process.env.PORT || 3000;
+const server = app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on port ${PORT}`);
   console.log('Available endpoints:');
   console.log(`- POST /login`);
   console.log(`- POST /signup`);
   console.log(`- POST /forgot-password`);
   console.log(`- GET /health`);
+});
+
+// Handle graceful shutdown
+process.on('SIGTERM', () => {
+  console.log('SIGTERM received. Shutting down gracefully...');
+  server.close(() => {
+    console.log('Server closed.');
+    process.exit(0);
+  });
+});
+
+// Handle uncaught exceptions
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err);
+  server.close(() => process.exit(1));
 });
