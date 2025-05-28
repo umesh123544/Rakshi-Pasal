@@ -13,10 +13,8 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 // Connect to DB
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
+mongoose.connect(process.env.MONGODB_URI,)
+
 .then(async () => {
   // Run this once
 // await User.collection.dropIndex('email_1');
@@ -36,7 +34,7 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
 });
-const PORT = process.env.PORT || 10000;
+const PORT = process.env.PORT || 1000;
 // Start server
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
