@@ -2082,15 +2082,15 @@
       </svg>
     </div>
     <h2>Order Placed Successfully!</h2>
-
-<div class="confirmation-details">
+    
+    <div class="confirmation-details">
       <p>Thank you for your purchase, <span id="confirm-name"></span>!</p>
       <p>Your order <span id="confirm-number"></span> has been confirmed.</p>
       <p>Total Amount: <span id="confirm-total"></span></p>
       <p>We've sent a confirmation email to <span id="confirm-email"></span></p>
       <p>Delivery Address: <span id="confirm-address"></span></p>
       <p>Estimated Delivery Time: <span id="confirm-delivery-time"></span></p>
-
+      
       <!-- Payment QR Code Section -->
       <div class="payment-section">
         <h3 style="color: #ff6600; margin-bottom: 15px;">Payment Instructions</h3>
@@ -2098,7 +2098,7 @@
         
         <!-- Replace with your actual QR code image -->
         <div class="qr-code-container">
-          <img src="https://i.ibb.co/674pMq5L/IMG-20250613-132956.jpg" alt="Payment QR Code" class="qr-code">
+          <img src="https://i.ibb.co/your-qr-code-image.png" alt="Payment QR Code" class="qr-code">
         </div>
         
         <p><strong>Payment Methods:</strong></p>
@@ -2111,7 +2111,7 @@
         <p><strong>Important:</strong> After payment, please send the transaction details to our WhatsApp at <strong>+977 9813197704</strong> or email at <strong>aailapasa@gmail.com</strong> with your order number.</p>
       </div>
     </div>
-
+    
     <div class="confirmation-actions">
       <button onclick="continueShopping()" class="btn-continue">
         Continue Shopping
@@ -2451,11 +2451,6 @@
     
     window.open(whatsappUrl, '_blank');
   }
-
-/ Add these variables at the top with your other cart variables
-let paymentTimeout;
-let timeLeft = 300; // 5 minutes in seconds (change this to your desired duration)
-
   
   // Show order confirmation
   function showConfirmation(orderData) {
