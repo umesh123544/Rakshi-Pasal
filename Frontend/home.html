@@ -1027,165 +1027,207 @@
       width: 100%;
     }
     
-    /* Order Confirmation Styles - Updated for Scrollable Content */
+    /* Order Confirmation Styles */
+  .order-confirmation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: fadeIn 0.3s ease;
+    display: none; /* Hidden by default */
+  }
+  
+  .confirmation-container {
+    background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    position: relative;
+  }
+  
+  .confirmation-icon {
+    width: 80px;
+    height: 80px;
+    background: #4CAF50;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .confirmation-icon svg {
+    width: 40px;
+    height: 40px;
+    stroke: white;
+    stroke-width: 2;
+  }
+  
+  .order-confirmation h2 {
+    color: #fff;
+    font-size: 2.2em;
+    margin-bottom: 20px;
+  }
+  
+  .confirmation-details {
+    background: rgba(255,255,255,0.1);
+    padding: 25px;
+    border-radius: 12px;
+    margin: 20px 0;
+    text-align: left;
+  }
+  
+  .confirmation-details p {
+    color: #fff;
+    font-size: 1.1em;
+    margin: 15px 0;
+    line-height: 1.6;
+  }
+  
+  .confirmation-details span {
+    color: #4CAF50;
+    font-weight: 600;
+  }
+  
+  .btn-continue {
+    background: #4CAF50;
+    color: white;
+    padding: 15px 40px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+  }
+  
+  .btn-continue:hover {
+    background: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(76,175,80,0.3);
+  }
+  
+  .confirmation-note {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: #fff;
+    font-size: 0.95em;
+  }
+  
+  .confirmation-note i {
+    color: #4CAF50;
+    font-size: 1.2em;
+  }
+  
+  /* Payment QR Code Styles */
+  .payment-section {
+    background: rgba(0,0,0,0.2);
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+  }
+  
+  .payment-section h3 {
+    color: #ff6600;
+    margin-top: 0;
+  }
+  
+  .payment-instructions {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  
+  .qr-code-container {
+    text-align: center;
+    margin: 15px 0;
+  }
+  
+  .qr-code {
+    max-width: 200px;
+    border: 1px solid #444;
+    border-radius: 8px;
+  }
+  
+  .whatsapp-btn {
+    background: #25D366;
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 30px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+    margin-left: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .whatsapp-btn:hover {
+    background: #128C7E;
+  }
+  
+  @media (max-width: 768px) {
     .order-confirmation {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.9);
-      z-index: 9999;
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      padding: 20px;
-      animation: fadeIn 0.3s ease;
+      padding: 15px;
       overflow-y: auto;
     }
     
     .confirmation-container {
-      background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
-      padding: 30px;
-      border-radius: 20px;
-      text-align: center;
-      max-width: 600px;
-      width: 100%;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-      position: relative;
-      margin: 20px 0;
+      padding: 25px;
+      width: 95%;
       max-height: 90vh;
-      display: flex;
-      flex-direction: column;
-    }
-    
-    .confirmation-icon {
-      width: 80px;
-      height: 80px;
-      background: #4CAF50;
-      border-radius: 50%;
-      margin: 0 auto 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .confirmation-icon svg {
-      width: 40px;
-      height: 40px;
-      stroke: white;
-      stroke-width: 2;
-    }
-    
-    .order-confirmation h2 {
-      color: #fff;
-      font-size: 2.2em;
-      margin-bottom: 20px;
+      overflow-y: auto;
     }
     
     .confirmation-details {
-      background: rgba(255,255,255,0.1);
-      padding: 20px;
-      border-radius: 12px;
-      margin: 20px 0;
-      text-align: left;
-      overflow-y: auto;
-      flex-grow: 1;
-      max-height: calc(100% - 200px);
+      padding: 15px;
     }
     
     .confirmation-details p {
-      color: #fff;
-      font-size: 1.1em;
-      margin: 15px 0;
-      line-height: 1.6;
+      font-size: 14px;
+      margin: 10px 0;
     }
     
-    .confirmation-details span {
-      color: #4CAF50;
-      font-weight: 600;
-    }
-    
-    /* Payment QR Code Styles */
     .payment-section {
-      background: rgba(0,0,0,0.2);
-      padding: 15px;
-      border-radius: 8px;
-      margin-top: 20px;
+      padding: 10px;
     }
     
     .payment-section h3 {
-      color: #ff6600;
-      margin-top: 0;
+      font-size: 16px;
     }
     
-    .payment-instructions {
+    .payment-section p, .payment-section li {
+      font-size: 13px;
+    }
+    
+    .confirmation-actions {
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .btn-continue, .whatsapp-btn {
+      width: 100%;
+      padding: 12px;
       font-size: 14px;
-      line-height: 1.6;
-    }
-    
-    .qr-code-container {
-      text-align: center;
-      margin: 15px 0;
     }
     
     .qr-code {
-      max-width: 200px;
-      border: 1px solid #444;
-      border-radius: 8px;
-    }
-    
-    .btn-continue {
-      background: #4CAF50;
-      color: white;
-      padding: 15px 40px;
-      border: none;
-      border-radius: 30px;
-      font-size: 1.1em;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      margin-top: 20px;
-    }
-    
-    .btn-continue:hover {
-      background: #45a049;
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(76,175,80,0.3);
-    }
-    
-    .whatsapp-btn {
-      background: #25D366;
-      color: white;
-      border: none;
-      padding: 15px 40px;
-      border-radius: 30px;
-      font-size: 1.1em;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      margin-top: 20px;
-      margin-left: 10px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-    
-    .whatsapp-btn:hover {
-      background: #128C7E;
-    }
-    
-    .confirmation-note {
-      margin-top: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      color: #fff;
-      font-size: 0.95em;
-    }
-    
-    .confirmation-note i {
-      color: #4CAF50;
-      font-size: 1.2em;
+      max-width: 150px;
     }
 
     /* Special Offers Section */
@@ -2072,7 +2114,7 @@
   </div>
 </div>
   
-<!-- Order Confirmation Section -->
+<!-- Add this HTML just before your footer section -->
 <section class="order-confirmation" id="orderConfirmation" style="display: none;">
   <div class="confirmation-container">
     <div class="confirmation-icon">
@@ -2082,7 +2124,7 @@
       </svg>
     </div>
     <h2>Order Placed Successfully!</h2>
-    
+
     <div class="confirmation-details">
       <p>Thank you for your purchase, <span id="confirm-name"></span>!</p>
       <p>Your order <span id="confirm-number"></span> has been confirmed.</p>
@@ -2090,13 +2132,13 @@
       <p>We've sent a confirmation email to <span id="confirm-email"></span></p>
       <p>Delivery Address: <span id="confirm-address"></span></p>
       <p>Estimated Delivery Time: <span id="confirm-delivery-time"></span></p>
-      
+
       <!-- Payment QR Code Section -->
       <div class="payment-section">
         <h3 style="color: #ff6600; margin-bottom: 15px;">Payment Instructions</h3>
         <p>Please scan the QR code below to complete your payment:</p>
         
-        <!-- QR code image -->
+        <!-- Replace with your actual QR code image -->
         <div class="qr-code-container">
           <img src="https://i.ibb.co/674pMq5L/IMG-20250613-132956.jpg" alt="Payment QR Code" class="qr-code">
         </div>
@@ -2111,7 +2153,7 @@
         <p><strong>Important:</strong> After payment, please send the transaction details to our WhatsApp at <strong>+977 9813197704</strong> or email at <strong>aailapasa@gmail.com</strong> with your order number.</p>
       </div>
     </div>
-    
+
     <div class="confirmation-actions">
       <button onclick="continueShopping()" class="btn-continue">
         Continue Shopping
