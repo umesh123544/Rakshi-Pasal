@@ -2470,19 +2470,6 @@
     
     // Scroll to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    
-    // Update the email template to include payment instructions
-    orderData.payment_instructions = `
-      Payment Instructions:
-      Please scan the QR code in your confirmation email or on our website to complete your payment.
-      
-      Payment Methods Accepted:
-      - eSewa
-      - Khalti
-      - Bank Transfer
-      
-      After payment, please send the transaction details to our WhatsApp at +977 9813197704 or email at aailapasa@gmail.com with your order number ${orderNumber}.
-    `;
   }
   
   // Continue shopping button handler
@@ -2575,14 +2562,14 @@
   });
   
   // Handle form submission
-  document.getElementById('order-form').addEventListener('submit', function(e) {
+  document.getElementById('order-form').addEventListener('submit', async function(e) {
     e.preventDefault();
     
     if (cart.length === 0) {
       alert("Your cart is empty!");
       return;
     }
-    
+
     // Get form values
     const orderData = {
       customer_name: document.getElementById('customer-name').value,
@@ -2598,34 +2585,53 @@
       delivery_time: deliveryTime,
       order_date: new Date().toLocaleString()
     };
-    
+
+    // Generate order number
+    const orderNumber = 'AP-' + Date.now().toString().slice(-6);
+
     // Show loading state
     const submitBtn = this.querySelector('button[type="submit"]');
     const submitText = submitBtn.textContent;
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-    
-    // Generate order number
-    const orderNumber = 'AP-' + Date.now().toString().slice(-6);
-    
-    // Send email via EmailJS
-    emailjs.send('service_wb7evwg', 'template_0593y8t', {
-      customer_name: orderData.customer_name,
-      customer_email: orderData.customer_email,
-      customer_phone: orderData.customer_phone,
-      customer_address: orderData.customer_address,
-      order_items: orderData.order_items,
-      order_subtotal: orderData.order_subtotal,
-      delivery_fee: orderData.delivery_fee,
-      order_total: orderData.order_total,
-      delivery_time: orderData.delivery_time_preference,
-      order_number: orderNumber,
-      customer_notes: orderData.customer_notes,
-      order_date: orderData.order_date,
-      payment_instructions: orderData.payment_instructions
-    })
-    .then(function(response) {
-      console.log('Email sent!', response.status, response.text);
+
+    try {
+      // Send email via EmailJS
+      const emailResponse = await emailjs.send(
+        'service_wb7evwg', // Replace with your actual service ID
+        'template_0593y8t', // Replace with your actual template ID
+        {
+          customer_name: orderData.customer_name,
+          customer_email: orderData.customer_email,
+          customer_phone: orderData.customer_phone,
+          customer_address: orderData.customer_address,
+          order_items: orderData.order_items,
+          order_subtotal: `Rs.${orderData.order_subtotal.toFixed(2)}`,
+          delivery_fee: `Rs.${orderData.delivery_fee}`,
+          order_total: `Rs.${orderData.order_total.toFixed(2)}`,
+          delivery_time: orderData.delivery_time_preference || 'ASAP',
+          order_number: orderNumber,
+          customer_notes: orderData.customer_notes || 'None',
+          order_date: orderData.order_date,
+          payment_instructions: `
+            Payment Instructions:
+            1. Scan the QR code below or use one of these payment methods:
+            - eSewa: 9813197704
+            - Khalti: 9813197704
+            - Bank Transfer:
+              Bank: NMB Bank
+              Account: Aaila Pasa
+              Account No: 1234567890
+            
+            2. After payment, send transaction details to:
+            WhatsApp: +977 9813197704
+            Email: aailapasa@gmail.com
+            Include your order number: ${orderNumber}
+          `
+        }
+      );
+
+      console.log('Email sent successfully:', emailResponse);
       
       // Show confirmation
       showConfirmation(orderData);
@@ -2638,12 +2644,11 @@
       
       // Reset form
       e.target.reset();
-    })
-    .catch(function(error) {
-      console.log('Email failed to send', error);
-      alert('There was an error sending your confirmation email. Your order is still being processed.');
       
-      // Still show confirmation even if email fails
+    } catch (error) {
+      console.error('Email sending failed:', error);
+      
+      // Show confirmation even if email fails (order is still processed)
       showConfirmation(orderData);
       
       // Reset cart and close modal
@@ -2654,12 +2659,15 @@
       
       // Reset form
       e.target.reset();
-    })
-    .finally(function() {
+      
+      // Show error to user
+      alert('Order placed successfully! However, we could not send the confirmation email. Please note your order number: ' + orderNumber);
+      
+    } finally {
       // Reset button
       submitBtn.disabled = false;
       submitBtn.textContent = submitText;
-    });
+    }
   });
   
   // Helper function to calculate subtotal
