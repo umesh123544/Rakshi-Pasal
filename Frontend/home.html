@@ -2451,6 +2451,11 @@
     
     window.open(whatsappUrl, '_blank');
   }
+
+/ Add these variables at the top with your other cart variables
+let paymentTimeout;
+let timeLeft = 300; // 5 minutes in seconds (change this to your desired duration)
+
   
   // Show order confirmation
   function showConfirmation(orderData) {
