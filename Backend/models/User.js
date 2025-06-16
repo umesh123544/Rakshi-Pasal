@@ -1,65 +1,83 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const { Schema } = mongoose;
-
-const userSchema = new Schema({
-  username: { type: String, required: true, unique: true },
-  email: { type: String, required: true, unique: true },
-  first_name: { type: String, required: true },
-  last_name: { type: String, required: true },
-  password: { type: String, required: true },
-  is_active: { type: Boolean, default: true },
-  is_staff: { type: Boolean, default: false },
-  is_superuser: { type: Boolean, default: false },
-  is_admin: { type: Boolean, default: false },
-  is_customer: { type: Boolean, default: true },
-  is_seller: { type: Boolean, default: false },
-  is_verified: { type: Boolean, default: false },
-  date_joined: { type: Date, default: Date.now },
-  customer_phone: { type: String },
-  customer_address: { type: String }
-});
-
-// Hash password before saving
-userSchema.pre('save', async function(next) {
-  if (!this.isModified('password')) return next();
-  this.password = await bcrypt.hash(this.password, 10);
-  next();
-});
-
-// Method to compare passwords
-userSchema.methods.comparePassword = async function(candidatePassword) {
-  return await bcrypt.compare(candidatePassword, this.password);
-};
+const validator = require('validator');
 
 const UserSchema = new mongoose.Schema({
-  username: {
+  name: {
     type: String,
-    required: [true, 'Please provide a username'],
-    unique: true,
+    required: [true, 'Please provide a name'],
     trim: true,
-    minlength: 3,
-    maxlength: 20
+    maxlength: [50, 'Name cannot exceed 50 characters']
+  },
+  email: {
+    type: String,
+    required: [true, 'Please provide an email'],
+    unique: true,
+    lowercase: true,
+    validate: [validator.isEmail, 'Please provide a valid email']
   },
   password: {
     type: String,
-    required: [true, 'Please provide a password'],
-    minlength: 6,
+    select: false,
+    minlength: [8, 'Password must be at least 8 characters'],
+    validate: {
+      validator: function(v) {
+        // Only validate password if provider is local
+        return this.provider !== 'local' || v.length >= 8;
+      },
+      message: 'Password must be at least 8 characters'
+    }
+  },
+  avatar: {
+    type: String,
+    default: 'default.jpg'
+  },
+  provider: {
+    type: String,
+    enum: ['local', 'google', 'facebook'],
+    default: 'local'
+  },
+  providerId: {
+    type: String,
     select: false
+  },
+  role: {
+    type: String,
+    enum: ['user', 'admin'],
+    default: 'user'
+  },
+  verified: {
+    type: Boolean,
+    default: false
   },
   createdAt: {
     type: Date,
     default: Date.now
+  },
+  lastLogin: {
+    type: Date
   }
+}, {
+  timestamps: true,
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
 });
 
-// Hash password before saving
+// Indexes
+UserSchema.index({ email: 1 });
+UserSchema.index({ provider: 1, providerId: 1 });
+
+// Password hashing middleware
 UserSchema.pre('save', async function(next) {
-  if (!this.isModified('password')) return next();
+  if (!this.isModified('password') return next();
   
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-  next();
+  try {
+    const salt = await bcrypt.genSalt(12);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+  } catch (error) {
+    next(error);
+  }
 });
 
 // Method to compare passwords
@@ -67,8 +85,10 @@ UserSchema.methods.comparePassword = async function(candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
 };
 
+// Update last login on successful authentication
+UserSchema.methods.updateLastLogin = async function() {
+  this.lastLogin = new Date();
+  await this.save({ validateBeforeSave: false });
+};
+
 module.exports = mongoose.model('User', UserSchema);
-
-// const User = mongoose.model('User', userSchema);
-
-// module.exports = User;
