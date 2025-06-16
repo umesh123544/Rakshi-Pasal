@@ -1,238 +1,88 @@
+// Load environment variables first
+require('dotenv').config();
+
 const express = require('express');
-const bodyParser = require('body-parser');
 const cors = require('cors');
-const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-const User = require('./models/User');
+const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
 
-// Load env vars
-dotenv.config();
-
-// Initialize app
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-// Connect to DB
-mongoose.connect(process.env.MONGODB_URI)
-  .then(async () => {
-    console.log('MongoDB Connected');
-  })
-  .catch(err => console.error('MongoDB connection error:', err));
+// Enhanced MongoDB Connection
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  serverSelectionTimeoutMS: 5000,
+  connectTimeoutMS: 5000,
+  socketTimeoutMS: 45000,
+  maxPoolSize: 10,
+})
+.then(() => console.log('MongoDB connected successfully'))
+.catch(err => {
+  console.error('MongoDB connection error:', err);
+  process.exit(1);
+});
+
+// Connection events
+mongoose.connection.on('connected', () => {
+  console.log('Mongoose connected to DB');
+});
+
+mongoose.connection.on('error', (err) => {
+  console.error('Mongoose connection error:', err);
+});
+
+mongoose.connection.on('disconnected', () => {
+  console.log('Mongoose disconnected');
+});
+
+// Graceful shutdown
+process.on('SIGINT', async () => {
+  await mongoose.connection.close();
+  console.log('Mongoose connection closed due to app termination');
+  process.exit(0);
+});
 
 // Middleware
 app.use(cors({
-  origin: [
-    'http://localhost:3000',
-    'https://aailapasa.netlify.app'
-  ],
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type']
+  origin: process.env.FRONTEND_URL || 'http://localhost:3001',
+  credentials: true
 }));
-app.use(bodyParser.json());
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
 
 // Routes
-app.use('/api', require('./routes/api'));
+app.use('/auth', authRoutes);
+app.use('/api/users', userRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'OK', timestamp: new Date() });
-});
-
-// Login endpoint
-app.post('/login', async (req, res) => {
-  console.log('Login attempt:', req.body);
-  try {
-    const { username, password } = req.body;
-    
-    // Validation
-    if (!username?.trim() || !password?.trim()) {
-      return res.status(400).json({
-        success: false,
-        message: 'Username and password are required',
-        timestamp: new Date()
-      });
-    }
-
-    // Find user in MongoDB
-    const user = await User.findOne({ username: username.trim() });
-    if (!user) {
-      return res.status(401).json({
-        success: false,
-        message: 'Invalid credentials',
-        timestamp: new Date()
-      });
-    }
-
-    // Verify password
-    const passwordValid = await bcrypt.compare(password, user.password);
-    if (!passwordValid) {
-      return res.status(401).json({
-        success: false,
-        message: 'Invalid credentials',
-        timestamp: new Date()
-      });
-    }
-
-    // Successful login
-    res.json({
-      success: true,
-      message: 'Login successful',
-      user: {
-        id: user._id,
-        username: user.username,
-        email: user.email
-      },
-      timestamp: new Date()
-    });
-
-  } catch (error) {
-    console.error('Login error:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Internal server error',
-      timestamp: new Date()
-    });
-  }
-});
-
-// Signup endpoint
-app.post('/signup', async (req, res) => {
-  console.log('Signup attempt:', req.body);
-  try {
-    const { fullName, email, password } = req.body;
-    
-    // Validation
-    if (!fullName?.trim() || !email?.trim() || !password?.trim()) {
-      return res.status(400).json({
-        success: false,
-        message: 'All fields are required',
-        timestamp: new Date()
-      });
-    }
-
-    if (password.trim().length < 8) {
-      return res.status(400).json({
-        success: false,
-        message: 'Password must be at least 8 characters',
-        timestamp: new Date()
-      });
-    }
-
-    // Check if user exists in MongoDB
-    const existingUser = await User.findOne({ email: email.trim().toLowerCase() });
-    if (existingUser) {
-      return res.status(409).json({
-        success: false,
-        message: 'Email already registered',
-        timestamp: new Date()
-      });
-    }
-
-    // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({
-      fullName: fullName.trim(),
-      email: email.trim().toLowerCase(),
-      username: email.trim().toLowerCase(),
-      password: hashedPassword
-    });
-
-    // Save user to MongoDB
-    await newUser.save();
-    console.log('New user created:', newUser);
-
-    // Response
-    res.status(201).json({
-      success: true,
-      message: 'Account created successfully',
-      user: {
-        id: newUser._id,
-        username: newUser.username,
-        email: newUser.email
-      },
-      timestamp: new Date()
-    });
-
-  } catch (error) {
-    console.error('Signup error:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Internal server error',
-      timestamp: new Date()
-    });
-  }
-});
-
-// Forgot password endpoint
-app.post('/forgot-password', async (req, res) => {
-  console.log('Password reset request:', req.body);
-  try {
-    const { email } = req.body;
-    
-    if (!email?.trim() || !email.includes('@')) {
-      return res.status(400).json({
-        success: false,
-        message: 'Valid email is required',
-        timestamp: new Date()
-      });
-    }
-
-    const userExists = await User.findOne({ email: email.trim().toLowerCase() });
-    if (!userExists) {
-      return res.status(404).json({
-        success: false,
-        message: 'Email not found',
-        timestamp: new Date()
-      });
-    }
-
-    // In production: Send actual reset email here
-    res.json({
-      success: true,
-      message: 'Password reset link sent to your email',
-      timestamp: new Date()
-    });
-
-  } catch (error) {
-    console.error('Password reset error:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Internal server error',
-      timestamp: new Date()
-    });
-  }
+  res.status(200).json({
+    status: 'UP',
+    dbState: mongoose.connection.readyState,
+    timestamp: new Date()
+  });
 });
 
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).send('Something broke!');
-});
-
-// Start server
-const PORT = process.env.PORT || 5000;
-const server = app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server running on port ${PORT}`);
-  console.log('Available endpoints:');
-  console.log(`- POST /login`);
-  console.log(`- POST /signup`);
-  console.log(`- POST /forgot-password`);
-  console.log(`- GET /health`);
-});
-
-// Handle graceful shutdown
-process.on('SIGTERM', () => {
-  console.log('SIGTERM received. Shutting down gracefully...');
-  server.close(() => {
-    console.log('Server closed.');
-    process.exit(0);
+  res.status(500).json({ 
+    success: false,
+    message: 'Internal Server Error',
+    error: process.env.NODE_ENV === 'development' ? err.message : undefined
   });
 });
 
-// Handle uncaught exceptions
-process.on('uncaughtException', (err) => {
-  console.error('Uncaught Exception:', err);
+// Start server
+const server = app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
+// Handle unhandled promise rejections
+process.on('unhandledRejection', (err) => {
+  console.error('Unhandled Rejection:', err);
   server.close(() => process.exit(1));
 });
