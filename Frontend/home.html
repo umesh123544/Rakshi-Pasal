@@ -30,7 +30,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <!-- EmailJS SDK -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-  
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
   <style>
     * { box-sizing: border-box; }
     body {
@@ -1391,7 +1392,72 @@
       background: transparent;
       color: #292f36;
     }
+    social-login-dropdown {
+      position: absolute;
+      right: 20px;
+      top: 80px;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      z-index: 1000;
+      display: none;
+    }
     
+    .social-login-dropdown .divider {
+      display: flex;
+      align-items: center;
+      margin: 15px 0;
+      color: #777;
+      font-size: 14px;
+    }
+    
+    .social-login-dropdown .divider::before,
+    .social-login-dropdown .divider::after {
+      content: "";
+      flex: 1;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    .social-login-dropdown .divider::before {
+      margin-right: 10px;
+    }
+    
+    .social-login-dropdown .divider::after {
+      margin-left: 10px;
+    }
+    
+    .social-login-dropdown .social-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .social-login-dropdown .social-login-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 15px;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 1px solid #ddd;
+      background: white;
+      color: #333;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    
+    .social-login-dropdown .google-btn {
+      border-color: #4285F4;
+      color: #4285F4;
+    }
+    
+    .social-login-dropdown .facebook-btn {
+      border-color: #4267B2;
+      color: #4267B2;
+    }
     /* Footer */
     footer {
       background: #000;
@@ -1821,6 +1887,18 @@
     <i class="fas fa-search" style="font-size: 24px; margin-bottom: 10px;"></i>
     <p>No products found matching your search.</p>
     <button onclick="resetSearch()" style="margin-top: 15px; padding: 8px 20px; background: #ff6600; color: white; border: none; border-radius: 4px; cursor: pointer;">Reset Search</button>
+  </div>
+  
+  <div class="social-login-dropdown" id="socialLoginDropdown">
+    <div class="divider">Login with</div>
+    <div class="social-buttons">
+      <a href="#" class="social-login-btn google-btn" onclick="handleGoogleLogin()">
+        <i class="fab fa-google"></i> Google
+      </a>
+      <a href="#" class="social-login-btn facebook-btn" onclick="checkFacebookLogin()">
+        <i class="fab fa-facebook-f"></i> Facebook
+      </a>
+    </div>
   </div>
   
   <div class="product-list" id="productList">
@@ -2811,6 +2889,76 @@
     // Track installation
     console.log('PWA was installed');
   });
+   // Toggle login dropdown
+    function toggleLoginDropdown() {
+      const dropdown = document.getElementById('socialLoginDropdown');
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+      const dropdown = document.getElementById('socialLoginDropdown');
+      if (!event.target.closest('#socialLoginDropdown') && !event.target.closest('.login-toggle')) {
+        dropdown.style.display = 'none';
+      }
+    });
+
+    // Facebook SDK Initialization
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId: 'YOUR_FACEBOOK_APP_ID', // Same as login.html
+        cookie: true,
+        xfbml: true,
+        version: 'v18.0'
+      });
+    };
+
+    // Google One Tap and button handler
+    function handleGoogleLogin() {
+      google.accounts.id.prompt();
+    }
+
+    function handleGoogleResponse(response) {
+      const token = response.credential;
+      handleSocialLogin(token, 'google');
+    }
+
+    // Facebook login handler
+    function checkFacebookLogin() {
+      FB.login(function(response) {
+        if (response.authResponse) {
+          handleSocialLogin(response.authResponse.accessToken, 'facebook');
+        }
+      }, {scope: 'public_profile,email'});
+    }
+
+    // Handle social logins
+    async function handleSocialLogin(token, provider) {
+      try {
+        const response = await fetch(`/auth/${provider}/callback`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          localStorage.setItem('authToken', data.token);
+          window.location.reload(); // Refresh to show authenticated state
+        }
+      } catch (error) {
+        console.error(`${provider} login error:`, error);
+      }
+    }
+
+    // Initialize Google
+    document.addEventListener('DOMContentLoaded', function() {
+      google.accounts.id.initialize({
+        client_id: 'YOUR_GOOGLE_CLIENT_ID', // Same as login.html
+        callback: handleGoogleResponse
+      });
+    });
   
   // Pull to refresh functionality
   let touchstartY = 0;
