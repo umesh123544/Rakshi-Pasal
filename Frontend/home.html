@@ -358,6 +358,106 @@
       font-weight: bold;
     }
     
+    /* User Icon */
+    .user-icon {
+      position: relative;
+      cursor: pointer;
+      font-size: 20px;
+      color: white;
+      transition: all 0.3s ease;
+      padding: 5px;
+    }
+    
+    .user-icon:hover {
+      color: #ff6600;
+    }
+    
+    .user-icon img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    
+    /* Social Login Dropdown */
+    .social-login-dropdown {
+      position: absolute;
+      top: 60px;
+      right: 20px;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      z-index: 1000;
+      display: none;
+      width: 250px;
+    }
+    
+    .social-login-dropdown .divider {
+      display: flex;
+      align-items: center;
+      margin: 15px 0;
+      color: #777;
+      font-size: 14px;
+    }
+    
+    .social-login-dropdown .divider::before,
+    .social-login-dropdown .divider::after {
+      content: "";
+      flex: 1;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    .social-login-dropdown .divider::before {
+      margin-right: 10px;
+    }
+    
+    .social-login-dropdown .divider::after {
+      margin-left: 10px;
+    }
+    
+    .social-login-dropdown .social-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .social-login-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 15px;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 1px solid #ddd;
+      background: white;
+      color: #333;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    
+    .social-login-btn.google-btn {
+      border-color: #4285F4;
+      color: #4285F4;
+    }
+    
+    .social-login-btn.google-btn:hover {
+      background: #4285F4;
+      color: white;
+    }
+    
+    .social-login-btn.facebook-btn {
+      border-color: #4267B2;
+      color: #4267B2;
+    }
+    
+    .social-login-btn.facebook-btn:hover {
+      background: #4267B2;
+      color: white;
+    }
+    
   /* Banner Styles */
 .banner {
   position: relative;
@@ -1415,72 +1515,6 @@
       background: transparent;
       color: #292f36;
     }
-    social-login-dropdown {
-      position: absolute;
-      right: 20px;
-      top: 80px;
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      z-index: 1000;
-      display: none;
-    }
-    
-    .social-login-dropdown .divider {
-      display: flex;
-      align-items: center;
-      margin: 15px 0;
-      color: #777;
-      font-size: 14px;
-    }
-    
-    .social-login-dropdown .divider::before,
-    .social-login-dropdown .divider::after {
-      content: "";
-      flex: 1;
-      border-bottom: 1px solid #ddd;
-    }
-    
-    .social-login-dropdown .divider::before {
-      margin-right: 10px;
-    }
-    
-    .social-login-dropdown .divider::after {
-      margin-left: 10px;
-    }
-    
-    .social-login-dropdown .social-buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    
-    .social-login-dropdown .social-login-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 10px 15px;
-      border-radius: 4px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      border: 1px solid #ddd;
-      background: white;
-      color: #333;
-      text-decoration: none;
-      font-size: 14px;
-    }
-    
-    .social-login-dropdown .google-btn {
-      border-color: #4285F4;
-      color: #4285F4;
-    }
-    
-    .social-login-dropdown .facebook-btn {
-      border-color: #4267B2;
-      color: #4267B2;
-    }
     
     /* Responsive Styles */
     @media (max-width: 992px) {
@@ -1587,132 +1621,6 @@
       .order-confirmation {
         padding: 10px;
       }
-
-    }/* Footer Styles */
-    footer {
-      background: #000;
-      color: white;
-      padding: 60px 20px 20px;
-      text-align: center;
-    }
-
-    .footer-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
-      text-align: left;
-      padding: 0 20px;
-    }
-
-    .footer-column {
-      margin-bottom: 20px;
-    }
-
-    .footer-column h3 {
-      color: #ff6600;
-      margin-bottom: 20px;
-      font-size: 1.2rem;
-      position: relative;
-      padding-bottom: 10px;
-    }
-
-    .footer-column h3::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 50px;
-      height: 2px;
-      background: #ff6600;
-    }
-
-    .footer-column p, 
-    .footer-column a {
-      color: #ccc;
-      margin-bottom: 15px;
-      display: block;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      line-height: 1.6;
-    }
-
-    .footer-column a:hover {
-      color: #ff6600;
-      padding-left: 5px;
-    }
-
-    .footer-column i {
-      margin-right: 10px;
-      color: #ff6600;
-      width: 20px;
-      text-align: center;
-    }
-
-    .social-links {
-      display: flex;
-      gap: 15px;
-      margin-top: 20px;
-    }
-
-    .social-links a {
-      color: white;
-      background: rgba(255, 255, 255, 0.1);
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-    }
-
-    .social-links a:hover {
-      background: #ff6600;
-      transform: translateY(-3px);
-    }
-
-    .copyright {
-      margin-top: 40px;
-      padding-top: 20px;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      color: #aaa;
-      font-size: 0.9rem;
-      text-align: center;
-    }
-
-    /* Legal Notice */
-    .legal-notice {
-      background: #111;
-      color: #aaa;
-      padding: 20px;
-      font-size: 12px;
-      text-align: center;
-      line-height: 1.6;
-    }
-
-    .legal-notice a {
-      color: #ff6600;
-      text-decoration: none;
-    }
-
-    /* Responsive Footer */
-    @media (max-width: 768px) {
-      .footer-content {
-        grid-template-columns: 1fr;
-        text-align: center;
-        gap: 20px;
-      }
-      
-      .footer-column h3::after {
-        left: 50%;
-        transform: translateX(-50%);
-      }
-      
-      .social-links {
-        justify-content: center;
-      }
     }
   </style>
 </head>
@@ -1770,6 +1678,24 @@
         <i class="fas fa-shopping-cart"></i>
         <span class="cart-count" id="cartCount">0</span>
       </div>
+      
+      <!-- User Icon -->
+      <div class="user-icon" onclick="toggleLoginDropdown()">
+        <i class="fas fa-user"></i>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Social Login Dropdown -->
+  <div class="social-login-dropdown" id="socialLoginDropdown">
+    <div class="divider">Login with</div>
+    <div class="social-buttons">
+      <a href="#" class="social-login-btn google-btn" onclick="handleGoogleLogin(event)">
+        <i class="fab fa-google"></i> Google
+      </a>
+      <a href="#" class="social-login-btn facebook-btn" onclick="checkFacebookLogin(event)">
+        <i class="fab fa-facebook-f"></i> Facebook
+      </a>
     </div>
   </div>
   
@@ -1848,18 +1774,6 @@
     <i class="fas fa-search" style="font-size: 24px; margin-bottom: 10px;"></i>
     <p>No products found matching your search.</p>
     <button onclick="resetSearch()" style="margin-top: 15px; padding: 8px 20px; background: #ff6600; color: white; border: none; border-radius: 4px; cursor: pointer;">Reset Search</button>
-  </div>
-  
-  <div class="social-login-dropdown" id="socialLoginDropdown">
-    <div class="divider">Login with</div>
-    <div class="social-buttons">
-      <a href="#" class="social-login-btn google-btn" onclick="handleGoogleLogin()">
-        <i class="fab fa-google"></i> Google
-      </a>
-      <a href="#" class="social-login-btn facebook-btn" onclick="checkFacebookLogin()">
-        <i class="fab fa-facebook-f"></i> Facebook
-      </a>
-    </div>
   </div>
   
   <div class="product-list" id="productList">
@@ -2063,6 +1977,56 @@
   </div>
 </section>
 
+<!-- Footer -->
+<footer>
+  <div class="footer-content">
+    <div class="footer-column">
+      <h3>Aaila पासा</h3>
+      <p>Your e-commerce website for premium alcohol delivery in Kathmandu. We bring the bar to your doorstep with fast, reliable service.</p>
+      <div class="social-links">
+        <a href="https://www.facebook.com/profile.php?id=61575805491867"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/aailapasa25?igsh=MWtoaDdtY3dqdWZkdQ=="><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-tiktok"></i></a>
+      </div>
+    </div>
+    
+    <div class="footer-column">
+      <h3>Quick Links</h3>
+      <a href="home.html"><i class="fas fa-home"></i> Home</a>
+      <a href="shop.html"><i class="fas fa-shopping-bag"></i> Shop</a>
+      <a href="about.html"><i class="fas fa-info-circle"></i> About Us</a>
+      <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    </div>
+    
+    <div class="footer-column">
+      <h3>Customer Service</h3>
+      <a href="faqs.html"><i class="fas fa-question-circle"></i> FAQs</a>
+      <a href="shipping.html"><i class="fas fa-truck"></i> Shipping Policy</a>
+      <a href="return.html"><i class="fas fa-exchange-alt"></i> Return Policy</a>
+      <a href="privacy.html"><i class="fas fa-lock"></i> Privacy Policy</a>
+    </div>
+    
+    <div class="footer-column">
+      <h3>Contact Us</h3>
+      <p><i class="fas fa-map-marker-alt"></i> Thulobharang, Kathmandu, Nepal</p>
+      <p><i class="fas fa-phone"></i> +977 9813197704</p>
+      <p><i class="fas fa-envelope"></i> aailapasa@gmail.com</p>
+      <p><i class="fas fa-clock"></i> 24/7 Days Open</p>
+    </div>
+  </div>
+  
+  <div class="copyright">
+    &copy; 2025 Aaila पासा. All rights reserved.
+  </div>
+</footer>
+
+<!-- Legal Notice -->
+<div class="legal-notice">
+  <p><strong>WARNING:</strong> This website contains alcohol products and is intended for adults of legal drinking age only. By entering this site, you verify that you are of legal drinking age in your country of residence.</p>
+  <p>Please drink responsibly. <a href="https://www.drinkaware.co.uk/" target="_blank">Learn more about responsible drinking</a>.</p>
+</div>
+
 <!-- Checkout Modal -->
 <div class="modal" id="checkoutModal">
   <div class="modal-content">
@@ -2221,55 +2185,6 @@
       <i class="fas fa-truck"></i>
       <p>Your order will be delivered within <span id="delivery-time">2-3 hours</span> after payment confirmation</p>
     </div>
-
-<footer>
-    <div class="footer-content">
-      <div class="footer-column">
-        <h3>Aaila पासा</h3>
-        <p>Your e-commerce website for premium alcohol delivery in Kathmandu. We bring the bar to your doorstep with fast, reliable service.</p>
-        <div class="social-links">
-          <a href="https://www.facebook.com/profile.php?id=61575805491867"><i class="fab fa-facebook-f"></i></a>
-          <a href="https://www.instagram.com/aailapasa25?igsh=MWtoaDdtY3dqdWZkdQ=="><i class="fab fa-instagram"></i></a>
-          <a href="#"><i class="fab fa-twitter"></i></a>
-          <a href="#"><i class="fab fa-tiktok"></i></a>
-        </div>
-      </div>
-      
-      <div class="footer-column">
-        <h3>Quick Links</h3>
-        <a href="home.html"><i class="fas fa-home"></i> Home</a>
-        <a href="shop.html"><i class="fas fa-shopping-bag"></i> Shop</a>
-        <a href="about.html"><i class="fas fa-info-circle"></i> About Us</a>
-        <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
-      </div>
-      
-      <div class="footer-column">
-        <h3>Customer Service</h3>
-        <a href="faqs.html"><i class="fas fa-question-circle"></i> FAQs</a>
-        <a href="shipping.html"><i class="fas fa-truck"></i> Shipping Policy</a>
-        <a href="return.html"><i class="fas fa-exchange-alt"></i> Return Policy</a>
-        <a href="privacy.html"><i class="fas fa-lock"></i> Privacy Policy</a>
-      </div>
-      
-      <div class="footer-column">
-        <h3>Contact Us</h3>
-        <p><i class="fas fa-map-marker-alt"></i> Thulobharang, Kathmandu, Nepal</p>
-        <p><i class="fas fa-phone"></i> +977 9813197704</p>
-        <p><i class="fas fa-envelope"></i> aailapasa@gmail.com</p>
-        <p><i class="fas fa-clock"></i> 24/7 Days Open</p>
-      </div>
-    </div>
-    
-    <div class="copyright">
-      &copy; 2025 Aaila पासा. All rights reserved.
-    </div>
-  </footer>
- 
-  <!-- Legal Notice -->
-  <div class="legal-notice">
-    <p><strong>WARNING:</strong> This website contains alcohol products and is intended for adults of legal drinking age only. By entering this site, you verify that you are of legal drinking age in your country of residence.</p>
-    <p>Please drink responsibly. <a href="https://www.drinkaware.co.uk/" target="_blank">Learn more about responsible drinking</a>.</p>
-  </div>
   </div>
 </section>
 
@@ -2322,6 +2237,29 @@
         window.location.href = `product-details.html?product=${encodeURIComponent(productName)}`;
       });
     });
+    
+    // Initialize Facebook SDK
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId: 'YOUR_FACEBOOK_APP_ID', // Replace with your Facebook app ID
+        cookie: true,
+        xfbml: true,
+        version: 'v18.0'
+      });
+    };
+    
+    // Load Google SDK
+    const script = document.createElement('script');
+    script.src = 'https://accounts.google.com/gsi/client';
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
+    
+    // Check if user is logged in
+    const user = localStorage.getItem('user');
+    if (user) {
+      updateUserUI(JSON.parse(user));
+    }
   };
   
   // Cart functionality
@@ -2366,6 +2304,21 @@
       document.body.style.overflow = 'auto';
     }
   }
+  
+  // Toggle login dropdown
+  function toggleLoginDropdown() {
+    const dropdown = document.getElementById('socialLoginDropdown');
+    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+  }
+  
+  // Close login dropdown when clicking outside
+  document.addEventListener('click', function(event) {
+    const dropdown = document.getElementById('socialLoginDropdown');
+    if (!event.target.closest('#socialLoginDropdown') && 
+        !event.target.closest('.user-icon')) {
+      dropdown.style.display = 'none';
+    }
+  });
   
   // Close mobile menu when clicking on a link
   document.querySelectorAll('.mobile-nav a').forEach(link => {
@@ -2802,6 +2755,98 @@
     }
   });
   
+  // ===== Social Login Functionality =====
+  
+  // Handle Google login
+  function handleGoogleLogin(e) {
+    e.preventDefault();
+    google.accounts.id.prompt();
+  }
+  
+  // Handle Google response
+  function handleGoogleResponse(response) {
+    const userInfo = JSON.parse(atob(response.credential.split('.')[1]));
+    console.log('Google user info:', userInfo);
+    
+    // Store user info in localStorage
+    const userData = {
+      name: userInfo.name,
+      email: userInfo.email,
+      picture: userInfo.picture,
+      provider: 'Google'
+    };
+    localStorage.setItem('user', JSON.stringify(userData));
+    
+    // Update UI
+    updateUserUI(userData);
+    
+    // Close the dropdown
+    document.getElementById('socialLoginDropdown').style.display = 'none';
+    
+    // Show welcome message
+    alert(`Welcome ${userInfo.name}! You've successfully logged in with Google.`);
+  }
+  
+  // Initialize Google
+  window.onload = function() {
+    // ... existing onload code ...
+    
+    // Initialize Google Identity Services
+    google.accounts.id.initialize({
+      client_id: 'YOUR_GOOGLE_CLIENT_ID', // Replace with your Google client ID
+      callback: handleGoogleResponse
+    });
+  };
+  
+  // Handle Facebook login
+  function checkFacebookLogin(e) {
+    e.preventDefault();
+    FB.login(function(response) {
+      if (response.authResponse) {
+        // Logged in
+        FB.api('/me', { fields: 'name,email,picture' }, function(userInfo) {
+          console.log('Facebook user info:', userInfo);
+          
+          // Store user info in localStorage
+          const userData = {
+            name: userInfo.name,
+            email: userInfo.email,
+            picture: userInfo.picture.data.url,
+            provider: 'Facebook'
+          };
+          localStorage.setItem('user', JSON.stringify(userData));
+          
+          // Update UI
+          updateUserUI(userData);
+          
+          // Close the dropdown
+          document.getElementById('socialLoginDropdown').style.display = 'none';
+          
+          // Show welcome message
+          alert(`Welcome ${userInfo.name}! You've successfully logged in with Facebook.`);
+        });
+      }
+    }, { scope: 'public_profile,email' });
+  }
+  
+  // Update UI after login
+  function updateUserUI(user) {
+    const userIcon = document.querySelector('.user-icon');
+    
+    if (user) {
+      userIcon.innerHTML = `<img src="${user.picture}" alt="${user.name}" style="width: 30px; height: 30px; border-radius: 50%;">`;
+    } else {
+      userIcon.innerHTML = '<i class="fas fa-user"></i>';
+    }
+  }
+  
+  // Logout functionality
+  function logout() {
+    localStorage.removeItem('user');
+    updateUserUI(null);
+    alert('You have been logged out successfully.');
+  }
+  
   // ===== PWA Functionality =====
   
   // Service Worker Registration
@@ -2877,76 +2922,6 @@
     // Track installation
     console.log('PWA was installed');
   });
-   // Toggle login dropdown
-    function toggleLoginDropdown() {
-      const dropdown = document.getElementById('socialLoginDropdown');
-      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-    }
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function(event) {
-      const dropdown = document.getElementById('socialLoginDropdown');
-      if (!event.target.closest('#socialLoginDropdown') && !event.target.closest('.login-toggle')) {
-        dropdown.style.display = 'none';
-      }
-    });
-
-    // Facebook SDK Initialization
-    window.fbAsyncInit = function() {
-      FB.init({
-        appId: 'YOUR_FACEBOOK_APP_ID', // Same as login.html
-        cookie: true,
-        xfbml: true,
-        version: 'v18.0'
-      });
-    };
-
-    // Google One Tap and button handler
-    function handleGoogleLogin() {
-      google.accounts.id.prompt();
-    }
-
-    function handleGoogleResponse(response) {
-      const token = response.credential;
-      handleSocialLogin(token, 'google');
-    }
-
-    // Facebook login handler
-    function checkFacebookLogin() {
-      FB.login(function(response) {
-        if (response.authResponse) {
-          handleSocialLogin(response.authResponse.accessToken, 'facebook');
-        }
-      }, {scope: 'public_profile,email'});
-    }
-
-    // Handle social logins
-    async function handleSocialLogin(token, provider) {
-      try {
-        const response = await fetch(`/auth/${provider}/callback`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ token })
-        });
-        
-        const data = await response.json();
-        
-        if (data.success) {
-          localStorage.setItem('authToken', data.token);
-          window.location.reload(); // Refresh to show authenticated state
-        }
-      } catch (error) {
-        console.error(`${provider} login error:`, error);
-      }
-    }
-
-    // Initialize Google
-    document.addEventListener('DOMContentLoaded', function() {
-      google.accounts.id.initialize({
-        client_id: 'YOUR_GOOGLE_CLIENT_ID', // Same as login.html
-        callback: handleGoogleResponse
-      });
-    });
   
   // Pull to refresh functionality
   let touchstartY = 0;
