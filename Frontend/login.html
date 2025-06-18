@@ -260,16 +260,16 @@
 
         <!-- Social Login Section -->
         <div class="social-login">
-          <div class="divider">Or continue with</div>
-          <div class="social-buttons">
-            <button class="social-login-btn google-btn" onclick="handleGoogleLogin()">
-              <i class="fab fa-google"></i> Continue with Google
-            </button>
-            <button class="social-login-btn facebook-btn" onclick="checkFacebookLogin()">
-              <i class="fab fa-facebook-f"></i> Continue with Facebook
-            </button>
-          </div>
-        </div>
+         <div class="divider">Login with</div>
+    <div class="social-buttons">
+      <a href="https://accounts.google.com/v3/signin/identifier?dsh=S1812573153%3A1655944654029516&flowEntry=ServiceLogin&flowName=WebLiteSignIn&ifkv=AX3vH39E0iYVTmn-NoMNM_C35EPrno8LWsRx2Qhr0HApkVLZ-Zc_Vql8ouaSQOiXzEmthrpOPAV5" class="social-login-btn google-btn" onclick="handleGoogleLogin(event)">
+        <i class="fab fa-google"></i> Google
+      </a>
+      <a href="https://m.facebook.com/login/" class="social-login-btn facebook-btn" onclick="checkFacebookLogin(event)">
+        <i class="fab fa-facebook-f"></i> Facebook
+      </a>
+    </div>
+  </div>
 
         <div class="auth-links">
           <a class="auth-link" id="showForgot">Forgot Password?</a>
