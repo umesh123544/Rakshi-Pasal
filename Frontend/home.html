@@ -1587,6 +1587,132 @@
       .order-confirmation {
         padding: 10px;
       }
+
+    }/* Footer Styles */
+    footer {
+      background: #000;
+      color: white;
+      padding: 60px 20px 20px;
+      text-align: center;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      text-align: left;
+      padding: 0 20px;
+    }
+
+    .footer-column {
+      margin-bottom: 20px;
+    }
+
+    .footer-column h3 {
+      color: #ff6600;
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    .footer-column h3::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 50px;
+      height: 2px;
+      background: #ff6600;
+    }
+
+    .footer-column p, 
+    .footer-column a {
+      color: #ccc;
+      margin-bottom: 15px;
+      display: block;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      line-height: 1.6;
+    }
+
+    .footer-column a:hover {
+      color: #ff6600;
+      padding-left: 5px;
+    }
+
+    .footer-column i {
+      margin-right: 10px;
+      color: #ff6600;
+      width: 20px;
+      text-align: center;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .social-links a {
+      color: white;
+      background: rgba(255, 255, 255, 0.1);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+      background: #ff6600;
+      transform: translateY(-3px);
+    }
+
+    .copyright {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: #aaa;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    /* Legal Notice */
+    .legal-notice {
+      background: #111;
+      color: #aaa;
+      padding: 20px;
+      font-size: 12px;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .legal-notice a {
+      color: #ff6600;
+      text-decoration: none;
+    }
+
+    /* Responsive Footer */
+    @media (max-width: 768px) {
+      .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 20px;
+      }
+      
+      .footer-column h3::after {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      
+      .social-links {
+        justify-content: center;
+      }
     }
   </style>
 </head>
@@ -2095,6 +2221,55 @@
       <i class="fas fa-truck"></i>
       <p>Your order will be delivered within <span id="delivery-time">2-3 hours</span> after payment confirmation</p>
     </div>
+
+<footer>
+    <div class="footer-content">
+      <div class="footer-column">
+        <h3>Aaila पासा</h3>
+        <p>Your e-commerce website for premium alcohol delivery in Kathmandu. We bring the bar to your doorstep with fast, reliable service.</p>
+        <div class="social-links">
+          <a href="https://www.facebook.com/profile.php?id=61575805491867"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/aailapasa25?igsh=MWtoaDdtY3dqdWZkdQ=="><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-tiktok"></i></a>
+        </div>
+      </div>
+      
+      <div class="footer-column">
+        <h3>Quick Links</h3>
+        <a href="home.html"><i class="fas fa-home"></i> Home</a>
+        <a href="shop.html"><i class="fas fa-shopping-bag"></i> Shop</a>
+        <a href="about.html"><i class="fas fa-info-circle"></i> About Us</a>
+        <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+      </div>
+      
+      <div class="footer-column">
+        <h3>Customer Service</h3>
+        <a href="faqs.html"><i class="fas fa-question-circle"></i> FAQs</a>
+        <a href="shipping.html"><i class="fas fa-truck"></i> Shipping Policy</a>
+        <a href="return.html"><i class="fas fa-exchange-alt"></i> Return Policy</a>
+        <a href="privacy.html"><i class="fas fa-lock"></i> Privacy Policy</a>
+      </div>
+      
+      <div class="footer-column">
+        <h3>Contact Us</h3>
+        <p><i class="fas fa-map-marker-alt"></i> Thulobharang, Kathmandu, Nepal</p>
+        <p><i class="fas fa-phone"></i> +977 9813197704</p>
+        <p><i class="fas fa-envelope"></i> aailapasa@gmail.com</p>
+        <p><i class="fas fa-clock"></i> 24/7 Days Open</p>
+      </div>
+    </div>
+    
+    <div class="copyright">
+      &copy; 2025 Aaila पासा. All rights reserved.
+    </div>
+  </footer>
+ 
+  <!-- Legal Notice -->
+  <div class="legal-notice">
+    <p><strong>WARNING:</strong> This website contains alcohol products and is intended for adults of legal drinking age only. By entering this site, you verify that you are of legal drinking age in your country of residence.</p>
+    <p>Please drink responsibly. <a href="https://www.drinkaware.co.uk/" target="_blank">Learn more about responsible drinking</a>.</p>
+  </div>
   </div>
 </section>
 
