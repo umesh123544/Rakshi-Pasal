@@ -1042,7 +1042,7 @@
     justify-content: center;
     padding: 20px;
     animation: fadeIn 0.3s ease;
-    display: none; /* Hidden by default */
+    display: none;
   }
   
   .confirmation-container {
@@ -1054,6 +1054,8 @@
     width: 100%;
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
   }
   
   .confirmation-icon {
@@ -1139,6 +1141,8 @@
     padding: 15px;
     border-radius: 8px;
     margin-top: 20px;
+    overflow-y: auto;
+    max-height: 300px;
   }
   
   .payment-section h3 {
@@ -1160,6 +1164,8 @@
     max-width: 200px;
     border: 1px solid #444;
     border-radius: 8px;
+    width: 100%;
+    height: auto;
   }
   
   .whatsapp-btn {
@@ -1180,6 +1186,21 @@
   
   .whatsapp-btn:hover {
     background: #128C7E;
+  }
+
+  /* Scrollbar styling for payment section */
+  .payment-section::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  .payment-section::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+  }
+  
+  .payment-section::-webkit-scrollbar-thumb {
+    background: #ff6600;
+    border-radius: 10px;
   }
   
   @media (max-width: 768px) {
@@ -1206,6 +1227,7 @@
     
     .payment-section {
       padding: 10px;
+      max-height: 250px;
     }
     
     .payment-section h3 {
@@ -1225,6 +1247,7 @@
       width: 100%;
       padding: 12px;
       font-size: 14px;
+      margin-left: 0;
     }
     
     .qr-code {
@@ -2192,7 +2215,7 @@
   </div>
 </div>
   
-<!-- Add this HTML just before your footer section -->
+<!-- Order Confirmation Section -->
 <section class="order-confirmation" id="orderConfirmation" style="display: none;">
   <div class="confirmation-container">
     <div class="confirmation-icon">
@@ -2216,19 +2239,34 @@
         <h3 style="color: #ff6600; margin-bottom: 15px;">Payment Instructions</h3>
         <p>Please scan the QR code below to complete your payment:</p>
         
-        <!-- Replace with your actual QR code image -->
         <div class="qr-code-container">
           <img src="https://i.ibb.co/674pMq5L/IMG-20250613-132956.jpg" alt="Payment QR Code" class="qr-code">
         </div>
         
-        <p><strong>Payment Methods:</strong></p>
-        <ul style="margin-left: 20px; margin-bottom: 15px;">
-          <li>eSewa</li>
-          <li>Khalti</li>
-          <li>Bank Transfer</li>
-        </ul>
-        
-        <p><strong>Important:</strong> After payment, please send the transaction details to our WhatsApp at <strong>+977 9813197704</strong> or email at <strong>aailapasa@gmail.com</strong> with your order number.</p>
+        <div style="text-align: left; padding: 0 10px;">
+          <p><strong>Payment Methods:</strong></p>
+          <ul style="margin-left: 20px; margin-bottom: 15px;">
+            <li>eSewa</li>
+            <li>Khalti</li>
+            <li>Bank Transfer</li>
+          </ul>
+          
+          <p><strong>Account Details:</strong></p>
+          <ul style="margin-left: 20px; margin-bottom: 15px;">
+            <li><strong>eSewa:</strong> 9813197704</li>
+            <li><strong>Khalti:</strong> 9813197704</li>
+            <li><strong>Bank:</strong> NMB Bank</li>
+            <li><strong>Account:</strong> Aaila Pasa</li>
+            <li><strong>Account No:</strong> 1234567890</li>
+          </ul>
+          
+          <p><strong>Important:</strong> After payment, please send the transaction details to:</p>
+          <ul style="margin-left: 20px; margin-bottom: 15px;">
+            <li><strong>WhatsApp:</strong> +977 9813197704</li>
+            <li><strong>Email:</strong> aailapasa@gmail.com</li>
+          </ul>
+          <p>Include your order number in the message.</p>
+        </div>
       </div>
     </div>
 
@@ -2582,14 +2620,27 @@
     document.getElementById('confirm-total').textContent = `Rs.${orderData.order_total.toFixed(2)}`;
     document.getElementById('confirm-email').textContent = orderData.customer_email;
     document.getElementById('confirm-address').textContent = orderData.customer_address;
-    document.getElementById('confirm-delivery-time').textContent = orderData.delivery_time_preference || deliveryTime;
+    
+    // Format delivery time
+    let deliveryTimeText = orderData.delivery_time_preference;
+    if (deliveryTimeText === 'ASAP') {
+      deliveryTimeText = 'As soon as possible';
+    } else if (deliveryTimeText === 'morning') {
+      deliveryTimeText = 'Morning (9AM-12PM)';
+    } else if (deliveryTimeText === 'afternoon') {
+      deliveryTimeText = 'Afternoon (12PM-5PM)';
+    } else if (deliveryTimeText === 'evening') {
+      deliveryTimeText = 'Evening (5PM-9PM)';
+    }
+    
+    document.getElementById('confirm-delivery-time').textContent = deliveryTimeText || '2-3 hours';
     document.getElementById('delivery-time').textContent = deliveryTime;
     
     confirmationSection.style.display = 'flex';
     document.body.style.overflow = 'hidden';
     
-    // Scroll to top
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Scroll to top of confirmation section
+    confirmationSection.scrollTop = 0;
   }
   
   // Continue shopping button handler
