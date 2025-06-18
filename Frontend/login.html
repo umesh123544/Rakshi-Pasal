@@ -24,7 +24,7 @@
 
     body {
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #ff6600, #ff8c42);
+      background-color: #ff6600;
       height: 100vh;
       width: 100vw;
       display: flex;
@@ -44,24 +44,10 @@
       background: white;
       padding: 40px;
       border-radius: 16px;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.25);
-      animation: fadeIn 0.5s ease-out;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      animation: fadeIn 0.3s ease;
       text-align: center;
       display: none;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .auth-box::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
-      transform: rotate(30deg);
-      z-index: 1;
     }
 
     .auth-box.active {
@@ -69,39 +55,26 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px) scale(0.95); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .logo {
       text-align: center;
       margin-bottom: 30px;
-      position: relative;
-      z-index: 2;
     }
 
     .logo img {
-      width: 90px;
-      height: 90px;
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
       object-fit: cover;
       margin-bottom: 15px;
-      border: 3px solid #ff6600;
-      box-shadow: 0 5px 15px rgba(255,102,0,0.3);
-    }
-
-    .logo h1 {
-      font-size: 24px;
-      color: #333;
-      font-weight: 700;
-      letter-spacing: 0.5px;
     }
 
     .form-group {
       margin-bottom: 20px;
       text-align: left;
-      position: relative;
-      z-index: 2;
     }
 
     .form-label {
@@ -109,89 +82,42 @@
       margin-bottom: 8px;
       font-weight: 600;
       color: #555;
-      position: relative;
-      padding-left: 10px;
-    }
-
-    .form-label::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 4px;
-      height: 16px;
-      background: #ff6600;
-      border-radius: 2px;
     }
 
     .form-control {
       width: 100%;
-      padding: 14px 15px;
+      padding: 12px 15px;
       border: 1px solid #ddd;
-      border-radius: 8px;
+      border-radius: 4px;
       font-family: 'Poppins', sans-serif;
       transition: all 0.3s ease;
-      font-size: 16px;
-      box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
     }
 
     .form-control:focus {
       border-color: #ff6600;
-      box-shadow: 0 0 0 3px rgba(255,102,0,0.2);
+      box-shadow: 0 0 0 2px rgba(255,102,0,0.2);
       outline: none;
     }
 
     .auth-btn {
       width: 100%;
-      padding: 14px;
-      background: linear-gradient(to right, #ff6600, #ff8c42);
+      padding: 12px;
+      background: #ff6600;
       color: white;
       border: none;
-      border-radius: 8px;
+      border-radius: 4px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
-      font-size: 16px;
-      letter-spacing: 0.5px;
-      position: relative;
-      overflow: hidden;
-      z-index: 2;
-    }
-
-    .auth-btn::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-      transition: all 0.5s;
-    }
-
-    .auth-btn:hover::after {
-      left: 100%;
     }
 
     .auth-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 7px 15px rgba(255,102,0,0.3);
-    }
-
-    .auth-btn:active {
-      transform: translateY(0);
+      background: #e65c00;
     }
 
     .auth-btn:disabled {
       background: #ccc;
       cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-    }
-
-    .auth-btn:disabled::after {
-      display: none;
     }
 
     .error-message {
@@ -199,11 +125,6 @@
       margin-top: 5px;
       font-size: 14px;
       min-height: 20px;
-      text-align: center;
-      font-weight: 500;
-      padding: 5px;
-      border-radius: 4px;
-      background: rgba(220, 53, 69, 0.1);
     }
 
     .success-message {
@@ -211,19 +132,12 @@
       margin-top: 5px;
       font-size: 14px;
       min-height: 20px;
-      text-align: center;
-      font-weight: 500;
-      padding: 5px;
-      border-radius: 4px;
-      background: rgba(40, 167, 69, 0.1);
     }
 
     .auth-links {
       display: flex;
       justify-content: space-between;
       margin-top: 20px;
-      position: relative;
-      z-index: 2;
     }
 
     .auth-link {
@@ -232,21 +146,17 @@
       font-weight: 600;
       font-size: 14px;
       cursor: pointer;
-      transition: all 0.2s;
-      padding: 5px;
-      border-radius: 4px;
     }
 
     .auth-link:hover {
       text-decoration: underline;
-      background: rgba(255,102,0,0.1);
     }
 
     .loading {
       display: inline-block;
-      width: 18px;
-      height: 18px;
-      border: 3px solid rgba(255,255,255,0.3);
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.3);
       border-radius: 50%;
       border-top-color: white;
       animation: spin 1s ease-in-out infinite;
@@ -262,8 +172,6 @@
     .social-login {
       margin: 25px 0;
       text-align: center;
-      position: relative;
-      z-index: 2;
     }
 
     .divider {
@@ -272,7 +180,6 @@
       margin: 20px 0;
       color: #777;
       font-size: 14px;
-      font-weight: 500;
     }
 
     .divider::before, .divider::after {
@@ -282,17 +189,17 @@
     }
 
     .divider::before {
-      margin-right: 15px;
+      margin-right: 10px;
     }
 
     .divider::after {
-      margin-left: 15px;
+      margin-left: 10px;
     }
 
     .social-buttons {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
       margin-top: 20px;
     }
 
@@ -300,127 +207,65 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 12px 15px;
-      border-radius: 8px;
+      padding: 10px 15px;
+      border-radius: 4px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
-      border: none;
-      color: white;
-      position: relative;
-      overflow: hidden;
-      z-index: 2;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border: 1px solid #ddd;
+      background: white;
+      color: #333;
     }
 
     .social-login-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-    }
-
-    .social-login-btn:active {
-      transform: translateY(0);
+      background: #f5f5f5;
     }
 
     .social-login-btn i {
       margin-right: 10px;
-      font-size: 20px;
+      font-size: 18px;
     }
 
     .google-btn {
-      background: linear-gradient(to right, #4285F4, #34A853);
+      border-color: #4285F4;
+      color: #4285F4;
     }
 
     .facebook-btn {
-      background: linear-gradient(to right, #4267B2, #3b5998);
+      border-color: #4267B2;
+      color: #4267B2;
     }
 
-    .success-animation {
-      position: fixed;
-      top: 0;
-      left: 0;
+    /* Google One-Tap Button */
+    #google-one-tap {
       width: 100%;
-      height: 100%;
-      background: rgba(255,255,255,0.9);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      z-index: 1000;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.5s;
+      height: 40px;
+      margin-bottom: 15px;
     }
     
-    .success-animation.active {
-      opacity: 1;
-      pointer-events: all;
+    /* Debug Panel */
+    .debug-panel {
+      background: rgba(0,0,0,0.7);
+      color: white;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 12px;
+      margin-top: 20px;
+      text-align: left;
+      max-height: 150px;
+      overflow-y: auto;
     }
     
-    .checkmark {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      display: block;
-      stroke-width: 4;
-      stroke: #4CAF50;
-      stroke-miterlimit: 10;
-      box-shadow: inset 0px 0px 0px #4CAF50;
-      animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
-      position: relative;
-      margin-bottom: 30px;
+    .debug-title {
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #ff6600;
     }
     
-    .checkmark__circle {
-      stroke-dasharray: 166;
-      stroke-dashoffset: 166;
-      stroke-width: 4;
-      stroke-miterlimit: 10;
-      stroke: #4CAF50;
-      fill: none;
-      animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
-    }
-    
-    .checkmark__check {
-      transform-origin: 50% 50%;
-      stroke-dasharray: 48;
-      stroke-dashoffset: 48;
-      animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
-    }
-    
-    @keyframes stroke {
-      100% {
-        stroke-dashoffset: 0;
-      }
-    }
-    
-    @keyframes scale {
-      0%, 100% {
-        transform: none;
-      }
-      50% {
-        transform: scale3d(1.1, 1.1, 1);
-      }
-    }
-    
-    @keyframes fill {
-      100% {
-        box-shadow: inset 0px 0px 0px 50px rgba(76, 175, 80, 0);
-      }
-    }
-    
-    .success-message-text {
-      font-size: 24px;
-      font-weight: 600;
-      color: #333;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-    
-    .redirect-text {
-      font-size: 16px;
-      color: #666;
-      text-align: center;
+    .debug-log {
+      font-family: monospace;
+      white-space: pre-wrap;
+      word-break: break-all;
     }
   </style>
 </head>
@@ -430,7 +275,6 @@
     <div class="auth-box active" id="loginBox">
       <div class="logo">
         <img src="https://i.ibb.co/4wqGSsw3/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png" alt="Aaila Pasa Logo">
-        <h1>Aaila Pasa Admin</h1>
       </div>
       <form id="loginForm">
         <div class="form-group">
@@ -446,15 +290,16 @@
           <span id="loginBtnText">Login</span>
         </button>
 
-            <!-- Social Login Section -->
+        <!-- Social Login Section -->
         <div class="social-login">
-          <div class="divider">Or continue with</div>
+          <div class="divider">Login with</div>
+          <div id="google-one-tap"></div>
           <div class="social-buttons">
-            <a href="CMS.html" class="social-login-btn google-btn" id="googleLoginBtn">
-              <i class="fab fa-google"></i> Sign in with Google
+            <a href="#" class="social-login-btn google-btn" id="googleLoginBtn">
+              <i class="fab fa-google"></i> Google
             </a>
-            <a href="CMS.html" class="social-login-btn facebook-btn" id="facebookLoginBtn">
-              <i class="fab fa-facebook-f"></i> Sign in with Facebook
+            <a href="#" class="social-login-btn facebook-btn" id="facebookLoginBtn">
+              <i class="fab fa-facebook-f"></i> Facebook
             </a>
           </div>
         </div>
@@ -470,7 +315,6 @@
     <div class="auth-box" id="signupBox">
       <div class="logo">
         <img src="https://i.ibb.co/4wqGSsw3/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png" alt="Aaila Pasa Logo">
-        <h1>Create Account</h1>
       </div>
       <form id="signupForm">
         <div class="form-group">
@@ -500,7 +344,6 @@
     <div class="auth-box" id="forgotBox">
       <div class="logo">
         <img src="https://i.ibb.co/4wqGSsw3/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png" alt="Aaila Pasa Logo">
-        <h1>Reset Password</h1>
       </div>
       <form id="forgotForm">
         <div class="form-group">
@@ -517,16 +360,12 @@
         </div>
       </form>
     </div>
-  </div>
-  
-  <!-- Success Animation -->
-  <div class="success-animation" id="successAnimation">
-    <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-      <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
-      <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-    </svg>
-    <div class="success-message-text">Authentication Successful!</div>
-    <div class="redirect-text">Redirecting to your CMS dashboard...</div>
+    
+    <!-- Debug Panel -->
+    <div class="debug-panel">
+      <div class="debug-title">Debug Console:</div>
+      <div class="debug-log" id="debugConsole"></div>
+    </div>
   </div>
 
   <!-- SDK Scripts -->
@@ -535,11 +374,19 @@
 
   <!-- Main Script -->
   <script>
+    // Debug logging function
+    function debugLog(message) {
+      const debugConsole = document.getElementById('debugConsole');
+      debugConsole.innerHTML += message + '\n';
+      debugConsole.scrollTop = debugConsole.scrollHeight;
+    }
+    
     // Config - REPLACE WITH YOUR ACTUAL DOMAIN
-    const domain = "https://your-cms-backend.com";
+    const domain = "https://your-backend-domain.com";
     const googleClientId = "49087856860-i2773p0b1co3jj3lqtk4gtq9r0ldv2rl.apps.googleusercontent.com";
     
-    console.log("Using Google Client ID:", googleClientId);
+    debugLog(`Using Google Client ID: ${googleClientId}`);
+    debugLog(`Backend domain: ${domain}`);
 
     // Form management
     function showForm(formName) {
@@ -598,19 +445,38 @@
         version: 'v18.0'
       });
       
-      console.log('Facebook SDK initialized');
+      debugLog('Facebook SDK initialized');
+      
+      // Check login status on load
+      FB.getLoginStatus(function(response) {
+        if (response.status === 'connected') {
+          debugLog('Facebook: Already connected');
+          handleSocialLogin(response.authResponse.accessToken, 'facebook');
+        }
+      });
     };
 
     // Google One Tap and button handler
     function initGoogle() {
       if (typeof google !== 'undefined' && google.accounts) {
-        console.log('Google Identity Services loaded');
+        debugLog('Google Identity Services loaded');
         
         // Initialize Google One Tap
         google.accounts.id.initialize({
           client_id: googleClientId,
           callback: handleGoogleResponse
         });
+        
+        // Render One Tap UI
+        google.accounts.id.renderButton(
+          document.getElementById("google-one-tap"),
+          { 
+            theme: "outline", 
+            size: "large",
+            width: document.getElementById("google-one-tap").offsetWidth,
+            text: "signin_with"
+          }
+        );
         
         // Prompt One Tap if appropriate
         google.accounts.id.prompt();
@@ -621,20 +487,20 @@
 
     // Google callback function
     function handleGoogleResponse(response) {
-      console.log('Google response received');
+      debugLog('Google response received');
       const token = response.credential;
       handleSocialLogin(token, 'google');
     }
 
     // Facebook login handler
     function checkFacebookLogin() {
-      console.log('Initiating Facebook login');
+      debugLog('Initiating Facebook login');
       FB.login(function(response) {
         if (response.authResponse) {
-          console.log('Facebook login successful');
+          debugLog('Facebook login successful');
           handleSocialLogin(response.authResponse.accessToken, 'facebook');
         } else {
-          console.log('Facebook login cancelled');
+          debugLog('Facebook login cancelled');
           document.getElementById('loginError').textContent = 'Facebook login was cancelled';
         }
       }, {scope: 'public_profile,email'});
@@ -642,7 +508,7 @@
 
     // Handle both Google and Facebook logins
     async function handleSocialLogin(token, provider) {
-      console.log(`Handling ${provider} login with token`);
+      debugLog(`Handling ${provider} login with token`);
       const button = document.querySelector(`#${provider}LoginBtn`);
       
       try {
@@ -651,13 +517,27 @@
         button.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Authenticating...`;
         button.disabled = true;
         
-        // Simulate API call to backend
-        console.log(`Sending token to: ${domain}/auth/${provider}/callback`);
+        debugLog(`Sending token to: ${domain}/auth/${provider}/callback`);
         
-        // Simulate API delay
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        // Simulate backend response for demo
+        // In real implementation, use the fetch call below
+        debugLog("Simulating backend response for demo");
+        debugLog("Success! Redirecting to CMS...");
         
-        // Simulated successful response
+        // This is where you would normally call your backend
+        /*
+        const response = await fetch(`${domain}/auth/${provider}/callback`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ token })
+        });
+        
+        const data = await response.json();
+        */
+        
+        // Simulated response
         const data = {
           success: true,
           token: "demo_auth_token",
@@ -670,34 +550,35 @@
         };
         
         if (data.success) {
-          console.log(`${provider} login successful`);
+          debugLog(`${provider} login successful`);
           
           // Store token and user data
           localStorage.setItem('authToken', data.token);
           localStorage.setItem('user', JSON.stringify(data.user));
           
-          console.log(`Stored auth token and user data`);
+          debugLog(`Stored auth token and user data`);
+          debugLog(`Redirecting to: ${data.redirectTo}`);
           
-          // Show success animation
-          document.getElementById('successAnimation').classList.add('active');
+          // Redirect to dashboard or home page
+          // In a real implementation, uncomment the next line:
+          // window.location.href = data.redirectTo || '/dashboard.html';
           
-          // After delay, redirect to CMS
+          // For demo, show success message
+          document.getElementById('loginError').textContent = '';
+          document.getElementById('loginError').classList.remove('error-message');
+          document.getElementById('loginError').classList.add('success-message');
+          document.getElementById('loginError').textContent = `Success! Redirecting to CMS...`;
+          
+          // Simulate redirect
           setTimeout(() => {
-            // In real implementation, uncomment:
-            // window.location.href = data.redirectTo || '/dashboard.html';
-            
-            // For demo, show success message
-            document.getElementById('successAnimation').classList.remove('active');
-            document.getElementById('loginError').textContent = '';
-            document.getElementById('loginError').classList.remove('error-message');
-            document.getElementById('loginError').classList.add('success-message');
-            document.getElementById('loginError').textContent = `Success! You would be redirected to CMS now.`;
-          }, 3000);
+            document.getElementById('loginError').textContent = 'Redirect would happen in a real implementation';
+          }, 2000);
         } else {
-          console.log(`${provider} login failed`);
-          document.getElementById('loginError').textContent = `${provider} login failed. Please try again.`;
+          debugLog(`${provider} login failed: ${data.message}`);
+          document.getElementById('loginError').textContent = data.message || `${provider} login failed`;
         }
       } catch (error) {
+        debugLog(`Error during ${provider} login: ${error.message}`);
         console.error(`${provider} login error:`, error);
         document.getElementById('loginError').textContent = `Error during ${provider} login: ${error.message}`;
       } finally {
@@ -711,28 +592,29 @@
 
     // Initialize Google on page load
     document.addEventListener('DOMContentLoaded', function() {
+      debugLog('DOMContentLoaded event fired');
       initGoogle();
       
       // Setup social login buttons
       document.getElementById('googleLoginBtn').addEventListener('click', function(e) {
         e.preventDefault();
-        console.log('Google button clicked');
+        debugLog('Google button clicked');
         handleGoogleLogin();
       });
       
       document.getElementById('facebookLoginBtn').addEventListener('click', function(e) {
         e.preventDefault();
-        console.log('Facebook button clicked');
+        debugLog('Facebook button clicked');
         checkFacebookLogin();
       });
     });
     
     function handleGoogleLogin() {
-      console.log('Google login initiated');
+      debugLog('Google login initiated');
       if (typeof google !== 'undefined' && google.accounts) {
         google.accounts.id.prompt();
       } else {
-        console.log('Google Identity Services not loaded yet');
+        debugLog('Google Identity Services not loaded yet');
         document.getElementById('loginError').textContent = 'Google login service not ready. Please try again.';
       }
     }
@@ -740,6 +622,7 @@
     // Regular form handlers
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
       e.preventDefault();
+      debugLog('Login form submitted');
       const button = document.getElementById('loginBtn');
       setLoading(button, true);
       
@@ -752,6 +635,7 @@
 
     document.getElementById('signupForm').addEventListener('submit', async (e) => {
       e.preventDefault();
+      debugLog('Signup form submitted');
       const button = document.getElementById('signupBtn');
       setLoading(button, true);
       
@@ -764,6 +648,7 @@
 
     document.getElementById('forgotForm').addEventListener('submit', async (e) => {
       e.preventDefault();
+      debugLog('Forgot password form submitted');
       const button = document.getElementById('forgotBtn');
       setLoading(button, true);
       
