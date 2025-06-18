@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' https://rakshi-pasal-1.onrender.com;">
   <title>Aaila Pasa - Admin Dashboard</title>
   
   <!-- Favicons -->
@@ -2009,13 +2008,6 @@ class UI {
     // Implement category delete
   }
 }
-
-  // Authentication check
-  document.addEventListener('DOMContentLoaded', function() {
-    if (!localStorage.getItem('aailaPasaAdminToken')) {
-      window.location.href = 'login.html';
-    }
-  });
 
 // Initialize the CMS when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
