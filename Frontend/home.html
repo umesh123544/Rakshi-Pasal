@@ -57,6 +57,35 @@
       display: none;
     }
     
+    /* Install Button */
+    #installButton {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ff6600;
+      color: white;
+      padding: 12px 25px;
+      border-radius: 30px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      z-index: 1000;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      display: none;
+      transition: all 0.3s ease;
+    }
+    
+    #installButton:hover {
+      background: #e65c00;
+      transform: translateX(-50%) translateY(-2px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+    }
+    
+    #installButton i {
+      margin-right: 8px;
+    }
+    
     /* Age Verification Modal */
     .age-verification {
       position: fixed;
@@ -144,6 +173,7 @@
       align-items: center;
       padding: 15px 20px;
       margin: 0 auto;
+      max-width: 1200px;
     }
     
     .logo {
@@ -474,7 +504,6 @@
   background: url('https://i.ibb.co/0y0JLGVV/2.png') no-repeat center center/cover;
   display: flex;
   align-items: center;
-  margin-top: 17px
 }
   
   /* Mobile Banner - Hidden by default */
@@ -577,6 +606,8 @@
     .banner .btn {
       padding: 10px 20px;
       font-size: 0.9rem;
+      margin: 0 auto;
+      margin-top: 150px;
     }
   }
   
@@ -695,6 +726,7 @@
       text-align: center;
       background: white;
       margin: 0 auto;
+      max-width: 1200px;
     }
     
     .section-title {
@@ -750,7 +782,7 @@
     .product {
       border: 1px solid #eee;
       padding: 20px;
-      width: calc(33.333% - 30px);
+      width: calc(25% - 30px);
       max-width: 300px;
       background: white;
       box-sizing: border-box;
@@ -873,6 +905,7 @@
       padding: 60px 20px;
       background-color: #f9f9f9;
       margin: 0 auto;
+      max-width: 1200px;
     }
     
     .logo-container {
@@ -1359,6 +1392,7 @@
   background: linear-gradient(135deg, #f5f7fa 0%, #f8f9fa 100%);
   text-align: center;
   margin: 0 auto;
+  max-width: 1200px;
 }
 
 .section-subtitle {
@@ -1775,6 +1809,11 @@ footer {
 <!-- Network Status Indicator -->
 <div id="network-status"></div>
 
+<!-- Install Button -->
+<button id="installButton" class="install-btn">
+  <i class="fas fa-download"></i> Install App
+</button>
+
 <!-- Age Verification Modal -->
 <div class="age-verification" id="ageVerification">
   <div class="age-verification-content">
@@ -1786,11 +1825,6 @@ footer {
     </div>
   </div>
 </div>
-
-<!-- Install Button -->
-<button id="installButton" class="install-btn">
-  <i class="fas fa-download"></i> Install App
-</button>
 
 <!-- Header -->
 <header>
