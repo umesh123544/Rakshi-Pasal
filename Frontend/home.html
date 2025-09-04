@@ -28,6 +28,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- Auth0 SDK -->
+  <script src="https://cdn.auth0.com/js/auth0/9.19/auth0.min.js"></script>
   <!-- EmailJS SDK -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -3186,5 +3188,19 @@ s0.parentNode.insertBefore(s1,s0);
 })();
 </script>
 <!--End of Tawk.to Script-->
+  <!-- Your custom login script -->
+  <script>
+    var webAuth = new auth0.WebAuth({
+      domain: 'dev-itycmj0zvsi5plt6.us.auth0.com',
+      clientID: 'C3CXeqMgo0ApvQqPrh2lmYJ63ntOgZG3',
+      redirectUri: 'https://aailapasa.netlify.app/callback',
+      responseType: 'token id_token',
+      scope: 'openid profile email'
+    });
+
+    document.getElementById('loginBtn').addEventListener('click', function() {
+      webAuth.authorize();
+    });
+  </script>
 </body>
 </html>
