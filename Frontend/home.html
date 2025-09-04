@@ -13,18 +13,27 @@
   <meta name="apple-mobile-web-app-title" content="Aaila Pasa">
   
   <!-- Favicons -->
-  <link rel="icon" type="image/png" sizes="16x16" href="https://via.placeholder.com/16">
-  <link rel="icon" type="image/png" sizes="32x32" href="https://via.placeholder.com/32">
-  <link rel="icon" type="image/png" sizes="192x192" href="https://via.placeholder.com/192">
-  <link rel="apple-touch-icon" sizes="180x180" href="https://via.placeholder.com/180">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://i.ibb.co/4wqGSsw3/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/4wqGSsw3/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="https://i.ibb.co/4wqGSsw3/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/4wqGSsw3/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png">
   
   <!-- Web App Manifest -->
   <link rel="manifest" href="/manifest.json">
+  
+  <!-- iOS Splash Screens -->
+  <link rel="apple-touch-startup-image" href="/splash-screen.png">
   
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- Auth0 SDK -->
+  <script src="https://cdn.auth0.com/js/auth0/9.19/auth0.min.js"></script>
+  <!-- EmailJS SDK -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
   <style>
     * { box-sizing: border-box; }
     body {
@@ -494,7 +503,7 @@
 .desktop-banner {
   width: 100%;
   height: 100%;
-  background: url('https://via.placeholder.com/1200x600/333/fff?text=Aaila+Pasa+Alcohol+Delivery') no-repeat center center/cover;
+  background: url('https://i.ibb.co/0y0JLGVV/2.png') no-repeat center center/cover;
   display: flex;
   align-items: center;
 }
@@ -503,7 +512,7 @@
   .mobile-banner {
     width: 100%;
     height: 100%;
-    background: url('https://via.placeholder.com/600x400/333/fff?text=Aaila+Pasa+Alcohol+Delivery') no-repeat center center/cover;
+    background: url('https://i.ibb.co/8LrnVtsp/bof.png') no-repeat center center/cover;
     display: none;
     align-items: center;
   }
@@ -560,7 +569,7 @@
     letter-spacing: 1px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     animation: fadeInScale 1s ease-out 1.1s both;
-    display: inline-block;
+    display: none;
   } 
   
   .banner .btn:hover {
@@ -1919,10 +1928,10 @@ footer {
   <div class="social-login-dropdown" id="socialLoginDropdown">
     <div class="divider">Login with</div>
     <div class="social-buttons">
-      <a href="#" class="social-login-btn google-btn" onclick="handleGoogleLogin(event)">
+      <a href="https://accounts.google.com/v3/signin/identifier?dsh=S1812573153%3A1655944654029516&flowEntry=ServiceLogin&flowName=WebLiteSignIn&ifkv=AX3vH39E0iYVTmn-NoMNM_C35EPrno8LWsRx2Qhr0HApkVLZ-Zc_Vql8ouaSQOiXzEmthrpOPAV5" class="social-login-btn google-btn" onclick="handleGoogleLogin(event)">
         <i class="fab fa-google"></i> Google
       </a>
-      <a href="#" class="social-login-btn facebook-btn" onclick="checkFacebookLogin(event)">
+      <a href="https://m.facebook.com/login/" class="social-login-btn facebook-btn" onclick="checkFacebookLogin(event)">
         <i class="fab fa-facebook-f"></i> Facebook
       </a>
     </div>
@@ -1947,8 +1956,8 @@ footer {
   <div class="desktop-banner">
     <a href="shop.html" class="banner-link"></a>
     <div class="banner-content">
-      <h1>Premium Alcohol Delivery</h1>
-      <p>Get your favorite drinks delivered right to your doorstep in Kathmandu</p>
+      <h1></h1>
+      <p></p>
       <a href="shop.html" class="btn">Shop Now</a>
     </div>
   </div>
@@ -1957,8 +1966,8 @@ footer {
   <div class="mobile-banner">
     <a href="shop.html" class="banner-link"></a>
     <div class="banner-content">
-      <h1>Premium Alcohol Delivery</h1>
-      <p>Get your favorite drinks delivered right to your doorstep</p>
+      <h1></h1>
+      <p></p>
       <a href="shop.html" class="btn">Shop Now</a>
     </div>
   </div>
@@ -1969,19 +1978,19 @@ footer {
   <div class="promo-container">
     <!-- First Promo Box -->
     <div class="promo-box" onclick="window.location.href='shop.html?category=whiskey'">
-      <img src="https://via.placeholder.com/600x300/333/fff?text=Whiskey+Promotion" alt="Whiskey Promotion" class="promo-image">
+      <img src="https://i.postimg.cc/jjq6Q7xc/Add-a-heading-1.png" alt="Whiskey Promotion" class="promo-image">
       <div class="promo-content">
-        <h3>Premium Whiskey</h3>
-        <p>Shop our exclusive whiskey collection</p>
+        <h3></h3>
+        <p></p>
       </div>
     </div>
     
     <!-- Second Promo Box -->
     <div class="promo-box" onclick="window.location.href='shop.html?category=beer'">
-      <img src="https://via.placeholder.com/600x300/333/fff?text=Beer+Promotion" alt="Beer Promotion" class="promo-image">
+      <img src="https://i.ibb.co/NnHCwgRq/Add-a-heading.jpg" alt="Beer Promotion" class="promo-image">
       <div class="promo-content">
-        <h3>Craft Beer</h3>
-        <p>Discover our beer selection</p>
+        <h3></h3>
+        <p></p>
       </div>
     </div>
   </div>
@@ -2009,7 +2018,7 @@ footer {
     <!-- Whiskey Products -->
     <div class="product" data-category="whiskey">
       <div class="product-badge">Best Seller</div>
-      <img src="https://via.placeholder.com/300x300/eee/333?text=Old+Durbar+Whiskey" alt="Old Durbar Whiskey" />
+      <img src="https://i.ibb.co/NdBR861Z/old-durbar-750ml-73537.jpg" alt="Old Durbar Whiskey" />
       <h3>Old Durbar Whiskey</h3>
       <p class="category">Whiskey 750ML</p>
       <p class="price">Rs.<span>2,950</span></p>
@@ -2024,7 +2033,7 @@ footer {
     <!-- Wine Products -->
     <div class="product" data-category="wine">
       <div class="product-badge">Popular</div>
-      <img src="https://via.placeholder.com/300x300/eee/333?text=Canvas+Sweet+Red+Wine" alt="Canvas Sweet Red Wine" />
+      <img src="https://i.ibb.co/fGnwYyV2/9d6a25ad33d78e416a97696d4a8e1587.jpg" alt="Canvas Sweet Red Wine" />
       <h3>Canvas Sweet Red Wine</h3>
       <p class="category">Red Wine</p>
       <p class="price">Rs.<span>895</span></p>
@@ -2038,7 +2047,7 @@ footer {
     
     <!-- Beer Products -->
     <div class="product" data-category="beer">
-      <img src="https://via.placeholder.com/300x300/eee/333?text=Nepal+Ice" alt="Nepal Ice" />
+      <img src="https://i.ibb.co/QFc0rcmm/FHb-F8a-Js7a-BW0-Hqe-LJi2r7-Kwox7u-NWAj2sge-VOg-D.png" alt="Nepal Ice" />
       <h3>Nepal Ice 650ML</h3>
       <p class="category">Beer 650ML</p>
       <p class="price">Rs.<span>325</span></p>
@@ -2052,7 +2061,7 @@ footer {
     
     <div class="product" data-category="beer">
       <div class="product-badge">New</div>
-      <img src="https://via.placeholder.com/300x300/eee/333?text=Tuborg+Strong" alt="Tuborg Strong" />
+      <img src="https://i.ibb.co/Kj1qBJKj/Tuborg-650-ML-Bottle.png" alt="Tuborg Strong" />
       <h3>Tuborg Strong 650ML</h3>
       <p class="category">Premium Beer 650ML</p>
       <p class="price">Rs.<span>410</span></p>
@@ -2066,7 +2075,7 @@ footer {
     
     <!-- Vodka Products -->
     <div class="product" data-category="vodka">
-      <img src="https://via.placeholder.com/300x300/eee/333?text=8848+Vodka" alt="8848 Vodka 375ml" />
+      <img src="https://i.ibb.co/HLqhyd4Y/8848-Vodka.jpg" alt="8848 Vodka 375ml" />
       <h3>8848 Vodka 375ML</h3>
       <p class="category">Vodka 375ML</p>
       <p class="price">Rs.<span>1150</span></p>
@@ -2079,7 +2088,7 @@ footer {
     </div>
     
     <div class="product" data-category="vodka">
-      <img src="https://via.placeholder.com/300x300/eee/333?text=8848+Vodka" alt="8848 Vodka 180ml" />
+      <img src="https://i.ibb.co/HLqhyd4Y/8848-Vodka.jpg" alt="8848 Vodka 180ml" />
       <h3>8848 Vodka 180ML</h3>
       <p class="category">Vodka 180ML</p>
       <p class="price">Rs.<span>625</span></p>
@@ -2092,7 +2101,7 @@ footer {
     </div>
   
    <div class="product" data-category="vodka">
-      <img src="https://via.placeholder.com/300x300/eee/333?text=NUDE+Superior+Vodka" alt="NUDE Superior Vodka-750ML" />
+      <img src="https://i.ibb.co/cX3Zq9n7/NUDE-Superior-Vodka-Buy-Online.jpg" alt="NUDE Superior Vodka-750ML" />
       <h3>NUDE Superior Vodka</h3>
       <p class="category">Vodka 750ML</p>
       <p class="price">Rs.<span>2339</span></p>
@@ -2105,7 +2114,7 @@ footer {
     </div>
 
     <div class="product" data-category="vodka">
-      <img src="https://via.placeholder.com/300x300/eee/333?text=8848+Vodka" alt="8848 vodka" />
+      <img src="https://i.ibb.co/HLqhyd4Y/8848-Vodka.jpg" alt="8848 vodka" />
       <h3>8848 Vodka 750ML</h3>
       <p class="category">Vodka 750ML</p>
       <p class="price">Rs.<span>2,200</span></p>
@@ -2129,7 +2138,7 @@ footer {
     <div class="offer-card">
       <span class="offer-badge">10% OFF</span>
       <div class="offer-image-container">
-        <img src="https://via.placeholder.com/300x300/eee/333?text=Mustang+Whiskey" alt="Mustang Whiskey" class="offer-image">
+        <img src="https://content.sharesansar.com/photos/FEB12/March%2030%2C%202022/Aug%202%202022/mustangsep25.png" alt="Mustang Whiskey" class="offer-image">
       </div>
       <div class="offer-content">
         <h3 class="offer-title">Mustang Whiskey 750ML</h3>
@@ -2139,7 +2148,7 @@ footer {
           <button class="add-to-cart-offer" onclick="addOfferToCart('Mustang Whiskey 750ML', 1100, this)">
             <i class="fas fa-shopping-cart"></i> Add to Cart
           </button>
-          <a href="about.html" class="view-details-offer">
+          <a href="https://aailapasa.netlify.app/about" class="view-details-offer">
             <i class="fas fa-info-circle"></i> Details
           </a>
         </div>
@@ -2150,7 +2159,7 @@ footer {
     <div class="offer-card">
       <span class="offer-badge">7% OFF</span>
       <div class="offer-image-container">
-        <img src="https://via.placeholder.com/300x300/eee/333?text=Shikhar+ICE+Rush" alt="Shikhar ICE Rush" class="offer-image">
+        <img src="https://daruadda.com/wp-content/uploads/2022/11/Shikhar-Ice-Rush-20s.png" alt="Shikhar ICE Rush" class="offer-image">
       </div>
       <div class="offer-content">
         <h3 class="offer-title">Shikhar ICE Rush</h3>
@@ -2160,7 +2169,7 @@ footer {
           <button class="add-to-cart-offer" onclick="addOfferToCart('Shikhar ICE Rush', 260, this)">
             <i class="fas fa-shopping-cart"></i> Add to Cart
           </button>
-          <a href="about.html" class="view-details-offer">
+          <a href="https://aailapasa.netlify.app/about" class="view-details-offer">
             <i class="fas fa-info-circle"></i> Details
           </a>
         </div>
@@ -2171,7 +2180,7 @@ footer {
     <div class="offer-card">
       <span class="offer-badge">11% OFF</span>
       <div class="offer-image-container">
-        <img src="https://via.placeholder.com/300x300/eee/333?text=Nepal+ICE+Small" alt="Nepal ICE Small" class="offer-image">
+        <img src="https://drinksramart.com/wp-content/uploads/2023/03/nepal-xtraa.png" alt="Nepal ICE Small" class="offer-image">
       </div>
       <div class="offer-content">
         <h3 class="offer-title">Nepal ICE Small 330ML</h3>
@@ -2181,7 +2190,7 @@ footer {
           <button class="add-to-cart-offer" onclick="addOfferToCart('Nepal ICE Small 330ML', 160, this)">
             <i class="fas fa-shopping-cart"></i> Add to Cart
           </button>
-          <a href="about.html" class="view-details-offer">
+          <a href="https://aailapasa.netlify.app/about" class="view-details-offer">
             <i class="fas fa-info-circle"></i> Details
           </a>
         </div>
@@ -2198,11 +2207,11 @@ footer {
 <section class="logos">
   <h2 class="section-title">Trusted Brands</h2>
   <div class="logo-container">
-    <img src="https://via.placeholder.com/120x60/eee/333?text=Old+Durbar" alt="Old Durbar" />
-    <img src="https://via.placeholder.com/120x60/eee/333?text=Nepal+Ice" alt="Nepal Ice" />
-    <img src="https://via.placeholder.com/120x60/eee/333?text=Tuborg" alt="Tuborg" />
-    <img src="https://via.placeholder.com/120x60/eee/333?text=Mustang" alt="mustang" />
-    <img src="https://via.placeholder.com/120x60/eee/333?text=Carlsberg" alt="carslberg" />
+    <img src="https://dev-api.citi977.com.np/images/image-1679898129905.webp" alt="Old Durbar" />
+    <img src="https://nepalice.com.np/wp-content/uploads/2023/02/cropped-favicon.png" alt="Nepal Ice" />
+    <img src="https://i.ibb.co/39Q3n0jp/image-1679898083042.webp" alt="Tuborg" />
+    <img src="https://i.ibb.co/DPgk0G07/images.png" alt="mustang" />
+    <img src="https://i.ibb.co/r25421WW/493-carlsberg.jpg" alt="carslberg" />
   </div>
 </section>
 
@@ -2214,7 +2223,7 @@ footer {
       <p>Your e-commerce website for premium alcohol delivery in Kathmandu. We bring the bar to your doorstep with fast, reliable service.</p>
       <div class="social-links">
         <a href="https://www.facebook.com/profile.php?id=61575805491867"><i class="fab fa-facebook-f"></i></a>
-        <a href="https://www.instagram.com/aailapasa25?igsh=MWtoaDdtY3dqdWZkdQ=="><i class="fab fa-instagram"></i></a>
+        <a href="https://www.instagram.com/aailapasa25?igsh=MWtoaDdtY3dqdWZkdQ==""><i class="fab fa-instagram"></i></a>
         <a href="#"><i class="fab fa-twitter"></i></a>
         <a href="#"><i class="fab fa-tiktok"></i></a>
       </div>
@@ -2371,7 +2380,7 @@ footer {
         <p>Please scan the QR code below to complete your payment:</p>
         
         <div class="qr-code-container">
-          <img src="https://via.placeholder.com/200x200/fff/333?text=Payment+QR+Code" alt="Payment QR Code" class="qr-code">
+          <img src="https://i.ibb.co/674pMq5L/IMG-20250613-132956.jpg" alt="Payment QR Code" class="qr-code">
         </div>
         
         <div style="text-align: left; padding: 0 10px;">
@@ -2466,6 +2475,23 @@ footer {
         window.location.href = `product-details.html?product=${encodeURIComponent(productName)}`;
       });
     });
+    
+    // Initialize Facebook SDK
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId: 'YOUR_FACEBOOK_APP_ID', // Replace with your Facebook app ID
+        cookie: true,
+        xfbml: true,
+        version: 'v18.0'
+      });
+    };
+    
+    // Load Google SDK
+    const script = document.createElement('script');
+    script.src = 'https://accounts.google.com/gsi/client';
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
     
     // Check if user is logged in
     const user = localStorage.getItem('user');
@@ -2972,13 +2998,73 @@ footer {
   // Handle Google login
   function handleGoogleLogin(e) {
     e.preventDefault();
-    alert("Google login would be implemented here with proper OAuth integration");
+    google.accounts.id.prompt();
   }
+  
+  // Handle Google response
+  function handleGoogleResponse(response) {
+    const userInfo = JSON.parse(atob(response.credential.split('.')[1]));
+    console.log('Google user info:', userInfo);
+    
+    // Store user info in localStorage
+    const userData = {
+      name: userInfo.name,
+      email: userInfo.email,
+      picture: userInfo.picture,
+      provider: 'Google'
+    };
+    localStorage.setItem('user', JSON.stringify(userData));
+    
+    // Update UI
+    updateUserUI(userData);
+    
+    // Close the dropdown
+    document.getElementById('socialLoginDropdown').style.display = 'none';
+    
+    // Show welcome message
+    alert(`Welcome ${userInfo.name}! You've successfully logged in with Google.`);
+  }
+  
+  // Initialize Google
+  window.onload = function() {
+    // ... existing onload code ...
+    
+    // Initialize Google Identity Services
+    google.accounts.id.initialize({
+      client_id: '49087856860-i2773p0b1co3jj3lqtk4gtq9r0ldv2rl.apps.googleusercontent.com', // Replace with your Google client ID
+      callback: handleGoogleResponse
+    });
+  };
   
   // Handle Facebook login
   function checkFacebookLogin(e) {
     e.preventDefault();
-    alert("Facebook login would be implemented here with proper OAuth integration");
+    FB.login(function(response) {
+      if (response.authResponse) {
+        // Logged in
+        FB.api('/me', { fields: 'name,email,picture' }, function(userInfo) {
+          console.log('Facebook user info:', userInfo);
+          
+          // Store user info in localStorage
+          const userData = {
+            name: userInfo.name,
+            email: userInfo.email,
+            picture: userInfo.picture.data.url,
+            provider: 'Facebook'
+          };
+          localStorage.setItem('user', JSON.stringify(userData));
+          
+          // Update UI
+          updateUserUI(userData);
+          
+          // Close the dropdown
+          document.getElementById('socialLoginDropdown').style.display = 'none';
+          
+          // Show welcome message
+          alert(`Welcome ${userInfo.name}! You've successfully logged in with Facebook.`);
+        });
+      }
+    }, { scope: 'public_profile,email' });
   }
   
   // Update UI after login
@@ -3089,5 +3175,40 @@ footer {
     }
   }, {passive: true});
 </script>
+  <!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/6853eb59e1502f190c3cc184/1iu3sumdc';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+  <!-- Your custom login script -->
+  <script>
+    var webAuth = new auth0.WebAuth({
+      domain: 'dev-itycmj0zvsi5plt6.us.auth0.com',
+      clientID: 'C3CXeqMgo0ApvQqPrh2lmYJ63ntOgZG3',
+      redirectUri: 'https://aailapasa.netlify.app/callback',
+      responseType: 'token id_token',
+      scope: 'openid profile email'
+    });
+
+    document.getElementById('loginBtn').addEventListener('click', function() {
+      webAuth.authorize();
+    });
+webAuth.parseHash(function(err, authResult) {
+  if (authResult && authResult.accessToken && authResult.idToken) {
+    // user is logged in
+    console.log(authResult.idTokenPayload);
+  } else if (err) {
+    console.error(err);
+  }
+});
+  </script>
 </body>
 </html>
