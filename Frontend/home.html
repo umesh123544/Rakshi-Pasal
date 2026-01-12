@@ -72,6 +72,58 @@
       padding-bottom: 80px; /* Space for bottom nav */
     }
     
+    /* ===== TAWK.TO CHAT WIDGET ===== */
+    #tawkchat-container {
+      bottom: 90px !important; 
+      right: 20px !important;
+      transition: all 0.3s ease !important;
+      z-index: 9998 !important;
+      cursor: move !important;
+      user-select: none !important;
+    }
+    
+    /* Make it movable/draggable on mobile */
+    #tawkchat-container iframe {
+      touch-action: none !important;
+    }
+    
+    .tawk-header, #tawkchat-minified-icon {
+      cursor: move !important;
+    }
+    
+    /* Chat widget responsive adjustments */
+    @media (max-width: 768px) {
+      #tawkchat-container {
+        width: auto !important;
+        max-width: 90vw !important;
+        height: auto !important;
+        max-height: 70vh !important;
+        bottom: 100px !important;
+        right: 10px !important;
+      }
+      
+      /* Optional: Make chat widget appear as a floating bubble */
+      #tawkchat-minified-container {
+        bottom: 100px !important;
+        right: 20px !important;
+        width: 60px !important;
+        height: 60px !important;
+        border-radius: 50% !important;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+      }
+      
+      #tawkchat-minified-icon {
+        width: 60px !important;
+        height: 60px !important;
+        border-radius: 50% !important;
+      }
+      
+      #tawkchat-container:active, #tawkchat-minified-container:active {
+        opacity: 0.9;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.3) !important;
+      }
+    }
+    
     /* ===== AGE VERIFICATION ===== */
     .age-verification {
       position: fixed;
@@ -1836,6 +1888,197 @@
       }, 3000);
     }
 
+    // TAWK.TO CHAT WIDGET DRAGGABLE FUNCTIONALITY
+    function makeChatMovable() {
+      // Wait for Tawk.to to load
+      const checkChatWidget = setInterval(() => {
+        const chatContainer = document.querySelector('#tawkchat-container, #tawkchat-minified-container');
+        
+        if (chatContainer) {
+          clearInterval(checkChatWidget);
+          setupDraggableChat(chatContainer);
+        }
+      }, 1000);
+    }
+
+    function setupDraggableChat(element) {
+      let isDragging = false;
+      let currentX;
+      let currentY;
+      let initialX;
+      let initialY;
+      let xOffset = 0;
+      let yOffset = 0;
+      
+      // Get computed styles for initial position
+      const computedStyle = window.getComputedStyle(element);
+      if (computedStyle.bottom !== 'auto') {
+        yOffset = window.innerHeight - element.getBoundingClientRect().bottom;
+      }
+      if (computedStyle.right !== 'auto') {
+        xOffset = window.innerWidth - element.getBoundingClientRect().right;
+      }
+      
+      element.style.cursor = 'move';
+      element.style.position = 'fixed';
+      
+      // Touch events for mobile
+      element.addEventListener("touchstart", dragStart, false);
+      element.addEventListener("touchend", dragEnd, false);
+      element.addEventListener("touchmove", drag, false);
+      
+      // Mouse events for desktop
+      element.addEventListener("mousedown", dragStart, false);
+      element.addEventListener("mouseup", dragEnd, false);
+      element.addEventListener("mousemove", drag, false);
+      
+      function dragStart(e) {
+        if (e.type === "touchstart") {
+          initialX = e.touches[0].clientX - xOffset;
+          initialY = e.touches[0].clientY - yOffset;
+        } else {
+          initialX = e.clientX - xOffset;
+          initialY = e.clientY - yOffset;
+        }
+        
+        // Only start dragging if clicking on the header/icon area
+        const target = e.target;
+        const isHeader = target.closest('.tawk-header, #tawkchat-minified-icon, .tawk-min-chat-icon');
+        
+        if (isHeader || e.type === "touchstart") {
+          isDragging = true;
+          element.style.opacity = '0.9';
+          element.style.boxShadow = '0 8px 25px rgba(0,0,0,0.3)';
+        }
+      }
+      
+      function dragEnd() {
+        initialX = currentX;
+        initialY = currentY;
+        isDragging = false;
+        element.style.opacity = '1';
+        element.style.boxShadow = '';
+        
+        // Save position to localStorage
+        saveChatPosition(xOffset, yOffset);
+      }
+      
+      function drag(e) {
+        if (isDragging) {
+          e.preventDefault();
+          
+          if (e.type === "touchmove") {
+            currentX = e.touches[0].clientX - initialX;
+            currentY = e.touches[0].clientY - initialY;
+          } else {
+            currentX = e.clientX - initialX;
+            currentY = e.clientY - initialY;
+          }
+          
+          xOffset = currentX;
+          yOffset = currentY;
+          
+          setTranslate(currentX, currentY, element);
+        }
+      }
+      
+      function setTranslate(xPos, yPos, el) {
+        el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
+        el.style.right = "auto";
+        el.style.bottom = "auto";
+        el.style.left = "0";
+        el.style.top = "0";
+      }
+      
+      // Load saved position
+      function loadChatPosition() {
+        const savedPos = localStorage.getItem('chatWidgetPosition');
+        if (savedPos) {
+          try {
+            const pos = JSON.parse(savedPos);
+            if (pos && typeof pos.x === 'number' && typeof pos.y === 'number') {
+              xOffset = pos.x;
+              yOffset = pos.y;
+              setTranslate(xOffset, yOffset, element);
+            }
+          } catch (e) {
+            console.log('Error loading chat position:', e);
+          }
+        }
+      }
+      
+      function saveChatPosition(x, y) {
+        localStorage.setItem('chatWidgetPosition', JSON.stringify({ x, y }));
+      }
+      
+      // Load saved position after a delay
+      setTimeout(loadChatPosition, 2000);
+      
+      // Reset position button (optional)
+      addResetButton(element);
+    }
+    
+    function addResetButton(element) {
+      // Add a small reset button to the chat widget
+      setTimeout(() => {
+        const resetBtn = document.createElement('div');
+        resetBtn.innerHTML = '⟳';
+        resetBtn.style.cssText = `
+          position: absolute;
+          top: -25px;
+          right: 0;
+          background: var(--primary);
+          color: white;
+          width: 25px;
+          height: 25px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          font-size: 14px;
+          font-weight: bold;
+          z-index: 10001;
+          opacity: 0.8;
+          transition: opacity 0.3s;
+        `;
+        resetBtn.title = 'Reset Position';
+        resetBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          localStorage.removeItem('chatWidgetPosition');
+          element.style.transform = 'translate3d(0, 0, 0)';
+          element.style.right = '20px';
+          element.style.bottom = '90px';
+          element.style.left = 'auto';
+          element.style.top = 'auto';
+        });
+        
+        element.style.position = 'relative';
+        element.appendChild(resetBtn);
+        
+        // Show reset button on hover
+        element.addEventListener('mouseenter', () => {
+          resetBtn.style.opacity = '1';
+        });
+        element.addEventListener('mouseleave', () => {
+          resetBtn.style.opacity = '0.8';
+        });
+      }, 3000);
+    }
+
+    // Initialize movable chat
+    window.addEventListener('load', function() {
+      // Start checking for chat widget after Tawk.to loads
+      setTimeout(makeChatMovable, 3000);
+      
+      // Also listen for Tawk API events
+      if (typeof Tawk_API !== 'undefined') {
+        Tawk_API.onLoad = function() {
+          setTimeout(makeChatMovable, 1000);
+        };
+      }
+    });
+
     // Initialize
     window.onload = function() {
       checkAgeVerification();
@@ -1849,14 +2092,38 @@
       // Load cart from localStorage if exists
       const savedCart = localStorage.getItem('aailaPasaCart');
       if (savedCart) {
-        cart = JSON.parse(savedCart);
-        updateCartBadge();
+        try {
+          cart = JSON.parse(savedCart);
+          updateCartBadge();
+        } catch (e) {
+          console.log('Error loading cart:', e);
+        }
       }
       
       // Save cart to localStorage on changes
       setInterval(() => {
         localStorage.setItem('aailaPasaCart', JSON.stringify(cart));
       }, 1000);
+      
+      // Add animation styles for chat widget
+      const styleSheet = document.createElement("style");
+      styleSheet.type = "text/css";
+      styleSheet.innerText = `
+        @keyframes slideInRight {
+          from { transform: translateX(100%); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slideOutRight {
+          from { transform: translateX(0); opacity: 1; }
+          to { transform: translateX(100%); opacity: 0; }
+        }
+        
+        #tawkchat-container, #tawkchat-minified-container {
+          transition: transform 0.2s ease, opacity 0.2s ease !important;
+        }
+      `;
+      document.head.appendChild(styleSheet);
     };
   </script>
   
