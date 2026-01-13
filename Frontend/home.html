@@ -380,28 +380,37 @@
     }
     
     .offer-banner {
-      background: linear-gradient(90deg, 
-                  rgba(0, 0, 0, 0.8) 0%, 
-                  rgba(0, 0, 0, 0.6) 30%,
-                  rgba(0, 0, 0, 0.4) 50%,
-                  rgba(0, 0, 0, 0.2) 70%,
-                  transparent 100%),
-                  url('https://i.ibb.co/0ymbggms/Untitled-design-5.png');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      border-radius: var(--radius-lg);
-      padding: 30px;
-      color: var(--white);
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 8px 32px rgba(255, 107, 0, 0.25);
-      animation: pulse-glow 2s infinite alternate;
-      min-height: 250px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
+  background: linear-gradient(135deg, rgba(255, 107, 0, 0.85), rgba(255, 142, 83, 0.85)),
+              url('YOUR_IMAGE_URL_HERE');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: var(--radius-lg);
+  padding: 30px;
+  color: var(--white);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(255, 107, 0, 0.25);
+  animation: pulse-glow 2s infinite alternate;
+  min-height: 250px; /* Desktop */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .offer-banner {
+    min-height: 200px;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .offer-banner {
+    min-height: 180px;
+    padding: 16px;
+  }
+}
     
     .offer-banner::before {
       content: '';
