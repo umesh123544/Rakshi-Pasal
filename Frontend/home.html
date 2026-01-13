@@ -380,35 +380,35 @@
     }
     
     .offer-banner {
-  background: url('https://i.ibb.co/0ymbggms/Untitled-design-5.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  border-radius: var(--radius-lg);
-  padding: 30px;
-  color: var(--white);
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 8px 32px rgba(255, 107, 0, 0.25);
-  min-height: 250px; /* Desktop */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
+      background: url('https://i.ibb.co/0ymbggms/Untitled-design-5.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      border-radius: var(--radius-lg);
+      padding: 30px;
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(255, 107, 0, 0.25);
+      min-height: 250px; /* Desktop */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
 
-@media (max-width: 768px) {
-  .offer-banner {
-    min-height: 200px;
-    padding: 20px;
-  }
-}
+    @media (max-width: 768px) {
+      .offer-banner {
+        min-height: 200px;
+        padding: 20px;
+      }
+    }
 
-@media (max-width: 480px) {
-  .offer-banner {
-    min-height: 180px;
-    padding: 16px;
-  }
-}
+    @media (max-width: 480px) {
+      .offer-banner {
+        min-height: 180px;
+        padding: 16px;
+      }
+    }
     
     .offer-banner::before {
       content: '';
@@ -423,7 +423,6 @@
         rgba(255, 107, 0, 0.1) 50%,
         transparent 100%
       );
-      animation: shine 3s infinite linear;
     }
     
     .offer-header {
@@ -442,7 +441,6 @@
       background: linear-gradient(135deg, var(--primary), var(--primary-dark));
       padding: 8px 16px;
       border-radius: 50px;
-      animation: bounce 2s infinite;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
     
@@ -477,7 +475,6 @@
       border-radius: 4px;
       min-width: 20px;
       text-align: center;
-      animation: countdown 1s infinite;
     }
     
     .offer-content {
@@ -520,7 +517,6 @@
       font-weight: 800;
       color: var(--primary);
       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-      animation: price-pulse 2s infinite;
       background: rgba(0, 0, 0, 0.3);
       padding: 5px 15px;
       border-radius: 8px;
@@ -564,7 +560,6 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      animation: cta-pulse 1.5s infinite;
       box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
     }
     
@@ -1179,67 +1174,6 @@
       }
     }
     
-    /* Today's Offer Animations */
-    @keyframes pulse-glow {
-      0% {
-        box-shadow: 0 8px 32px rgba(255, 107, 0, 0.25);
-      }
-      100% {
-        box-shadow: 0 8px 32px rgba(255, 107, 0, 0.4), 0 0 20px rgba(255, 107, 0, 0.2);
-      }
-    }
-    
-    @keyframes shine {
-      0% {
-        transform: translateX(-100%) translateY(-100%) rotate(45deg);
-      }
-      100% {
-        transform: translateX(100%) translateY(100%) rotate(45deg);
-      }
-    }
-    
-    @keyframes bounce {
-      0%, 100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-5px);
-      }
-    }
-    
-    @keyframes countdown {
-      0%, 100% {
-        opacity: 1;
-        transform: scale(1);
-      }
-      50% {
-        opacity: 0.8;
-        transform: scale(0.95);
-      }
-    }
-    
-    @keyframes price-pulse {
-      0%, 100% {
-        transform: scale(1);
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-      }
-      50% {
-        transform: scale(1.05);
-        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-      }
-    }
-    
-    @keyframes cta-pulse {
-      0%, 100% {
-        transform: scale(1);
-        box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
-      }
-      50% {
-        transform: scale(1.02);
-        box-shadow: 0 6px 16px rgba(255, 255, 255, 0.4);
-      }
-    }
-    
     /* ===== RESPONSIVE ===== */
     @media (min-width: 768px) {
       .hero-banner {
@@ -1684,32 +1618,67 @@
       document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
       document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
       document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
-      
-      // Update animation intensity based on time left
-      const banner = document.querySelector('.offer-banner');
-      if (hours < 6) {
-        banner.style.animationDuration = '1s';
-      } else if (hours < 12) {
-        banner.style.animationDuration = '2s';
-      }
     }
 
-    // Age Verification
+    // ===== AGE VERIFICATION WITH LOCALSTORAGE =====
     function verifyAge() {
       document.getElementById('ageVerification').style.display = 'none';
-      document.cookie = "ageVerified=true; max-age=86400; path=/";
+      
+      // Save to localStorage with 30-day expiry
+      const verificationData = {
+        verified: true,
+        verifiedAt: new Date().toISOString(),
+        expiry: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString() // 30 days from now
+      };
+      
+      localStorage.setItem('aailaPasa_ageVerified', JSON.stringify(verificationData));
     }
 
     function exitSite() {
       window.location.href = "https://www.drinkaware.co.uk/";
     }
 
-    // Check age on load
+    // Check age verification on load
     function checkAgeVerification() {
-      if (!document.cookie.includes("ageVerified=true")) {
+      try {
+        const verificationData = localStorage.getItem('aailaPasa_ageVerified');
+        
+        if (verificationData) {
+          const data = JSON.parse(verificationData);
+          
+          // Check if verification has expired
+          if (data.expiry) {
+            const expiryDate = new Date(data.expiry);
+            const now = new Date();
+            
+            if (now < expiryDate) {
+              // Still valid, don't show verification
+              document.getElementById('ageVerification').style.display = 'none';
+              return;
+            } else {
+              // Expired, remove and show verification
+              localStorage.removeItem('aailaPasa_ageVerified');
+            }
+          } else {
+            // No expiry date, assume permanent
+            document.getElementById('ageVerification').style.display = 'none';
+            return;
+          }
+        }
+        
+        // Show verification if not verified or expired
+        document.getElementById('ageVerification').style.display = 'flex';
+      } catch (error) {
+        console.error('Error checking age verification:', error);
+        // Show verification on error
         document.getElementById('ageVerification').style.display = 'flex';
       }
     }
+
+    // ===== TESTING FUNCTION (Optional) =====
+    // Add this to your browser console to reset age verification:
+    // localStorage.removeItem('aailaPasa_ageVerified');
+    // Then refresh the page
 
     // Today's Offer Functions
     function addTodaysOffer() {
@@ -1720,7 +1689,6 @@
       // Animation effect
       offerBtn.innerHTML = '<i class="fas fa-check"></i> Added!';
       offerBtn.style.background = '#28A745';
-      offerBtn.style.animation = 'none';
       
       // Add to cart
       addToCart(todaysOffer);
@@ -1732,7 +1700,6 @@
       setTimeout(() => {
         offerBtn.innerHTML = originalText;
         offerBtn.style.background = '';
-        offerBtn.style.animation = 'cta-pulse 1.5s infinite';
       }, 2000);
     }
 
@@ -2175,7 +2142,7 @@
 
     // Initialize
     window.onload = function() {
-      checkAgeVerification();
+      checkAgeVerification(); // This must be called FIRST
       displayProducts();
       updateCartBadge();
       updateCountdown(); // Initialize countdown
