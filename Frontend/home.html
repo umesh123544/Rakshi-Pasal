@@ -1612,18 +1612,6 @@
       
       localStorage.setItem('aailaPasa_ageVerified', JSON.stringify(verificationData));
       
-      // Hide after 1 second with a fade effect
-      const ageVerification = document.getElementById('ageVerification');
-      ageVerification.style.opacity = '1';
-      ageVerification.style.transition = 'opacity 0.3s ease';
-      
-      setTimeout(() => {
-        ageVerification.style.opacity = '0';
-        setTimeout(() => {
-          ageVerification.style.display = 'none';
-        }, 300);
-      }, 1000);
-    }
 
     function exitSite() {
       window.location.href = "https://www.drinkaware.co.uk/";
