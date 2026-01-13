@@ -1601,48 +1601,62 @@
     let cart = [];
     let deliveryFee = 100;
 
-    // ===== AGE VERIFICATION WITH LOCALSTORAGE (SHOWS FOR 1 SECOND) =====
-    function verifyAge() {
-      // Save to localStorage immediately
-      const verificationData = {
+    // ===== AGE VERIFICATION WITH LOCALSTORAGE =====
+function verifyAge() {
+    // Save to localStorage immediately
+    const verificationData = {
         verified: true,
         verifiedAt: new Date().toISOString(),
-        expiry: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString() // 30 days
-      };
-      
-      localStorage.setItem('aailaPasa_ageVerified', JSON.stringify(verificationData));
-      
+        expiry: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString() // 30 days expiry
+    };
+    
+    localStorage.setItem('aailaPasa_ageVerified', JSON.stringify(verificationData));
+    
+    // Fade out animation
+    const ageVerification = document.getElementById('ageVerification');
+    ageVerification.style.opacity = '0';
+    ageVerification.style.transition = 'opacity 0.3s ease';
+    
+    // Remove from DOM after animation
+    setTimeout(() => {
+        ageVerification.style.display = 'none';
+        // Initialize the rest of the app
+        initializeApp();
+    }, 300);
+}
 
-    function exitSite() {
-      window.location.href = "https://www.drinkaware.co.uk/";
-    }
+function exitSite() {
+    window.location.href = "https://www.drinkaware.co.uk/";
+}
 
-    // Check age verification on load
-    function checkAgeVerification() {
-      try {
+// Check age verification on load
+function checkAgeVerification() {
+    try {
         const verificationData = localStorage.getItem('aailaPasa_ageVerified');
         
         if (verificationData) {
-          const data = JSON.parse(verificationData);
-          
-          // Check if verification has expired
-          if (data.expiry) {
-            const expiryDate = new Date(data.expiry);
-            const now = new Date();
+            const data = JSON.parse(verificationData);
             
-            if (now < expiryDate) {
-              // Still valid, don't show verification
-              document.getElementById('ageVerification').style.display = 'none';
-              return;
+            // Check if verification has expired
+            if (data.expiry) {
+                const expiryDate = new Date(data.expiry);
+                const now = new Date();
+                
+                if (now < expiryDate) {
+                    // Still valid, hide verification
+                    document.getElementById('ageVerification').style.display = 'none';
+                    initializeApp(); // Initialize the rest of the app
+                    return;
+                } else {
+                    // Expired, remove and show verification
+                    localStorage.removeItem('aailaPasa_ageVerified');
+                }
             } else {
-              // Expired, remove and show verification
-              localStorage.removeItem('aailaPasa_ageVerified');
+                // No expiry date, assume permanent verification
+                document.getElementById('ageVerification').style.display = 'none';
+                initializeApp(); // Initialize the rest of the app
+                return;
             }
-          } else {
-            // No expiry date, assume permanent
-            document.getElementById('ageVerification').style.display = 'none';
-            return;
-          }
         }
         
         // Show verification if not verified or expired
@@ -1650,12 +1664,68 @@
         ageVerification.style.display = 'flex';
         ageVerification.style.opacity = '1';
         
-      } catch (error) {
+    } catch (error) {
         console.error('Error checking age verification:', error);
         // Show verification on error
         document.getElementById('ageVerification').style.display = 'flex';
-      }
+        document.getElementById('ageVerification').style.opacity = '1';
     }
+}
+
+// Initialize the rest of the app (moved from window.onload)
+function initializeApp() {
+    displayProducts();
+    updateCartBadge();
+    updateCountdown(); // Initialize countdown
+    
+    // Update countdown every second
+    setInterval(updateCountdown, 1000);
+    
+    // Load cart from localStorage if exists
+    const savedCart = localStorage.getItem('aailaPasaCart');
+    if (savedCart) {
+        try {
+            cart = JSON.parse(savedCart);
+            updateCartBadge();
+        } catch (e) {
+            console.log('Error loading cart:', e);
+        }
+    }
+    
+    // Save cart to localStorage on changes
+    setInterval(() => {
+        localStorage.setItem('aailaPasaCart', JSON.stringify(cart));
+    }, 1000);
+    
+    // Start checking for chat widget
+    setTimeout(makeChatMovable, 3000);
+}
+
+// Replace your existing window.onload with this:
+window.onload = function() {
+    // Check age verification first
+    checkAgeVerification();
+    
+    // Add animation styles for chat widget
+    const styleSheet = document.createElement("style");
+    styleSheet.type = "text/css";
+    styleSheet.innerText = `
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+        
+        #tawkchat-container, #tawkchat-minified-container {
+            transition: transform 0.2s ease, opacity 0.2s ease !important;
+        }
+    `;
+    document.head.appendChild(styleSheet);
+};
 
     // Countdown Timer
     function updateCountdown() {
