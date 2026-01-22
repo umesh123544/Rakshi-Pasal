@@ -2268,5 +2268,36 @@ window.onload = function() {
     })();
   </script>
   <!--End of Tawk.to Script-->
+  <script type="module">
+  // Firebase CDN (2026 compatible)
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+  import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  // Your Firebase Config
+  const firebaseConfig = {
+    apiKey: "AIzaSyCt2OzSF7JR6Euh7lPTgHZaQDpBigT0J6E",
+    authDomain: "aaila-pasa-acbcb.firebaseapp.com",
+    projectId: "aaila-pasa-acbcb",
+    storageBucket: "aaila-pasa-acbcb.firebasestorage.app",
+    messagingSenderId: "225067351400",
+    appId: "1:225067351400:web:8d80a9ab3d20cbcaadaadd",
+    measurementId: "G-Z0RSS4NLET"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+
+  // Make Firebase available globally
+  window.firebaseApp = app;
+  window.db = db;
+  window.auth = auth;
+
+  console.log("🔥 Firebase connected successfully");
+</script>
 </body>
 </html>
