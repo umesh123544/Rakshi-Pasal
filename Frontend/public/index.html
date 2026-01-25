@@ -1,0 +1,2303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>Aaila Pasa - Alcohol Delivery</title>
+  
+  <!-- PWA Meta Tags -->
+  <meta name="theme-color" content="#FF6B00">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Aaila Pasa">
+  
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://iili.io/fzA2WwF.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://iili.io/fzA2WwF.png">
+  <meta name="msapplication-TileColor" content="#FF6B00">
+  
+  <!-- Web App Manifest -->
+  <link rel="manifest" href="/manifest.json">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  
+  <!-- Auth0 SDK -->
+  <script src="https://cdn.auth0.com/js/auth0/9.19/auth0.min.js"></script>
+  
+  <!-- EmailJS SDK -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  
+  <!-- Facebook SDK -->
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+  
+  <style>
+    /* ===== BASE STYLES ===== */
+    :root {
+      --primary: #FF6B00;
+      --primary-dark: #E55A00;
+      --secondary: #1A1A1A;
+      --light: #F8F9FA;
+      --dark: #121212;
+      --gray: #6C757D;
+      --light-gray: #E9ECEF;
+      --success: #28A745;
+      --danger: #DC3545;
+      --white: #FFFFFF;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+      --radius: 12px;
+      --radius-sm: 8px;
+      --radius-lg: 16px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--white);
+      color: var(--secondary);
+      line-height: 1.5;
+      overflow-x: hidden;
+      padding-bottom: 80px; /* Space for bottom nav */
+    }
+    
+    /* ===== TAWK.TO CHAT WIDGET ===== */
+    #tawkchat-container {
+      bottom: 90px !important; 
+      right: 20px !important;
+      transition: all 0.3s ease !important;
+      z-index: 9998 !important;
+      cursor: move !important;
+      user-select: none !important;
+    }
+    
+    /* Make it movable/draggable on mobile */
+    #tawkchat-container iframe {
+      touch-action: none !important;
+    }
+    
+    .tawk-header, #tawkchat-minified-icon {
+      cursor: move !important;
+    }
+    
+    /* Chat widget responsive adjustments */
+    @media (max-width: 768px) {
+      #tawkchat-container {
+        width: auto !important;
+        max-width: 90vw !important;
+        height: auto !important;
+        max-height: 70vh !important;
+        bottom: 100px !important;
+        right: 10px !important;
+      }
+      
+      /* Optional: Make chat widget appear as a floating bubble */
+      #tawkchat-minified-container {
+        bottom: 100px !important;
+        right: 20px !important;
+        width: 60px !important;
+        height: 60px !important;
+        border-radius: 50% !important;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+      }
+      
+      #tawkchat-minified-icon {
+        width: 60px !important;
+        height: 60px !important;
+        border-radius: 50% !important;
+      }
+      
+      #tawkchat-container:active, #tawkchat-minified-container:active {
+        opacity: 0.9;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.3) !important;
+      }
+    }
+    
+    /* ===== AGE VERIFICATION ===== */
+    .age-verification {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      animation: fadeIn 0.3s ease;
+      opacity: 1;
+      transition: opacity 0.3s ease;
+    }
+    
+    .age-content {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 40px 30px;
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: var(--shadow-lg);
+      animation: slideUp 0.4s ease;
+    }
+    
+    .age-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 25px;
+    }
+    
+    .age-icon i {
+      font-size: 32px;
+      color: var(--white);
+    }
+    
+    .age-content h2 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: var(--secondary);
+    }
+    
+    .age-content p {
+      color: var(--gray);
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+    
+    .age-buttons {
+      display: flex;
+      gap: 15px;
+      flex-direction: column;
+    }
+    
+    .age-btn {
+      padding: 16px;
+      border: none;
+      border-radius: var(--radius);
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .verify-btn {
+      background: var(--primary);
+      color: var(--white);
+    }
+    
+    .verify-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+    
+    .exit-btn {
+      background: var(--light-gray);
+      color: var(--secondary);
+    }
+    
+    .exit-btn:hover {
+      background: #DEE2E6;
+    }
+    
+    /* ===== BOTTOM NAVIGATION ===== */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: var(--white);
+      border-top: 1px solid var(--light-gray);
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 0;
+      z-index: 1000;
+      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+    }
+    
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      color: var(--gray);
+      text-decoration: none;
+      transition: var(--transition);
+      padding: 8px 16px;
+      border-radius: var(--radius);
+      position: relative;
+    }
+    
+    .nav-item.active {
+      color: var(--primary);
+    }
+    
+    .nav-item i {
+      font-size: 20px;
+      margin-bottom: 2px;
+    }
+    
+    .nav-label {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .nav-item.active::after {
+      content: '';
+      position: absolute;
+      top: -12px;
+      width: 4px;
+      height: 4px;
+      background: var(--primary);
+      border-radius: 50%;
+    }
+    
+    .cart-badge {
+      position: absolute;
+      top: -2px;
+      right: 8px;
+      background: var(--danger);
+      color: var(--white);
+      font-size: 10px;
+      font-weight: 600;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--white);
+    }
+    
+    /* ===== TOP HEADER ===== */
+    .top-header {
+      background: var(--white);
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+    
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+  .logo-icon {
+  width: 40px;
+  height: 40px;
+  background: url('https://iili.io/fzA2WwF.png') center/contain no-repeat;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent; /* Hide the "AP" text */
+  font-weight: 700;
+  font-size: 20px;
+}
+    
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .logo-text h1 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--secondary);
+      line-height: 1.2;
+    }
+    
+    .logo-text span {
+      color: var(--primary);
+    }
+    
+    .logo-text small {
+      font-size: 11px;
+      color: var(--gray);
+      margin-top: -2px;
+    }
+    
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .header-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--secondary);
+      text-decoration: none;
+      transition: var(--transition);
+      position: relative;
+    }
+    
+    .header-icon:hover {
+      background: var(--light-gray);
+      transform: translateY(-2px);
+    }
+    
+    .header-icon i {
+      font-size: 18px;
+    }
+    
+    /* ===== TODAY'S OFFER BANNER WITH FULL-SIZE MUSTANG WHISKEY IMAGE ===== */
+    .todays-offer-section {
+      padding: 16px;
+      margin-top: 10px;
+    }
+    
+    .offer-banner {
+      background: url('https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=1600&h=600&fit=crop');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      border-radius: var(--radius-lg);
+      padding: 30px;
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(255, 107, 0, 0.25);
+      min-height: 250px; /* Desktop */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    @media (max-width: 768px) {
+      .offer-banner {
+        min-height: 200px;
+        padding: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .offer-banner {
+        min-height: 180px;
+        padding: 16px;
+      }
+    }
+    
+    .offer-banner::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        45deg,
+        rgba(255, 107, 0, 0.2) 0%,
+        rgba(255, 107, 0, 0.1) 50%,
+        transparent 100%
+      );
+    }
+    
+    .offer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .offer-tag {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      padding: 8px 16px;
+      border-radius: 50px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+    
+    .offer-tag i {
+      font-size: 14px;
+    }
+    
+    .offer-tag span {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .timer {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 8px 12px;
+      border-radius: var(--radius);
+      font-size: 12px;
+      font-weight: 600;
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .timer span {
+      font-family: monospace;
+      background: rgba(255, 107, 0, 0.8);
+      padding: 4px 6px;
+      border-radius: 4px;
+      min-width: 20px;
+      text-align: center;
+    }
+    
+    .offer-content {
+      position: relative;
+      z-index: 2;
+      max-width: 70%;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 20px;
+      border-radius: var(--radius);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .offer-content h2 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      line-height: 1.3;
+      color: #FFE8D6;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    
+    .offer-content p {
+      font-size: 14px;
+      opacity: 0.9;
+      margin-bottom: 20px;
+      color: #FFE8D6;
+    }
+    
+    .offer-price {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    
+    .current-price {
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--primary);
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.3);
+      padding: 5px 15px;
+      border-radius: 8px;
+    }
+    
+    .old-price {
+      font-size: 20px;
+      opacity: 0.7;
+      text-decoration: line-through;
+      color: #FFE8D6;
+    }
+    
+    .discount-badge {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      padding: 6px 15px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      color: white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+    
+    .offer-cta {
+      display: flex;
+      gap: 12px;
+      max-width: 400px;
+    }
+    
+    .btn-primary {
+      flex: 2;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: var(--white);
+      border: none;
+      padding: 16px 28px;
+      border-radius: var(--radius);
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(255, 107, 0, 0.6);
+    }
+    
+    .btn-secondary {
+      flex: 1;
+      background: transparent;
+      color: var(--white);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      padding: 16px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(5px);
+    }
+    
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--white);
+      transform: translateY(-2px);
+    }
+    
+    /* ===== HERO BANNER ===== */
+    .hero-section {
+      padding: 16px;
+      position: relative;
+      margin-top: 0;
+    }
+    
+    .hero-banner {
+      height: 200px;
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                  url('https://images.unsplash.com/photo-1535958636474-b021ee887b13?w=1600&h=400&fit=crop&auto=format');
+      background-size: cover;
+      background-position: center;
+      border-radius: var(--radius-lg);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      padding: 24px;
+      color: var(--white);
+    }
+    
+    .hero-content h2 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+    
+    .hero-content p {
+      font-size: 14px;
+      opacity: 0.9;
+      margin-bottom: 20px;
+    }
+    
+    .hero-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary);
+      color: var(--white);
+      padding: 12px 24px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition);
+      border: none;
+      cursor: pointer;
+    }
+    
+    .hero-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+    
+    /* ===== CATEGORIES ===== */
+    .categories-section {
+      padding: 0 16px 24px;
+    }
+    
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    
+    .section-header h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--secondary);
+    }
+    
+    .see-all {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    
+    .category-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 16px 8px;
+      text-align: center;
+      transition: var(--transition);
+      border: 1px solid var(--light-gray);
+      cursor: pointer;
+    }
+    
+    .category-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+      border-color: var(--primary);
+    }
+    
+    .category-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #FFE5D6, #FFD4B8);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+      color: var(--primary);
+      font-size: 20px;
+    }
+    
+    .category-card h4 {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--secondary);
+      margin-bottom: 4px;
+    }
+    
+    .category-card p {
+      font-size: 11px;
+      color: var(--gray);
+    }
+    
+    /* ===== FEATURED PRODUCTS ===== */
+    .products-section {
+      padding: 0 16px 24px;
+    }
+    
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    
+    .product-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      position: relative;
+    }
+    
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .product-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--primary);
+      color: var(--white);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      z-index: 1;
+    }
+    
+    .product-image {
+      width: 100%;
+      height: 160px;
+      object-fit: contain;
+      padding: 16px;
+      background: var(--light);
+    }
+    
+    .product-info {
+      padding: 16px;
+    }
+    
+    .product-info h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--secondary);
+      line-height: 1.3;
+    }
+    
+    .product-category {
+      font-size: 12px;
+      color: var(--gray);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .product-price {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 12px;
+    }
+    
+    .price {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    
+    .add-to-cart {
+      width: 40px;
+      height: 40px;
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .add-to-cart:hover {
+      background: var(--primary-dark);
+      transform: scale(1.1);
+    }
+    
+    /* ===== SPECIAL OFFERS ===== */
+    .offers-section {
+      padding: 0 16px 24px;
+    }
+    
+    .offer-card {
+      background: linear-gradient(135deg, #1A1A1A, #2D2D2D);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .offer-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--primary);
+      color: var(--white);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    
+    .offer-content h3 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    
+    .offer-content p {
+      font-size: 14px;
+      opacity: 0.8;
+      margin-bottom: 20px;
+    }
+    
+    .offer-price {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    
+    .current-price {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    
+    .old-price {
+      font-size: 16px;
+      opacity: 0.6;
+      text-decoration: line-through;
+    }
+    
+    .offer-actions {
+      display: flex;
+      gap: 12px;
+    }
+    
+    .offer-btn {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .btn-outline:hover {
+      border-color: var(--primary);
+    }
+    
+    /* ===== CART MODAL ===== */
+    .cart-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 2000;
+      display: none;
+      justify-content: flex-end;
+    }
+    
+    .cart-content {
+      width: 100%;
+      max-width: 400px;
+      background: var(--white);
+      height: 100%;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .cart-header {
+      padding: 24px;
+      border-bottom: 1px solid var(--light-gray);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .cart-header h3 {
+      font-size: 20px;
+      font-weight: 700;
+    }
+    
+    .close-cart {
+      background: none;
+      border: none;
+      font-size: 20px;
+      color: var(--gray);
+      cursor: pointer;
+    }
+    
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+    }
+    
+    .cart-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      background: var(--light);
+      border-radius: var(--radius);
+      margin-bottom: 12px;
+    }
+    
+    .cart-item-image {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      background: var(--white);
+      border-radius: var(--radius-sm);
+      padding: 8px;
+    }
+    
+    .cart-item-info {
+      flex: 1;
+    }
+    
+    .cart-item-name {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    
+    .cart-item-price {
+      color: var(--primary);
+      font-weight: 600;
+    }
+    
+    .cart-item-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .quantity-btn {
+      width: 28px;
+      height: 28px;
+      background: var(--white);
+      border: 1px solid var(--light-gray);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    
+    .quantity-input {
+      width: 40px;
+      text-align: center;
+      border: none;
+      background: transparent;
+      font-weight: 600;
+    }
+    
+    .remove-item {
+      color: var(--danger);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+    
+    .cart-footer {
+      padding: 24px;
+      border-top: 1px solid var(--light-gray);
+    }
+    
+    .cart-totals {
+      margin-bottom: 20px;
+    }
+    
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    
+    .total-label {
+      color: var(--gray);
+    }
+    
+    .total-value {
+      font-weight: 600;
+    }
+    
+    .grand-total {
+      font-size: 18px;
+      color: var(--primary);
+    }
+    
+    .checkout-btn {
+      width: 100%;
+      padding: 16px;
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius);
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .checkout-btn:hover {
+      background: var(--primary-dark);
+    }
+    
+    /* ===== ORDER CONFIRMATION ===== */
+    .order-confirmation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--white);
+      z-index: 3000;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+      text-align: center;
+    }
+    
+    .confirmation-icon {
+      width: 80px;
+      height: 80px;
+      background: var(--success);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    
+    .confirmation-icon i {
+      font-size: 36px;
+      color: var(--white);
+    }
+    
+    .confirmation-content h2 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    
+    .confirmation-content p {
+      color: var(--gray);
+      margin-bottom: 8px;
+    }
+    
+    .confirmation-actions {
+      margin-top: 32px;
+      display: flex;
+      gap: 12px;
+      width: 100%;
+      max-width: 300px;
+    }
+    
+    .confirmation-btn {
+      flex: 1;
+      padding: 14px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      border: none;
+    }
+    
+    .btn-success {
+      background: var(--success);
+      color: var(--white);
+    }
+    
+    .btn-whatsapp {
+      background: #25D366;
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+    
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* ===== RESPONSIVE ===== */
+    @media (min-width: 768px) {
+      .hero-banner {
+        height: 300px;
+      }
+      
+      .hero-content h2 {
+        font-size: 32px;
+      }
+      
+      .products-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      
+      .categories-grid {
+        grid-template-columns: repeat(6, 1fr);
+      }
+      
+      .todays-offer-section {
+        padding: 24px;
+      }
+      
+      .offer-banner {
+        padding: 40px;
+        min-height: 300px;
+      }
+      
+      .offer-content {
+        max-width: 60%;
+        padding: 30px;
+      }
+      
+      .offer-content h2 {
+        font-size: 32px;
+      }
+      
+      .offer-content p {
+        font-size: 16px;
+      }
+      
+      .current-price {
+        font-size: 48px;
+      }
+      
+      .old-price {
+        font-size: 24px;
+      }
+      
+      .discount-badge {
+        font-size: 16px;
+        padding: 8px 20px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .hero-banner {
+        height: 180px;
+      }
+      
+      .hero-content h2 {
+        font-size: 20px;
+      }
+      
+      .products-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .categories-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      
+      .offer-banner {
+        padding: 20px;
+        min-height: 200px;
+      }
+      
+      .offer-content {
+        max-width: 100%;
+        padding: 15px;
+        background: rgba(0, 0, 0, 0.7);
+      }
+      
+      .offer-tag span {
+        font-size: 10px;
+      }
+      
+      .timer {
+        font-size: 10px;
+      }
+      
+      .offer-content h2 {
+        font-size: 20px;
+      }
+      
+      .offer-content p {
+        font-size: 12px;
+      }
+      
+      .current-price {
+        font-size: 28px;
+      }
+      
+      .old-price {
+        font-size: 16px;
+      }
+      
+      .offer-cta {
+        flex-direction: column;
+        max-width: 100%;
+      }
+      
+      .btn-primary, .btn-secondary {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Age Verification -->
+  <div class="age-verification" id="ageVerification">
+    <div class="age-content">
+      <div class="age-icon">
+        <i class="fas fa-shield-alt"></i>
+      </div>
+      <h2>Age Verification</h2>
+      <p>You must be 21 years or older to access this site. By entering, you confirm you are of legal drinking age.</p>
+      <div class="age-buttons">
+        <button class="age-btn verify-btn" onclick="verifyAge()">
+          <i class="fas fa-check"></i> I'm 21 or Older
+        </button>
+        <button class="age-btn exit-btn" onclick="exitSite()">
+          <i class="fas fa-times"></i> Exit Site
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Header -->
+  <header class="top-header">
+    <div class="logo-container">
+      <div class="logo-icon">AP</div>
+      <div class="logo-text">
+        <h1>Aaila <span>पासा</span></h1>
+        <small>Ghar Ghar Mai Delivery</small>
+      </div>
+    </div>
+    <div class="header-actions">
+      <a href="#" class="header-icon" id="searchBtn">
+        <i class="fas fa-search"></i>
+      </a>
+      <a href="#" class="header-icon" onclick="openCart()" id="cartIcon">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-badge">0</span>
+      </a>
+      <a href="#" class="header-icon" id="userBtn">
+        <i class="fas fa-user"></i>
+      </a>
+    </div>
+  </header>
+
+  <!-- Today's Offer Banner with Full-Size Mustang Whiskey Image -->
+  <section class="todays-offer-section">
+    <div class="offer-banner">
+      <div class="offer-header">
+        <div class="offer-tag">
+          <i class="fas fa-bolt"></i>
+          <span>Today's Special</span>
+        </div>
+        <div class="timer">
+          <i class="fas fa-clock"></i>
+          <span id="hours">12</span>:<span id="minutes">34</span>:<span id="seconds">56</span>
+        </div>
+      </div>
+      
+      <div class="offer-content">
+        <h2>Mustang Whiskey 750ML - Limited Time Offer!</h2>
+        <p>Premium blended whiskey matured in 8-year-old scotch casks for exceptional taste. Limited stock available!</p>
+        
+        <div class="offer-price">
+          <div class="current-price">Rs 1,100</div>
+          <div class="old-price">Rs 1,220</div>
+          <div class="discount-badge">
+            Save 10%
+          </div>
+        </div>
+        
+        <div class="offer-cta">
+          <button class="btn-primary" onclick="addTodaysOffer()">
+            <i class="fas fa-bolt"></i> Grab This Deal!
+          </button>
+          <button class="btn-secondary" onclick="viewOfferDetails()">
+            <i class="fas fa-info-circle"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hero Banner -->
+  <section class="hero-section">
+    <div class="hero-banner">
+      <div class="hero-content">
+        <h2>Premium Alcohol Delivered to Your Doorstep</h2>
+        <p>Fast, reliable delivery in Kathmandu Valley</p>
+        <button class="hero-btn" onclick="window.location.href='#products'">
+          Shop Now <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section class="categories-section">
+    <div class="section-header">
+      <h2>Categories</h2>
+      <a href="shop.html" class="see-all">View All <i class="fas fa-chevron-right"></i></a>
+    </div>
+    <div class="categories-grid">
+      <div class="category-card" onclick="filterProducts('whiskey')">
+        <div class="category-icon">
+          <i class="fas fa-glass-whiskey"></i>
+        </div>
+        <h4>Whiskey</h4>
+        <p>Premium Selection</p>
+      </div>
+      <div class="category-card" onclick="filterProducts('beer')">
+        <div class="category-icon">
+          <i class="fas fa-beer"></i>
+        </div>
+        <h4>Beer</h4>
+        <p>Local & Imported</p>
+      </div>
+      <div class="category-card" onclick="filterProducts('wine')">
+        <div class="category-icon">
+          <i class="fas fa-wine-glass-alt"></i>
+        </div>
+        <h4>Wine</h4>
+        <p>Red & White</p>
+      </div>
+      <div class="category-card" onclick="filterProducts('vodka')">
+        <div class="category-icon">
+          <i class="fas fa-cocktail"></i>
+        </div>
+        <h4>Vodka</h4>
+        <p>Premium Brands</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products -->
+  <section class="products-section" id="products">
+    <div class="section-header">
+      <h2>Featured Products</h2>
+      <a href="shop.html" class="see-all">View All <i class="fas fa-chevron-right"></i></a>
+    </div>
+    <div class="products-grid" id="productGrid">
+      <!-- Products will be loaded here -->
+    </div>
+  </section>
+
+  <!-- Special Offers -->
+  <section class="offers-section">
+    <div class="section-header">
+      <h2>More Offers</h2>
+    </div>
+    <div class="offer-card">
+      <div class="offer-badge">7% OFF</div>
+      <div class="offer-content">
+        <h3>Shikhar ICE Rush</h3>
+        <p>Smoking causes lung cancer, heart disease, emphysema and may complicate pregnancy.</p>
+        <div class="offer-price">
+          <span class="current-price">Rs 260</span>
+          <span class="old-price">Rs 280</span>
+        </div>
+        <div class="offer-actions">
+          <button class="offer-btn btn-primary" onclick="addOfferToCart('Shikhar ICE Rush', 260)">
+            <i class="fas fa-cart-plus"></i> Add to Cart
+          </button>
+          <button class="offer-btn btn-outline">
+            <i class="fas fa-info-circle"></i> Details
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item active">
+      <i class="fas fa-home"></i>
+      <span class="nav-label">Home</span>
+    </a>
+    <a href="shop.html" class="nav-item">
+      <i class="fas fa-store"></i>
+      <span class="nav-label">Shop</span>
+    </a>
+    <a href="orders.html" class="nav-item">
+      <i class="fas fa-shopping-bag"></i>
+      <span class="nav-label">Orders</span>
+    </a>
+    <a href="customerprofile.html" class="nav-item">
+      <i class="fas fa-user"></i>
+      <span class="nav-label">Profile</span>
+    </a>
+  </nav>
+
+  <!-- Cart Modal -->
+  <div class="cart-modal" id="cartModal">
+    <div class="cart-content" id="cartContent">
+      <div class="cart-header">
+        <h3>Your Cart</h3>
+        <button class="close-cart" onclick="closeCart()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="cart-items" id="cartItems">
+        <!-- Cart items will be loaded here -->
+      </div>
+      <div class="cart-footer">
+        <div class="cart-totals">
+          <div class="total-row">
+            <span class="total-label">Subtotal</span>
+            <span class="total-value" id="subtotal">Rs 0</span>
+          </div>
+          <div class="total-row">
+            <span class="total-label">Delivery</span>
+            <span class="total-value">Rs 100</span>
+          </div>
+          <div class="total-row grand-total">
+            <span>Total</span>
+            <span id="totalAmount">Rs 0</span>
+          </div>
+        </div>
+        <button class="checkout-btn" onclick="checkout()">
+          <i class="fas fa-shopping-bag"></i> Checkout
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Order Confirmation -->
+  <div class="order-confirmation" id="orderConfirmation">
+    <div class="confirmation-icon">
+      <i class="fas fa-check"></i>
+    </div>
+    <div class="confirmation-content">
+      <h2>Order Confirmed!</h2>
+      <p>Thank you for your purchase</p>
+      <p id="orderNumber">Order #AP-123456</p>
+      <p id="orderTotal">Total: Rs 0</p>
+      <div class="confirmation-actions">
+        <button class="confirmation-btn btn-success" onclick="continueShopping()">
+          Continue Shopping
+        </button>
+        <button class="confirmation-btn btn-whatsapp" onclick="shareViaWhatsApp()">
+          <i class="fab fa-whatsapp"></i> WhatsApp
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Initialize EmailJS
+    emailjs.init('jRW7p7WnU3zCVXhn3');
+
+    // Products Data
+    const products = [
+      {
+        id: 1,
+        name: "Old Durbar Whiskey",
+        category: "whiskey",
+        price: 2950,
+        image: "https://i.ibb.co/NdBR861Z/old-durbar-750ml-73537.jpg",
+        badge: "Best Seller"
+      },
+      {
+        id: 2,
+        name: "Canvas Sweet Red Wine",
+        category: "wine",
+        price: 895,
+        image: "https://i.ibb.co/fGnwYyV2/9d6a25ad33d78e416a97696d4a8e1587.jpg",
+        badge: "Popular"
+      },
+      {
+        id: 3,
+        name: "Nepal Ice 650ML",
+        category: "beer",
+        price: 325,
+        image: "https://i.ibb.co/QFc0rcmm/FHb-F8a-Js7a-BW0-Hqe-LJi2r7-Kwox7u-NWAj2sge-VOg-D.png"
+      },
+      {
+        id: 4,
+        name: "Tuborg Strong 650ML",
+        category: "beer",
+        price: 410,
+        image: "https://i.ibb.co/Kj1qBJKj/Tuborg-650-ML-Bottle.png",
+        badge: "New"
+      },
+      {
+        id: 5,
+        name: "8848 Vodka 375ML",
+        category: "vodka",
+        price: 1150,
+        image: "https://i.ibb.co/HLqhyd4Y/8848-Vodka.jpg"
+      },
+      {
+        id: 6,
+        name: "NUDE Superior Vodka",
+        category: "vodka",
+        price: 2339,
+        image: "https://i.ibb.co/cX3Zq9n7/NUDE-Superior-Vodka-Buy-Online.jpg"
+      }
+    ];
+
+    // Today's Offer Product
+    const todaysOffer = {
+      id: 100,
+      name: "Mustang Whiskey 750ML",
+      category: "special-offer",
+      price: 1100,
+      originalPrice: 1220,
+      image: "https://content.sharesansar.com/photos/FEB12/March%2030%2C%202022/Aug%202%202022/mustangsep25.png",
+      description: "Premium blended whiskey matured in 8-year-old scotch casks for exceptional taste. Limited stock available!"
+    };
+
+    // Cart functionality
+    let cart = [];
+    let deliveryFee = 100;
+
+    // ===== AGE VERIFICATION WITH LOCALSTORAGE =====
+function verifyAge() {
+    // Save to localStorage immediately
+    const verificationData = {
+        verified: true,
+        verifiedAt: new Date().toISOString(),
+        expiry: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString() // 30 days expiry
+    };
+    
+    localStorage.setItem('aailaPasa_ageVerified', JSON.stringify(verificationData));
+    
+    // Fade out animation
+    const ageVerification = document.getElementById('ageVerification');
+    ageVerification.style.opacity = '0';
+    ageVerification.style.transition = 'opacity 0.3s ease';
+    
+    // Remove from DOM after animation
+    setTimeout(() => {
+        ageVerification.style.display = 'none';
+        // Initialize the rest of the app
+        initializeApp();
+    }, 300);
+}
+
+function exitSite() {
+    window.location.href = "https://www.drinkaware.co.uk/";
+}
+
+// Check age verification on load
+function checkAgeVerification() {
+    try {
+        const verificationData = localStorage.getItem('aailaPasa_ageVerified');
+        
+        if (verificationData) {
+            const data = JSON.parse(verificationData);
+            
+            // Check if verification has expired
+            if (data.expiry) {
+                const expiryDate = new Date(data.expiry);
+                const now = new Date();
+                
+                if (now < expiryDate) {
+                    // Still valid, hide verification
+                    document.getElementById('ageVerification').style.display = 'none';
+                    initializeApp(); // Initialize the rest of the app
+                    return;
+                } else {
+                    // Expired, remove and show verification
+                    localStorage.removeItem('aailaPasa_ageVerified');
+                }
+            } else {
+                // No expiry date, assume permanent verification
+                document.getElementById('ageVerification').style.display = 'none';
+                initializeApp(); // Initialize the rest of the app
+                return;
+            }
+        }
+        
+        // Show verification if not verified or expired
+        const ageVerification = document.getElementById('ageVerification');
+        ageVerification.style.display = 'flex';
+        ageVerification.style.opacity = '1';
+        
+    } catch (error) {
+        console.error('Error checking age verification:', error);
+        // Show verification on error
+        document.getElementById('ageVerification').style.display = 'flex';
+        document.getElementById('ageVerification').style.opacity = '1';
+    }
+}
+
+// Initialize the rest of the app (moved from window.onload)
+function initializeApp() {
+    displayProducts();
+    updateCartBadge();
+    updateCountdown(); // Initialize countdown
+    
+    // Update countdown every second
+    setInterval(updateCountdown, 1000);
+    
+    // Load cart from localStorage if exists
+    const savedCart = localStorage.getItem('aailaPasaCart');
+    if (savedCart) {
+        try {
+            cart = JSON.parse(savedCart);
+            updateCartBadge();
+        } catch (e) {
+            console.log('Error loading cart:', e);
+        }
+    }
+    
+    // Save cart to localStorage on changes
+    setInterval(() => {
+        localStorage.setItem('aailaPasaCart', JSON.stringify(cart));
+    }, 1000);
+    
+    // Start checking for chat widget
+    setTimeout(makeChatMovable, 3000);
+}
+
+// Replace your existing window.onload with this:
+window.onload = function() {
+    // Check age verification first
+    checkAgeVerification();
+    
+    // Add animation styles for chat widget
+    const styleSheet = document.createElement("style");
+    styleSheet.type = "text/css";
+    styleSheet.innerText = `
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+        
+        #tawkchat-container, #tawkchat-minified-container {
+            transition: transform 0.2s ease, opacity 0.2s ease !important;
+        }
+    `;
+    document.head.appendChild(styleSheet);
+};
+
+    // Countdown Timer
+    function updateCountdown() {
+      const now = new Date();
+      const endOfDay = new Date();
+      endOfDay.setHours(23, 59, 59, 999);
+      
+      const diff = endOfDay - now;
+      
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      
+      document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+      document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+      document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+    }
+
+    // Today's Offer Functions
+    function addTodaysOffer() {
+      // Create a special effect when adding today's offer
+      const offerBtn = document.querySelector('.offer-banner .btn-primary');
+      const originalText = offerBtn.innerHTML;
+      
+      // Animation effect
+      offerBtn.innerHTML = '<i class="fas fa-check"></i> Added!';
+      offerBtn.style.background = '#28A745';
+      
+      // Add to cart
+      addToCart(todaysOffer);
+      
+      // Show success message
+      showSpecialFeedback('🎉 Today\'s deal added to cart!', '#28A745');
+      
+      // Reset button after 2 seconds
+      setTimeout(() => {
+        offerBtn.innerHTML = originalText;
+        offerBtn.style.background = '';
+      }, 2000);
+    }
+
+    function viewOfferDetails() {
+      // Show details in a modal or alert
+      alert(`🌟 ${todaysOffer.name}\n\n${todaysOffer.description}\n\n💰 Original Price: Rs ${todaysOffer.originalPrice}\n🔥 Today's Price: Rs ${todaysOffer.price}\n🎯 Save: Rs ${todaysOffer.originalPrice - todaysOffer.price} (${Math.round((todaysOffer.originalPrice - todaysOffer.price) / todaysOffer.originalPrice * 100)}%)\n\nLimited stock - Offer ends today!`);
+    }
+
+    // Cart functions
+    function openCart() {
+      document.getElementById('cartModal').style.display = 'flex';
+      setTimeout(() => {
+        document.getElementById('cartContent').style.transform = 'translateX(0)';
+      }, 10);
+      updateCartDisplay();
+    }
+
+    function closeCart() {
+      document.getElementById('cartContent').style.transform = 'translateX(100%)';
+      setTimeout(() => {
+        document.getElementById('cartModal').style.display = 'none';
+      }, 300);
+    }
+
+    function addToCart(product) {
+      const existingItem = cart.find(item => item.id === product.id);
+      
+      if (existingItem) {
+        existingItem.quantity++;
+      } else {
+        cart.push({
+          ...product,
+          quantity: 1
+        });
+      }
+      
+      updateCartBadge();
+      showAddToCartFeedback(product);
+    }
+
+    function removeFromCart(productId) {
+      cart = cart.filter(item => item.id !== productId);
+      updateCartBadge();
+      updateCartDisplay();
+    }
+
+    function updateQuantity(productId, change) {
+      const item = cart.find(item => item.id === productId);
+      if (item) {
+        item.quantity = Math.max(1, item.quantity + change);
+        if (item.quantity === 0) {
+          removeFromCart(productId);
+        } else {
+          updateCartDisplay();
+        }
+      }
+    }
+
+    function updateCartBadge() {
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      const badge = document.querySelector('.cart-badge');
+      badge.textContent = totalItems;
+      badge.style.display = totalItems > 0 ? 'flex' : 'none';
+    }
+
+    function updateCartDisplay() {
+      const cartItems = document.getElementById('cartItems');
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      const total = subtotal + deliveryFee;
+      
+      cartItems.innerHTML = cart.map(item => `
+        <div class="cart-item">
+          <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+          <div class="cart-item-info">
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-price">Rs ${item.price * item.quantity}</div>
+            <div class="cart-item-actions">
+              <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
+              <input type="text" class="quantity-input" value="${item.quantity}" readonly>
+              <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+              <button class="remove-item" onclick="removeFromCart(${item.id})">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+      
+      document.getElementById('subtotal').textContent = `Rs ${subtotal}`;
+      document.getElementById('totalAmount').textContent = `Rs ${total}`;
+    }
+
+    // Checkout function
+    function checkout() {
+      if (cart.length === 0) {
+        alert('Your cart is empty!');
+        return;
+      }
+      
+      const orderNumber = 'AP-' + Date.now().toString().slice(-6);
+      const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0) + deliveryFee;
+      
+      document.getElementById('orderNumber').textContent = `Order #${orderNumber}`;
+      document.getElementById('orderTotal').textContent = `Total: Rs ${total}`;
+      
+      closeCart();
+      document.getElementById('orderConfirmation').style.display = 'flex';
+    }
+
+    // Continue shopping
+    function continueShopping() {
+      document.getElementById('orderConfirmation').style.display = 'none';
+      cart = [];
+      updateCartBadge();
+    }
+
+    // WhatsApp sharing
+    function shareViaWhatsApp() {
+      const orderNumber = document.getElementById('orderNumber').textContent;
+      const total = document.getElementById('orderTotal').textContent;
+      const message = `Hello Aaila Pasa!\n\n${orderNumber}\n${total}\n\nPlease process my order.`;
+      const whatsappUrl = `https://wa.me/9779813197704?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+    }
+
+    // Product display
+    function displayProducts(filter = 'all') {
+      const grid = document.getElementById('productGrid');
+      const filteredProducts = filter === 'all' 
+        ? products 
+        : products.filter(p => p.category === filter);
+      
+      grid.innerHTML = filteredProducts.map(product => `
+        <div class="product-card">
+          ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
+          <img src="${product.image}" alt="${product.name}" class="product-image">
+          <div class="product-info">
+            <h3>${product.name}</h3>
+            <div class="product-category">
+              <i class="fas fa-tag"></i> ${product.category.charAt(0).toUpperCase() + product.category.slice(1)}
+            </div>
+            <div class="product-price">
+              <span class="price">Rs ${product.price}</span>
+              <button class="add-to-cart" onclick="addToCart(${JSON.stringify(product).replace(/"/g, '&quot;')})">
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Filter products
+    function filterProducts(category) {
+      displayProducts(category);
+      
+      // Update active category in UI
+      document.querySelectorAll('.category-card').forEach(card => {
+        card.style.borderColor = 'var(--light-gray)';
+      });
+      
+      const activeCard = Array.from(document.querySelectorAll('.category-card'))
+        .find(card => card.querySelector('h4').textContent.toLowerCase().includes(category));
+      
+      if (activeCard) {
+        activeCard.style.borderColor = 'var(--primary)';
+      }
+    }
+
+    // Special offer add to cart
+    function addOfferToCart(name, price) {
+      const product = {
+        id: Date.now(),
+        name: name,
+        price: price,
+        image: "https://daruadda.com/wp-content/uploads/2022/11/Shikhar-Ice-Rush-20s.png",
+        category: "special-offer"
+      };
+      
+      addToCart(product);
+    }
+
+    // Show feedback when adding to cart
+    function showAddToCartFeedback(product) {
+      // Create feedback element
+      const feedback = document.createElement('div');
+      feedback.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: var(--success);
+        color: white;
+        padding: 12px 20px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        z-index: 10000;
+        animation: slideInRight 0.3s ease;
+      `;
+      feedback.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <i class="fas fa-check-circle" style="font-size: 20px;"></i>
+          <div>
+            <div style="font-weight: 600;">Added to cart!</div>
+            <div style="font-size: 12px; opacity: 0.9;">${product.name}</div>
+          </div>
+        </div>
+      `;
+      
+      document.body.appendChild(feedback);
+      
+      setTimeout(() => {
+        feedback.style.animation = 'slideOutRight 0.3s ease';
+        setTimeout(() => feedback.remove(), 300);
+      }, 2000);
+    }
+
+    // Special feedback for today's offer
+    function showSpecialFeedback(message, color) {
+      const feedback = document.createElement('div');
+      feedback.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: ${color};
+        color: white;
+        padding: 16px 24px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-lg);
+        z-index: 10000;
+        animation: slideInRight 0.3s ease;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        max-width: 300px;
+      `;
+      feedback.innerHTML = `
+        <i class="fas fa-gift" style="font-size: 24px;"></i>
+        <div>${message}</div>
+      `;
+      
+      document.body.appendChild(feedback);
+      
+      setTimeout(() => {
+        feedback.style.animation = 'slideOutRight 0.3s ease';
+        setTimeout(() => feedback.remove(), 300);
+      }, 3000);
+    }
+
+    // TAWK.TO CHAT WIDGET DRAGGABLE FUNCTIONALITY
+    function makeChatMovable() {
+      // Wait for Tawk.to to load
+      const checkChatWidget = setInterval(() => {
+        const chatContainer = document.querySelector('#tawkchat-container, #tawkchat-minified-container');
+        
+        if (chatContainer) {
+          clearInterval(checkChatWidget);
+          setupDraggableChat(chatContainer);
+        }
+      }, 1000);
+    }
+
+    function setupDraggableChat(element) {
+      let isDragging = false;
+      let currentX;
+      let currentY;
+      let initialX;
+      let initialY;
+      let xOffset = 0;
+      let yOffset = 0;
+      
+      // Get computed styles for initial position
+      const computedStyle = window.getComputedStyle(element);
+      if (computedStyle.bottom !== 'auto') {
+        yOffset = window.innerHeight - element.getBoundingClientRect().bottom;
+      }
+      if (computedStyle.right !== 'auto') {
+        xOffset = window.innerWidth - element.getBoundingClientRect().right;
+      }
+      
+      element.style.cursor = 'move';
+      element.style.position = 'fixed';
+      
+      // Touch events for mobile
+      element.addEventListener("touchstart", dragStart, false);
+      element.addEventListener("touchend", dragEnd, false);
+      element.addEventListener("touchmove", drag, false);
+      
+      // Mouse events for desktop
+      element.addEventListener("mousedown", dragStart, false);
+      element.addEventListener("mouseup", dragEnd, false);
+      element.addEventListener("mousemove", drag, false);
+      
+      function dragStart(e) {
+        if (e.type === "touchstart") {
+          initialX = e.touches[0].clientX - xOffset;
+          initialY = e.touches[0].clientY - yOffset;
+        } else {
+          initialX = e.clientX - xOffset;
+          initialY = e.clientY - yOffset;
+        }
+        
+        // Only start dragging if clicking on the header/icon area
+        const target = e.target;
+        const isHeader = target.closest('.tawk-header, #tawkchat-minified-icon, .tawk-min-chat-icon');
+        
+        if (isHeader || e.type === "touchstart") {
+          isDragging = true;
+          element.style.opacity = '0.9';
+          element.style.boxShadow = '0 8px 25px rgba(0,0,0,0.3)';
+        }
+      }
+      
+      function dragEnd() {
+        initialX = currentX;
+        initialY = currentY;
+        isDragging = false;
+        element.style.opacity = '1';
+        element.style.boxShadow = '';
+        
+        // Save position to localStorage
+        saveChatPosition(xOffset, yOffset);
+      }
+      
+      function drag(e) {
+        if (isDragging) {
+          e.preventDefault();
+          
+          if (e.type === "touchmove") {
+            currentX = e.touches[0].clientX - initialX;
+            currentY = e.touches[0].clientY - initialY;
+          } else {
+            currentX = e.clientX - initialX;
+            currentY = e.clientY - initialY;
+          }
+          
+          xOffset = currentX;
+          yOffset = currentY;
+          
+          setTranslate(currentX, currentY, element);
+        }
+      }
+      
+      function setTranslate(xPos, yPos, el) {
+        el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
+        el.style.right = "auto";
+        el.style.bottom = "auto";
+        el.style.left = "0";
+        el.style.top = "0";
+      }
+      
+      // Load saved position
+      function loadChatPosition() {
+        const savedPos = localStorage.getItem('chatWidgetPosition');
+        if (savedPos) {
+          try {
+            const pos = JSON.parse(savedPos);
+            if (pos && typeof pos.x === 'number' && typeof pos.y === 'number') {
+              xOffset = pos.x;
+              yOffset = pos.y;
+              setTranslate(xOffset, yOffset, element);
+            }
+          } catch (e) {
+            console.log('Error loading chat position:', e);
+          }
+        }
+      }
+      
+      function saveChatPosition(x, y) {
+        localStorage.setItem('chatWidgetPosition', JSON.stringify({ x, y }));
+      }
+      
+      // Load saved position after a delay
+      setTimeout(loadChatPosition, 2000);
+      
+      // Reset position button (optional)
+      addResetButton(element);
+    }
+    
+    function addResetButton(element) {
+      // Add a small reset button to the chat widget
+      setTimeout(() => {
+        const resetBtn = document.createElement('div');
+        resetBtn.innerHTML = '⟳';
+        resetBtn.style.cssText = `
+          position: absolute;
+          top: -25px;
+          right: 0;
+          background: var(--primary);
+          color: white;
+          width: 25px;
+          height: 25px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          font-size: 14px;
+          font-weight: bold;
+          z-index: 10001;
+          opacity: 0.8;
+          transition: opacity 0.3s;
+        `;
+        resetBtn.title = 'Reset Position';
+        resetBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          localStorage.removeItem('chatWidgetPosition');
+          element.style.transform = 'translate3d(0, 0, 0)';
+          element.style.right = '20px';
+          element.style.bottom = '90px';
+          element.style.left = 'auto';
+          element.style.top = 'auto';
+        });
+        
+        element.style.position = 'relative';
+        element.appendChild(resetBtn);
+        
+        // Show reset button on hover
+        element.addEventListener('mouseenter', () => {
+          resetBtn.style.opacity = '1';
+        });
+        element.addEventListener('mouseleave', () => {
+          resetBtn.style.opacity = '0.8';
+        });
+      }, 3000);
+    }
+
+    // Initialize movable chat
+    window.addEventListener('load', function() {
+      // Start checking for chat widget after Tawk.to loads
+      setTimeout(makeChatMovable, 3000);
+      
+      // Also listen for Tawk API events
+      if (typeof Tawk_API !== 'undefined') {
+        Tawk_API.onLoad = function() {
+          setTimeout(makeChatMovable, 1000);
+        };
+      }
+    });
+
+    // Initialize
+    window.onload = function() {
+      // THIS MUST BE CALLED FIRST - Check age verification before anything else
+      checkAgeVerification();
+      
+      // Then initialize the rest of the app
+      displayProducts();
+      updateCartBadge();
+      updateCountdown(); // Initialize countdown
+      
+      // Update countdown every second
+      setInterval(updateCountdown, 1000);
+      
+      // Load cart from localStorage if exists
+      const savedCart = localStorage.getItem('aailaPasaCart');
+      if (savedCart) {
+        try {
+          cart = JSON.parse(savedCart);
+          updateCartBadge();
+        } catch (e) {
+          console.log('Error loading cart:', e);
+        }
+      }
+      
+      // Save cart to localStorage on changes
+      setInterval(() => {
+        localStorage.setItem('aailaPasaCart', JSON.stringify(cart));
+      }, 1000);
+      
+      // Add animation styles for chat widget
+      const styleSheet = document.createElement("style");
+      styleSheet.type = "text/css";
+      styleSheet.innerText = `
+        @keyframes slideInRight {
+          from { transform: translateX(100%); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slideOutRight {
+          from { transform: translateX(0); opacity: 1; }
+          to { transform: translateX(100%); opacity: 0; }
+        }
+        
+        #tawkchat-container, #tawkchat-minified-container {
+          transition: transform 0.2s ease, opacity 0.2s ease !important;
+        }
+      `;
+      document.head.appendChild(styleSheet);
+    };
+  </script>
+  
+  <!--Start of Tawk.to Script-->
+  <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+      var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+      s1.async=true;
+      s1.src='https://embed.tawk.to/6853eb59e1502f190c3cc184/1iu3sumdc';
+      s1.charset='UTF-8';
+      s1.setAttribute('crossorigin','*');
+      s0.parentNode.insertBefore(s1,s0);
+    })();
+  </script>
+  <!--End of Tawk.to Script-->
+  <script type="module">
+  // Firebase CDN (2026 compatible)
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+  import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  // Your Firebase Config
+  const firebaseConfig = {
+    apiKey: "AIzaSyCt2OzSF7JR6Euh7lPTgHZaQDpBigT0J6E",
+    authDomain: "aaila-pasa-acbcb.firebaseapp.com",
+    projectId: "aaila-pasa-acbcb",
+    storageBucket: "aaila-pasa-acbcb.firebasestorage.app",
+    messagingSenderId: "225067351400",
+    appId: "1:225067351400:web:8d80a9ab3d20cbcaadaadd",
+    measurementId: "G-Z0RSS4NLET"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+
+  // Make Firebase available globally
+  window.firebaseApp = app;
+  window.db = db;
+  window.auth = auth;
+
+  console.log("🔥 Firebase connected successfully");
+</script>
+</body>
+</html>

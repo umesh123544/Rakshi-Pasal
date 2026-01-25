@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us - Aaila Pasa</title>
+<link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/YBnWh99Q/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png">
+<link rel="icon" type="image/png" sizes="64x64" href="https://i.ibb.co/YBnWh99Q/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png">
+<link rel="icon" type="image/png" sizes="128x128" href="https://i.ibb.co/YBnWh99Q/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/YBnWh99Q/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      background: #111;
+      color: white;
+      flex-wrap: wrap;
+    }
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+    .logo {
+      font-size: 32px;
+      font-weight: 700;
+      animation: fadeInDown 1s ease-in-out;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+      color: white;
+    }
+    .logo span {
+      color: #ff6600;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+    }
+    .brand-subtitle {
+      font-size: 12px;
+      margin: 0;
+      color: #ccc;
+    }
+    .header-logo img {
+      height: 110px; width: 110px;
+      object-fit: contain;
+      border-radius: 8px;
+      animation: zoomIn 1.2s ease-in-out;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      padding: 0;
+      margin: 0;
+    }
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+    }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      margin: 4px 0;
+    }
+    .mobile-nav {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      background-color: #111;
+      overflow: hidden;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      padding: 10px;
+      border-top: 1px solid #333;
+      color: white;
+      text-decoration: none;
+    }
+    .nav__right {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .search-bar {
+      display: flex;
+      gap: 5px;
+      margin-top: 10px;
+      height: 32px;
+      align-items: center;
+    }
+    .search-bar input {
+      padding: 5px;
+      flex: 1;
+    }
+    .search-bar button {
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    
+    /* About Page Specific Styles */
+    .about-hero {
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url('https://i.ibb.co/HftL0HSw/Untitled-design-4.png') no-repeat center center/cover;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      flex-direction: column;
+      padding: 20px;
+      margin-top: 140px;
+      animation: fadeIn 1.5s ease;
+    }
+    
+    .about-hero h1 {
+      font-size: 34px;
+      margin: 0;
+      font-weight: bold;
+    }
+    
+    .about-container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    
+    .about-section {
+      margin-bottom: 50px;
+    }
+    
+    .about-section h2 {
+      color: #ff6600;
+      margin-bottom: 20px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .about-section h2::after {
+      content: "";
+      position: absolute;
+      width: 50%;
+      height: 4px;
+      background: linear-gradient(to right, #ff6600, #ff9933);
+      bottom: -8px;
+      left: 0;
+      border-radius: 2px;
+    }
+    
+    .about-section p {
+      line-height: 1.8;
+      color: #555;
+    }
+    
+    .mission-vision {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin: 40px 0;
+    }
+    
+    .mission-card, .vision-card {
+      background: #f9f9f9;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .mission-card h3, .vision-card h3 {
+      color: #ff6600;
+      margin-top: 0;
+    }
+    
+    .team-section {
+      text-align: center;
+      margin-top: 60px;
+    }
+    
+    .team-members {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-top: 30px;
+    }
+    
+    .team-member {
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .team-member img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+      border: 3px solid #ff6600;
+    }
+    
+    .team-member h3 {
+      margin: 10px 0 5px;
+    }
+    
+    .team-member p {
+      color: #777;
+      margin: 0;
+    }
+    
+    /* Updated Footer Styles */
+    footer {
+      background: #000;
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      text-align: center;
+    }
+    
+    .footer-column h3 {
+      color: #ff6600;
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+    }
+    
+    .footer-column p, 
+    .footer-column a {
+      color: white;
+      margin-bottom: 10px;
+      display: block;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .footer-column a:hover {
+      color: #ff6600;
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+      justify-content: center;
+    }
+    
+    .social-links a {
+      color: white;
+      background: rgba(255, 255, 255, 0.1);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+    
+    .social-links a:hover {
+      background: #ff6600;
+      transform: translateY(-3px);
+    }
+    
+    .copyright {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: #aaa;
+      font-size: 0.9rem;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes zoomIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+    @media (max-width: 768px) {
+      header { flex-direction: column; align-items: stretch; gap: 10px; }
+      nav ul { display: none; }
+      .hamburger { display: flex; }
+      .about-hero {
+        margin-top: 180px;
+        height: 250px;
+      }
+      .about-hero h1 {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+<!-- Header -->
+<header>
+  <div class="header-container">
+    <div class="logo">
+      Aaila <span>पासा</span>
+      <p class="brand-subtitle">Ghar Ghar Mai Delivery</p>
+    </div>
+    <div class="hamburger" onclick="toggleMobileMenu()">
+      <div></div><div></div><div></div>
+    </div>
+  </div>
+  <nav>
+    <ul class="desktop-nav">
+      <li><a href="home.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="mobile-nav" id="mobileNav">
+      <a href="home.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+  <div class="nav__right">
+    <div class="search-bar">
+      <input type="text" placeholder="Search..." />
+      <button>🔍</button>
+    </div>
+  </div>
+</header>
+
+<!-- About Hero Section -->
+<section class="about-hero">
+  <h1>ABOUT US</h1>
+  <p>At Aaila पासा, we’re a passionate team of connoisseurs and tech enthusiasts dedicated to revolutionizing the way you experience premium liquor.</p>
+</section>
+
+<!-- About Content -->
+<div class="about-container">
+  <div class="about-section">
+    <h2>Our Story</h2>
+    <p>Aaila Pasa was founded in 2020 with a simple mission: to bring Nepal's finest alcoholic beverages directly to your doorstep. What started as a small delivery service in Kathmandu has grown into one of the most trusted liquor delivery platforms in the country.</p>
+    <p>Our name "Aaila पासा" reflects our commitment to being your reliable neighbor ("पासा") who brings ("aaila") quality products with convenience and care. We take pride in our curated selection of products, exceptional customer service, and fast, reliable delivery.</p>
+  </div>
+  
+  <div class="mission-vision">
+    <div class="mission-card">
+      <h3>Our Mission</h3>
+      <p>To revolutionize liquor retail in Nepal by providing a seamless online shopping experience with the widest selection of premium products, competitive prices, and fastest delivery service.</p>
+    </div>
+    
+    <div class="vision-card">
+      <h3>Our Vision</h3>
+      <p>To become Nepal's most trusted liquor delivery service, known for quality, convenience, and customer satisfaction, while promoting responsible drinking.</p>
+    </div>
+  </div>
+  
+  <div class="about-section">
+    <h2>Why Choose Us?</h2>
+    <p>At Aaila पासा, we go beyond just delivering liquor. Here's what sets us apart:</p>
+    <ul style="line-height: 1.8; color: #555;">
+      <li><strong>Curated Selection:</strong> We carefully select each product in our inventory to ensure quality and variety.</li>
+      <li><strong>Fast Delivery:</strong> Our efficient delivery network ensures your order reaches you within hours.</li>
+      <li><strong>Competitive Pricing:</strong> We offer the best prices without compromising on quality.</li>
+      <li><strong>Customer Service:</strong> Our team is available 24/7 to assist with any queries or special requests.</li>
+      <li><strong>Responsible Service:</strong> We verify age and promote responsible drinking practices.</li>
+    </ul>
+  </div>
+  
+  <div class="team-section">
+    <h2>Meet Our Team</h2>
+    <p>The passionate individuals behind Aaila Pasa's success</p>
+    
+    <div class="team-members">
+      <div class="team-member">
+        <img src="https://i.ibb.co/fzxvppcK/Picsart-25-04-22-21-20-17-826.jpg" alt="Team Member">
+        <h3>Rojesh Man Shrestha</h3>
+        <p>Founder & CEO</p>
+      </div>
+      
+      <div class="team-member">
+        <img src="https://i.ibb.co/FLL4m9WB/Picsart-25-04-22-21-28-23-565.png" alt="Team Member">
+        <h3>Umesh Shrestha</h3>
+        <p>Operations Manager</p>
+      </div>
+      
+      <div class="team-member">
+        <img src="https://i.ibb.co/YT32JtGk/Picsart-25-04-22-21-06-22-356.jpg" alt="Team Member">
+        <h3>Amit Lama</h3>
+        <p>Head of Delivery</p>
+      </div>
+      
+      <div class="team-member">
+        <img src="https://i.ibb.co/HDy88fZF/IMG-20250422-215102.jpg" alt="Team Member">
+        <h3>Suchin Maharjan</h3>
+        <p>Head of Customer Service</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-content">
+      <div class="footer-column">
+        <h3>Aaila पासा</h3>
+        <p>Your trusted partner for quality products with convenient home delivery service.</p>
+        <div class="social-links">
+          <a href="youhttps://www.facebook.com/profile.php?id=61575805491867"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/aailapasa25?igsh=MWtoaDdtY3dqdWZkdQ=="><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      
+      <div class="footer-column">
+        <h3>Quick Links</h3>
+        <a href="home.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      
+      <div class="footer-column">
+        <h3>Customer Service</h3>
+        <a href="faqs.html">FAQs</a>
+        <a href="shipping.html">Shipping Policy</a>
+        <a href="return.html">Return Policy</a>
+        <a href="privacy.html">Privacy Policy</a>
+      </div>
+      
+      <div class="footer-column">
+        <h3>Contact Us</h3>
+        <p><i class="fas fa-map-marker-alt"></i> Kathmandu, Nepal</p>
+        <p><i class="fas fa-phone"></i> +977 9813197704</p>
+        <p><i class="fas fa-envelope"></i> aailapasa@gmail.com</p>
+      </div>
+    </div>
+    
+    <div class="copyright">
+      &copy; 2025 Aaila पासा. All rights reserved.
+    </div>
+</footer>
+
+<script>
+  // Toggle mobile navigation
+  function toggleMobileMenu() {
+    const mobileNav = document.getElementById("mobileNav");
+    mobileNav.classList.toggle("open");
+  }
+</script>
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/6853eb59e1502f190c3cc184/1iu3sumdc';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+</body>
+</html>

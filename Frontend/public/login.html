@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#ff6600">
+  <title>Aaila Pasa Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #ff6600;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      touch-action: manipulation;
+    }
+
+    .auth-container {
+      width: 100%;
+      max-width: 400px;
+      padding: 20px;
+    }
+
+    .auth-box {
+      background: white;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      animation: fadeIn 0.3s ease;
+      text-align: center;
+      display: none;
+    }
+
+    .auth-box.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .logo img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #555;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-family: 'Poppins', sans-serif;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      border-color: #ff6600;
+      box-shadow: 0 0 0 2px rgba(255,102,0,0.2);
+      outline: none;
+    }
+
+    .auth-btn {
+      width: 100%;
+      padding: 12px;
+      background: #ff6600;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .auth-btn:hover {
+      background: #e65c00;
+    }
+
+    .auth-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    .error-message {
+      color: #dc3545;
+      margin-top: 5px;
+      font-size: 14px;
+      min-height: 20px;
+    }
+
+    .success-message {
+      color: #28a745;
+      margin-top: 5px;
+      font-size: 14px;
+      min-height: 20px;
+    }
+
+    .auth-links {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .auth-link {
+      color: #ff6600;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .auth-link:hover {
+      text-decoration: underline;
+    }
+
+    .loading {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Social Login Styles */
+    .social-login {
+      margin: 25px 0;
+      text-align: center;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 20px 0;
+      color: #777;
+      font-size: 14px;
+    }
+
+    .divider::before, .divider::after {
+      content: "";
+      flex: 1;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .divider::before {
+      margin-right: 10px;
+    }
+
+    .divider::after {
+      margin-left: 10px;
+    }
+
+    .social-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .social-login-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 15px;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 1px solid #ddd;
+      background: white;
+      color: #333;
+    }
+
+    .social-login-btn:hover {
+      background: #f5f5f5;
+    }
+
+    .social-login-btn i {
+      margin-right: 10px;
+      font-size: 18px;
+    }
+
+    .google-btn {
+      border-color: #4285F4;
+      color: #4285F4;
+    }
+
+    .facebook-btn {
+      border-color: #4267B2;
+      color: #4267B2;
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-container">
+    <!-- Login Form -->
+    <div class="auth-box active" id="loginBox">
+      <div class="logo">
+        <img src="https://i.ibb.co/4wqGSsw3/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png" alt="Aaila Pasa Logo">
+      </div>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="username" class="form-label">Username</label>
+          <input type="text" class="form-control" id="username" required>
+        </div>
+        <div class="form-group">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" required>
+        </div>
+        <div id="loginError" class="error-message"></div>
+        <button type="submit" class="auth-btn" id="loginBtn">
+          <span id="loginBtnText">Login</span>
+        </button>
+
+         <!-- Social Login Section -->
+        <div class="social-login">
+         <div class="divider">Login with</div>
+    <div class="social-buttons">
+      <a href="https://accounts.google.com/v3/signin/identifier?dsh=S1812573153%3A1655944654029516&flowEntry=ServiceLogin&flowName=WebLiteSignIn&ifkv=AX3vH39E0iYVTmn-NoMNM_C35EPrno8LWsRx2Qhr0HApkVLZ-Zc_Vql8ouaSQOiXzEmthrpOPAV5" class="social-login-btn google-btn" onclick="handleGoogleLogin(event)">
+        <i class="fab fa-google"></i> Google
+      </a>
+      <a href="https://m.facebook.com/login/" class="social-login-btn facebook-btn" onclick="checkFacebookLogin(event)">
+        <i class="fab fa-facebook-f"></i> Facebook
+      </a>
+    </div>
+  </div>
+
+    <!-- Signup Form -->
+    <div class="auth-box" id="signupBox">
+      <div class="logo">
+        <img src="https://i.ibb.co/4wqGSsw3/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png" alt="Aaila Pasa Logo">
+      </div>
+      <form id="signupForm">
+        <div class="form-group">
+          <label for="fullName" class="form-label">Full Name</label>
+          <input type="text" class="form-control" id="fullName" required>
+        </div>
+        <div class="form-group">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" required>
+        </div>
+        <div class="form-group">
+          <label for="newPassword" class="form-label">Password</label>
+          <input type="password" class="form-control" id="newPassword" required minlength="8">
+          <small style="color: #777; display: block; margin-top: 5px;">Must be at least 8 characters</small>
+        </div>
+        <div id="signupError" class="error-message"></div>
+        <button type="submit" class="auth-btn" id="signupBtn">
+          <span id="signupBtnText">Sign Up</span>
+        </button>
+        <div class="auth-links">
+          <a class="auth-link" id="showLoginFromSignup">Back to Login</a>
+        </div>
+      </form>
+    </div>
+
+    <!-- Forgot Password Form -->
+    <div class="auth-box" id="forgotBox">
+      <div class="logo">
+        <img src="https://i.ibb.co/4wqGSsw3/30a825ad-93b8-400c-a1a2-fc658d578ce0-7.png" alt="Aaila Pasa Logo">
+      </div>
+      <form id="forgotForm">
+        <div class="form-group">
+          <label for="forgotEmail" class="form-label">Registered Email</label>
+          <input type="email" class="form-control" id="forgotEmail" required>
+        </div>
+        <div id="forgotError" class="error-message"></div>
+        <div id="forgotSuccess" class="success-message"></div>
+        <button type="submit" class="auth-btn" id="forgotBtn">
+          <span id="forgotBtnText">Reset Password</span>
+        </button>
+        <div class="auth-links">
+          <a class="auth-link" id="showLoginFromForgot">Back to Login</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Google Identity Services SDK -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  
+  <!-- Facebook SDK -->
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+
+  <script>
+    // Form management
+    function showForm(formName) {
+      document.querySelectorAll('.auth-box').forEach(form => form.classList.remove('active'));
+      document.getElementById(formName + 'Box').classList.add('active');
+      clearAllErrors();
+    }
+
+    function clearAllErrors() {
+      document.querySelectorAll('.error-message, .success-message').forEach(el => {
+        el.textContent = '';
+      });
+    }
+
+    // Form switching
+    document.getElementById('showSignup').addEventListener('click', (e) => {
+      e.preventDefault();
+      showForm('signup');
+    });
+
+    document.getElementById('showForgot').addEventListener('click', (e) => {
+      e.preventDefault();
+      showForm('forgot');
+    });
+
+    document.getElementById('showLoginFromSignup').addEventListener('click', (e) => {
+      e.preventDefault();
+      showForm('login');
+    });
+
+    document.getElementById('showLoginFromForgot').addEventListener('click', (e) => {
+      e.preventDefault();
+      showForm('login');
+    });
+
+    // Loading state
+    function setLoading(button, isLoading) {
+      if (isLoading) {
+        button.disabled = true;
+        const span = button.querySelector('span');
+        span.innerHTML = `<span class="loading"></span> Processing...`;
+      } else {
+        button.disabled = false;
+        const span = button.querySelector('span');
+        const action = button.id.replace('Btn', '');
+        span.textContent = action.charAt(0).toUpperCase() + action.slice(1);
+      }
+    }
+
+    // Initialize Google Sign-In
+    function initializeGoogleSignIn() {
+      google.accounts.id.initialize({
+        client_id: '49087856860-i2773p0b1co3jj3lqtk4gtq9r0ldv2rl.apps.googleusercontent.com',
+        callback: handleGoogleResponse
+      });
+      
+      // Render the Google Sign-In button
+      google.accounts.id.renderButton(
+        document.getElementById('googleBtn'),
+        { theme: 'outline', size: 'large', width: '100%' }
+      );
+      
+      // Also show the One Tap prompt
+      google.accounts.id.prompt();
+    }
+
+    // Handle Google response
+    function handleGoogleResponse(response) {
+      const token = response.credential;
+      
+      // Show loading state
+      const googleBtn = document.getElementById('googleBtn');
+      const originalText = googleBtn.innerHTML;
+      googleBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Authenticating...`;
+      googleBtn.disabled = true;
+      
+      // In a real app, you would send this token to your backend for verification
+      // For this example, we'll just store it and redirect
+      localStorage.setItem('googleToken', token);
+      
+      // Redirect to CMS.html after a short delay to show loading state
+      setTimeout(() => {
+        window.location.href = 'CMS.html';
+      }, 1000);
+    }
+
+    // Initialize Facebook SDK
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId: 'YOUR_FACEBOOK_APP_ID', // Replace with your Facebook App ID
+        cookie: true,
+        xfbml: true,
+        version: 'v18.0'
+      });
+      
+      // Check login status on load
+      FB.getLoginStatus(function(response) {
+        if (response.status === 'connected') {
+          // User is already logged in via Facebook
+          handleFacebookResponse(response.authResponse.accessToken);
+        }
+      });
+    };
+
+    // Handle Facebook login
+    document.getElementById('facebookBtn').addEventListener('click', function() {
+      FB.login(function(response) {
+        if (response.authResponse) {
+          handleFacebookResponse(response.authResponse.accessToken);
+        } else {
+          document.getElementById('loginError').textContent = 'Facebook login was cancelled';
+        }
+      }, {scope: 'public_profile,email'});
+    });
+
+    function handleFacebookResponse(token) {
+      const facebookBtn = document.getElementById('facebookBtn');
+      const originalText = facebookBtn.innerHTML;
+      facebookBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Authenticating...`;
+      facebookBtn.disabled = true;
+      
+      // In a real app, you would send this token to your backend
+      localStorage.setItem('facebookToken', token);
+      
+      setTimeout(() => {
+        window.location.href = 'CMS.html';
+      }, 1000);
+    }
+
+    // Regular form login handler
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      
+      try {
+        setLoading(document.getElementById('loginBtn'), true);
+        
+        // Example API call - replace with your actual endpoint
+        const response = await fetch('https://rakshi-pasal-1.onrender.com/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Login failed');
+        }
+        
+        const data = await response.json();
+        
+        // Store token and redirect
+        localStorage.setItem('aailaPasaAdminToken', data.token);
+        window.location.href = 'CMS.html';
+      } catch (error) {
+        document.getElementById('loginError').textContent = error.message;
+      } finally {
+        setLoading(document.getElementById('loginBtn'), false);
+      }
+    });
+
+    // Initialize Google Sign-In when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check if Google SDK is loaded
+      if (typeof google !== 'undefined') {
+        initializeGoogleSignIn();
+      } else {
+        // If not loaded yet, wait for it
+        window.onGoogleLoad = initializeGoogleSignIn;
+      }
+    });
+  </script>
+</body>
+</html>
